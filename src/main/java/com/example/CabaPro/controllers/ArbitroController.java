@@ -12,4 +12,5 @@ public class ArbitroController {
     public String menuArbitro(Model model) {
         return "arbitro/menuarbitro";
     }
+    
 }
