@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil del Admin</title>
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+<!-- Header -->
+<div th:replace="fragments/header_admin :: header_admin"></div>
+
+<div class="main-content">
+    <h1>Perfil del Admin</h1>
+    <div class="card">
+        <div>
+            <strong>Nombre:</strong> Admin Ejemplo
+        </div>
+        <div>
+            <strong>Email:</strong> admin@ejemplo.com
+        </div>
+    </div>
+    <button class="create_button">Editar Perfil</button>
+</div>
+</body>
+</html>

@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Menú Árbitro</title>
-    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <title>Menú del arbitro</title>
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+
 </head>
 <body>
-<div th:replace="fragments/header :: header"></div>
-<h1>Menú de Árbitro</h1>
+<!-- Header -->
+<div th:replace="fragments/header_arbitro :: header_arbitro"></div>
+
+<div class="main-content">
+    <h1>Menú del Arbitro</h1>
+</div>
 </body>
 </html>

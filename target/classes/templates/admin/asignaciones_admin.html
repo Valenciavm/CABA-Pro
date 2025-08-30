@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Asignaciones Admin</title>
+  <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+<!-- Header -->
+<div th:replace="fragments/header_admin :: header_admin"></div>
+
+<div class="main-content">
+  <h1>Asignaciones</h1>
+  <div class="card">
+    <div>
+      <strong>Asignación:</strong> Ejemplo de asignación
+    </div>
+    <div>
+      <strong>Estado:</strong> Pendiente
+    </div>
+  </div>
+  <button class="create_button">Nueva Asignación</button>
+</div>
+</body>
+</html>

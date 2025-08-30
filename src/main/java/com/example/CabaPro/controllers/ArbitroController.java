@@ -10,7 +10,7 @@ public class ArbitroController {
 
     @GetMapping("/arbitro")
     public String menuArbitro(Model model) {
-        return "arbitro/menuarbitro";
+        return "arbitro/menu_arbitro";
     }
     
 }
