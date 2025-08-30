@@ -14,18 +14,20 @@
   <div th:replace="fragments/header_admin :: header_admin"></div>
 
   <div class="main-content"><!-- Título -->
-    <h1 class="h1">Menú del Admin</h1>
+    <h1 class="h1">Partidos</h1>
 
     <!-- Cards -->
     <div class="card">
       <div class="date">Hoy</div>
       <div class="match">Equipo A vs Equipo B</div>
-      <div>☰</div>
+      <div class = "menu-icon">☰</div>
     </div>
 
-    <!-- Botones -->
-    <button class="create_button">Crear</button>
-    <button class="delete_button">Eliminar</button>
+    <div class = "button_group">
+      <!-- Botones -->
+      <button class="create_button">Crear</button>
+      <button class="delete_button">Eliminar</button>
+    </div>
   </div>
 
 </body>
