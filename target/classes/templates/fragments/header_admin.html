@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<nav th:fragment="header_menu">
+<nav th:fragment="header_admin">
 
 
 <html lang="es">
@@ -20,20 +20,20 @@
                 </div>
             </div>
             <div class="brand">
-                <img th:src="@{css/icons/Logo.png}" alt="Logo-Caba" class="logo">
+                <img th:src="@{/css/icons/Logo.png}" alt="Logo-Caba" class="logo">
                 <span class="name">CABA PRO</span>
             </div>
 
         </div>
         <div class="right">
             <a href="#">
-                <img src="css/icons/hogar.png" alt="inicio" >
+                <img src="/css/icons/hogar.png" alt="inicio" >
             </a>
             <a href="#">
                 <img src="/css/icons/campana.png" alt="notificaciones" >
             </a>
             <a href="#">
-                <img src="css/icons/salida.png" alt="salida" >
+                <img src="/css/icons/salida.png" alt="salida" >
             </a>
 
         </div>
@@ -45,23 +45,23 @@
             <ul>
                 <li>
                     <a href="#">
-                        <img src="css/icons/usuario.png" alt="Perfil" >
+                        <img src="/css/icons/usuario.png" alt="Perfil" >
                         <span>Perfil</span>
                     </a>
-                    <a href="#">
-                        <img src="css/icons/partido.png" alt="Partidos" >
+                    <a href="/admin/partidos">
+                        <img src="/css/icons/partido.png" alt="Partidos" >
                         <span>Partidos</span>
                     </a>
                     <a href="#">
-                        <img src="css/icons/asignar.png" alt="Asignaciones" >
+                        <img src="/css/icons/asignar.png" alt="Asignaciones" >
                         <span>Asignaciones</span>
                     </a>
                     <a href="#">
-                        <img src="css/icons/arbitro.png" alt="Arbitro" >
+                        <img src="/css/icons/arbitro.png" alt="Arbitro" >
                         <span>Arbitro</span>
                     </a>
                     <a href="#">
-                        <img src="css/icons/analiticas.png" alt="Analisis" >
+                        <img src="/css/icons/analiticas.png" alt="Analisis" >
                         <span>Analisis</span>
                     </a>
 

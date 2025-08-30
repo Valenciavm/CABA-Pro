@@ -155,6 +155,4 @@ h1 {
 button:hover {
     transform: translateY(-2px); /* se eleva un poquito */
     box-shadow: 0 6px 20px rgba(0,0,0,0.12); /* sombra más intensa */
-}
-
-
+}   

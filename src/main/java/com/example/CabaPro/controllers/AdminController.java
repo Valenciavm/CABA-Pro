@@ -9,8 +9,12 @@ public class AdminController {
 
     @GetMapping("/admin")
     public String menuAdmin(Model model) {
-        return "admin/menuadmin";
+        return "admin/menu_admin";
     }
 
+    @GetMapping("/admin/partidos")
+    public String partidosAdmin(Model model){
+        return "admin/partidos_admin";
+    }
 
 }
