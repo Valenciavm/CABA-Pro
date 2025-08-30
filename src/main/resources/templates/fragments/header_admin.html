@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<nav th:fragment="header_admin">
+
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+</head>
+<body>
+    <header>
+        <div class="left">
+            <div class="menu-container">
+                <div class="menu" id="menu">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div class="brand">
+                <img th:src="@{/css/icons/Logo.png}" alt="Logo-Caba" class="logo">
+                <span class="name">CABA PRO</span>
+            </div>
+
+        </div>
+        <div class="right">
+            <a href="#">
+                <img src="/css/icons/hogar.png" alt="inicio" >
+            </a>
+            <a href="#">
+                <img src="/css/icons/campana.png" alt="notificaciones" >
+            </a>
+            <a href="#">
+                <img src="/css/icons/salida.png" alt="salida" >
+            </a>
+
+        </div>
+
+    </header>
+
+    <div class="sidebar" id="sidebar">
+        <nav>
+            <ul>
+                <li>
+                    <a href="/admin/perfil">
+                        <img src="/css/icons/usuario.png" alt="Perfil" >
+                        <span>Perfil</span>
+                    </a>
+                    <a href="/admin/partidos">
+                        <img src="/css/icons/partido.png" alt="Partidos" >
+                        <span>Partidos</span>
+                    </a>
+                    <a href="/admin/asignaciones">
+                        <img src="/css/icons/asignar.png" alt="Asignaciones" >
+                        <span>Asignaciones</span>
+                    </a>
+                    <a href="/admin/gestion_arbitros">
+                        <img src="/css/icons/arbitro.png" alt="Arbitro" >
+                        <span>Gestión Arbitros</span>
+                    </a>
+                    <a href="/admin/analisis_arbitros">
+                        <img src="/css/icons/analiticas.png" alt="Analisis" >
+                        <span>Analisís</span>
+                    </a>
+
+
+                </li>
+
+            </ul>
+
+        </nav>
+
+
+    </div>
+
+
+<script>
+    const menu = document.getElementById('menu');
+    const sidebar = document.getElementById('sidebar');
+
+    menu.addEventListener('click', () => {
+        sidebar.classList.toggle('menu-toggle');
+    });
+
+</script>
+</body>
+</html>
+</nav>

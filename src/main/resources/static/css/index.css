@@ -93,3 +93,66 @@ h1 {
     background: #111;
     color: #fff;
 }
+
+/* Tarjetas estilo general */
+.card {
+    background: #fff; /* Fondo blanco */
+    color: #222; /* Texto oscuro */
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin: 1rem 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    max-width: 600px;
+    width: 100%;
+}
+
+/* Hover efecto */
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+/* Fecha dentro de la tarjeta */
+.card .date {
+    font-weight: bold;
+}
+
+/* Nombre del partido */
+.card .match {
+    flex: 1;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Icono de menú */
+.card .menu-icon {
+    cursor: pointer;
+    font-size: 1.2rem;
+}   
+
+.button {
+    background-color: #03fc49;
+    color: #fff;
+    border-radius: 12px;
+    padding: 1.5rem 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s; /* transición suave */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100px;
+    max-height: 5px;
+    width: 100%;
+    height: 100%;
+    border: none;
+    cursor: pointer; /* importante para indicar que se puede hacer click */
+}
+
+/* Hover efecto (igual que la tarjeta) */
+button:hover {
+    transform: translateY(-2px); /* se eleva un poquito */
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12); /* sombra más intensa */
+}   

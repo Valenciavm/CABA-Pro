@@ -1,2 +1,17 @@
-.mvn/wrapper
-src/target
+# Maven
+target/
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+
+# Logs / binarios
+*.log
+*.class
+*.jar
+*.war
+
+# SO
+.DS_Store
+Thumbs.db

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<nav th:fragment="header_arbitro">
+
+
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Menu</title>
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    </head>
+    <body>
+    <header>
+        <div class="left">
+            <div class="menu-container">
+                <div class="menu" id="menu">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div class="brand">
+                <img th:src="@{/css/icons/Logo.png}" alt="Logo-Caba" class="logo">
+                <span class="name">CABA PRO</span>
+            </div>
+
+        </div>
+        <div class="right">
+            <a href="#">
+                <img src="/css/icons/hogar.png" alt="inicio" >
+            </a>
+            <a href="#">
+                <img src="/css/icons/campana.png" alt="notificaciones" >
+            </a>
+            <a href="#">
+                <img src="/css/icons/salida.png" alt="salida" >
+            </a>
+
+        </div>
+
+    </header>
+
+    <div class="sidebar" id="sidebar">
+        <nav>
+            <ul>
+                <li>
+                    <a href="#">
+                        <img src="/css/icons/usuario.png" alt="Perfil" >
+                        <span>Perfil</span>
+                    </a>
+                    <a href="/admin/partidos">
+                        <img src="/css/icons/partido.png" alt="Tus partidos" >
+                        <span>Tus partidos</span>
+                    </a>
+                    <a href="#">
+                        <img src="/css/icons/pagos.png" alt="Tus pagos" >
+                        <span>Tus pagos</span>
+                    </a>
+
+
+                </li>
+
+            </ul>
+
+        </nav>
+
+
+    </div>
+
+
+    <script>
+        const menu = document.getElementById('menu');
+        const sidebar = document.getElementById('sidebar');
+
+        menu.addEventListener('click', () => {
+            sidebar.classList.toggle('menu-toggle');
+        });
+
+    </script>
+    </body>
+    </html>
+</nav>

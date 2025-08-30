@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión Árbitros </title>
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+<!-- Header -->
+<div th:replace="fragments/header_admin :: header_admin"></div>
+
+<div class="main-content">
+    <h1>Gestión de Árbitros</h1>
+    <div class="card">
+        <div>
+            <strong>Árbitro:</strong> Ejemplo Árbitro
+        </div>
+        <div>
+            <strong>Estado:</strong> Activo
+        </div>
+    </div>
+    <button class="create_button">Nuevo Árbitro</button>
+</div>
+</body>
+</html>
