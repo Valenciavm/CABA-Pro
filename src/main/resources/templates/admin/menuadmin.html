@@ -5,7 +5,13 @@
     <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 <body>
-<div th:replace="fragments/header :: header"></div>
-<h1>Menú del Admin</h1>
+    <!-- Header -->
+    <div th:replace="fragments/header :: header"></div>
+
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <h1>Menú del Admin</h1>
+    <button>Nuevo Partido</button>
 </body>
 </html>
