@@ -5,13 +5,49 @@
     <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 <body>
-    <!-- Header -->
-    <div th:replace="fragments/header :: header"></div>
+    <!-- Navbar adaptado para usar la etiqueta <nav> que tu CSS maneja -->
+    <nav th:replace="fragments/header :: header">
+        <!-- Puedes colocar links dentro del navbar -->
+        <a href="#" class="active">Inicio</a>
+        <a href="#">Perfil</a>
+        <a href="#">Partidos</a>
+    </nav>
 
-    <!-- Sidebar -->
-    <div th:replace="fragments/sidebar :: sidebar"></div>
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <!-- h1 ya se adapta al CSS para centrado y estilo -->
+        <h1>Menú del Admin</h1>
 
-    <h1>Menú del Admin</h1>
-    <button>Nuevo Partido</button>
+        <!-- Ejemplo de tarjetas (opcional, puedes adaptarlas al estilo de tu CSS si quieres) -->
+        <div class="card">
+            <div class="date">12/08</div>
+            <div class="match">Partido 1</div>
+            <div class="menu-icon">⋮</div>
+        </div>
+
+        <div class="card">
+            <div class="date">13/08</div>
+            <div class="match">Partido 2</div>
+            <div class="menu-icon">⋮</div>
+        </div>
+
+        <!-- Botón adaptado a estilo general (usando botón del CSS) -->
+        <button class="button">Nuevo Partido</button>
+
+        <!-- Ejemplo de formulario si quieres aplicar los estilos de login -->
+        <!--
+        <div class="login-container">
+            <form class="login-form">
+                <label for="user">Usuario</label>
+                <input type="text" id="user" name="user">
+
+                <label for="pass">Contraseña</label>
+                <input type="password" id="pass" name="pass">
+
+                <button type="submit">Ingresar</button>
+            </form>
+        </div>
+        -->
+    </div>
 </body>
 </html>
