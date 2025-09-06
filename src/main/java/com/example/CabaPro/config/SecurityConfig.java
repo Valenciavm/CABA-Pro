@@ -35,12 +35,11 @@ public class SecurityConfig {
                 .requestMatchers("/Admin/**").hasRole("ADMIN")
                 .requestMatchers("/Arbitro/**").hasRole("ARBITRO")
                 .requestMatchers("SuperAdmin/**").hasRole("SUPERADMIN")
-                .requestMatchers("/cursos/**").authenticated()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
                 .loginPage("/login")
-                .defaultSuccessUrl("/products", true)
+                .defaultSuccessUrl("/arbitro", true)
                 .permitAll()
             )
             .logout(logout -> logout
