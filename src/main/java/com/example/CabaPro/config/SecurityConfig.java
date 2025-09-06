@@ -30,9 +30,11 @@ public class SecurityConfig {
                 // Rutas públicas
                 .requestMatchers("/login", "/registro", "/css/**", "/js/**", "/h2-console/**").permitAll()
                 // Rutas protegidas (solo accesibles para usuarios autenticados)
-                .requestMatchers("/products/**").authenticated()
+                
                 // Rutas específicas según roles
-                .requestMatchers("/alumnos/**").hasRole("ADMIN")
+                .requestMatchers("/Admin/**").hasRole("ADMIN")
+                .requestMatchers("/Arbitro/**").hasRole("ARBITRO")
+                .requestMatchers("SuperAdmin/**").hasRole("SUPERADMIN")
                 .requestMatchers("/cursos/**").authenticated()
                 .anyRequest().authenticated()
             )
