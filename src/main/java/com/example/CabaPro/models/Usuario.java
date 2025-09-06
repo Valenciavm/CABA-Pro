@@ -1,42 +1,51 @@
 package com.example.CabaPro.models;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
-import java.time.LocalDate;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Usuario")
+@Table(name = "usuarios")
 public class Usuario {
-
+    
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idUsuario;
-
-    @NotBlank
-    @Column(nullable = false)
-    private String rol;
-
-    @NotBlank
-    @Column(nullable = false)
-    private String nombre;
-
-
-    @NotBlank
-    //@Pattern(reg)
-    @Column(name = "nombre_usuario", nullable = false, unique = true)
-    private String nombreUsuario;
-
-    @NotBlank
-    @Column(nullable = false)
-    private String contraseña;
-
-    @NotBlank
+    private Long id;
+    
     @Column(nullable = false, unique = true)
-    private String correo;
+    private String username;
+    
+    @Column(nullable = false)
+    private String password;
+    
+    @Column
+    private String role; // Ejemplo: ROLE_USER, ROLE_ADMIN
 
-    @Column()// he cambiado esto antes podía ser null
-    private String foto;
+    // Getters y Setters
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }
