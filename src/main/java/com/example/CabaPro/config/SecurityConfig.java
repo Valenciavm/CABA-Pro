@@ -28,7 +28,7 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(authorize -> authorize
                 // Rutas públicas
-                .requestMatchers("/login", "/registro", "/css/**", "/js/**", "/h2-console/**").permitAll()
+                .requestMatchers("/","/login", "/registro", "/css/**", "/js/**", "/h2-console/**").permitAll()
                 // Rutas protegidas (solo accesibles para usuarios autenticados)
                 
                 // Rutas específicas según roles

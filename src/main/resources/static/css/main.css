@@ -10,7 +10,7 @@ body {
 
 /* Barra de navegación */
 .nav {
-    background: #111;
+    background: #0f0f10;
     padding: 0.5rem 2rem;
     display: flex;
     align-items: center;
@@ -31,7 +31,7 @@ body {
 }
 .nav a:hover {
     background: #fff;
-    color: #111;
+    color: #0f0f10;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
