@@ -52,10 +52,20 @@ public class RegistroController {
         // Crear y guardar el nuevo usuario
         Usuario usuario = new Usuario();
         usuario.setUsername(registroForm.getUsername());
+        usuario.setNombre(registroForm.getNombre());
+        usuario.setApellido(registroForm.getApellido());
+        usuario.setEmail(registroForm.getEmail());
         // Encriptar la contraseña antes de guardar
         usuario.setPassword(passwordEncoder.encode(registroForm.getPassword()));
-        // Asignar un rol por defecto, por ejemplo ROLE_USER
-        usuario.setRole("ROLE_USER");
+        // Mapear rol según selección: ARBITRO -> ROLE_ARBITRO, ADMIN -> null (pendiente aprobación)
+        String tipo = registroForm.getTipoUsuario();
+        if ("ARBITRO".equalsIgnoreCase(tipo)) {
+            usuario.setRole("ROLE_ARBITRO");
+        } else if ("ADMIN".equalsIgnoreCase(tipo)) {
+            usuario.setRole(null);
+        } else {
+            usuario.setRole(null);
+        }
         usuarioRepository.save(usuario);
 
         // Redirigir a la página de login con un parámetro opcional para mostrar mensaje

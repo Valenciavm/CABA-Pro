@@ -31,8 +31,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         Set<GrantedAuthority> grantList = new HashSet<>();
-        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(appUser.getRole());
-        grantList.add(grantedAuthority);
+        String role = appUser.getRole();
+        if (role != null && !role.isBlank()) {
+            grantList.add(new SimpleGrantedAuthority(role));
+        }
 
         UserDetails user = new User(username, appUser.getPassword(), grantList);
 
