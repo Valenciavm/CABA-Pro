@@ -25,7 +25,7 @@ public class RegistroController {
     @GetMapping("/registro")
     public String mostrarRegistro(Model model) {
         model.addAttribute("registroForm", new RegistroForm());
-        return "registro"; // Corresponde a registro.html
+        return "registro/registro"; // Corresponde a templates/registro/registro.html
     }
 
     // Procesa el envío del formulario
@@ -46,7 +46,7 @@ public class RegistroController {
 
         // Si hay errores, se regresa al formulario
         if (result.hasErrors()) {
-            return "registro";
+            return "registro/registro";
         }
 
         // Crear y guardar el nuevo usuario
