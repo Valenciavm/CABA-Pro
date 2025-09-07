@@ -55,21 +55,11 @@ h1 {
     box-shadow: 0 2px 12px rgba(0,0,0,0.10);
 }
 
-ul {
+/*ul {
     padding-left: 18px;
 }
 
 li {
     margin-bottom: 8px;
     font-size: 0.98rem;
-}
-
-.main-content {
-    margin-top: 5rem;   /* Altura del header */
-    margin-left: 25rem;  /* Ancho del sidebar */
-    padding: 2rem;
-}
-
-.main-content.shifted{
-    margin-left: 15rem; /* ajusta al ancho de tu sidebar */
-}
+}*/
