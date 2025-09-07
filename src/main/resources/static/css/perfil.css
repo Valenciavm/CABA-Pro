@@ -8,7 +8,7 @@ body {
 
 
 h1 {
-    color: #2563eb;
+    color: white;
     font-size: 2rem;
     margin-bottom: 24px;
     text-align: center;
@@ -23,6 +23,7 @@ h1 {
     flex-direction: column;
     align-items: center;
 }
+
 .card div {
     margin-bottom: 14px;
     font-size: 1rem;
@@ -31,7 +32,7 @@ h1 {
 }
 
 .card strong {
-    color: #2563eb;
+    color: black;
     font-weight: 500;
 }
 

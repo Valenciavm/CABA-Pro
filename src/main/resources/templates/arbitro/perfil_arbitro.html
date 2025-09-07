@@ -22,15 +22,7 @@
             <div><strong>Apellido:</strong> <span th:text="${usuario.apellido}">-</span></div>
             <div><strong>Rol:</strong> <span th:text="${prettyRole}">-</span></div>
         </div>
-        <div th:if="${usuarioMap != null and !#maps.isEmpty(usuarioMap)}">
-            <h3>Datos adicionales</h3>
-            <ul>
-                <li th:each="entry : ${usuarioMap.entrySet()}">
-                    <strong th:text="${entry.key}">campo</strong>:
-                    <span th:text="${entry.value}">valor</span>
-                </li>
-            </ul>
-        </div>
+
         <div th:if="${usuario == null}">
             <p>No se encontró información del árbitro.</p>
         </div>
