@@ -1,32 +1,88 @@
 package com.example.CabaPro.models;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
 
 @Entity
-@Table(name = "Partido")
+@Table(name = "partido")
 public class Partido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_partido")
-    private Integer idPartido;
+    private Long id;
 
-    @Column(nullable = false)
-    private String equipos;
+    @Column(name = "nombre", nullable = false)
+    private String nombre;
 
-    @Column(nullable = false)
-    private LocalDate horario;
+    @Column(name = "equipo1", nullable = false)
+    private String equipo1;
 
-    @Column(nullable = false)
+    @Column(name = "equipo2", nullable = false)
+    private String equipo2;
+
+    @Column(name = "fecha", nullable = false)
+    private String fecha;
+
+    @Column(name = "hora", nullable = false)
+    private String hora;
+
+    @Column(name = "resultado", nullable = false)
     private String resultado;
 
-    @ManyToOne
-    @JoinColumn(name = "Administrador_Usuario_idUsuario", nullable = false)
-    private Administrador administrador;
+    // Getters y Setters
+    public Long getId() {
+        return id;
+    }
 
-    @ManyToOne
-    @JoinColumn(name = "Cancha_id_cancha", nullable = false)
-    private Cancha cancha;
+    public String getNombre() {
+        return nombre;
+    }
 
-    // getters/setters...
+    public String getEquipo1() {
+        return equipo1;
+    }
+
+    public String getEquipo2() {
+        return equipo2;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public String getResultado() {
+        return resultado;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setEquipo1(String equipo1) {
+        this.equipo1 = equipo1;
+    }
+
+    public void setEquipo2(String equipo2) {
+        this.equipo2 = equipo2;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    public void setResultado(String resultado) {
+        this.resultado = resultado;
+    }
 }
+
+
