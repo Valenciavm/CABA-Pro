@@ -23,10 +23,10 @@ public class Datainitializer implements CommandLineRunner {
     public void run(String... args) {
         // ADMINISTRADORES: username, email, nombre, apellido, rawPassword, tipo
         administradorService.createAdminIfNotExists("super", "super@caba.com", "Super", "Admin", "superpassword", "SUPER_ADMIN", "/ImagenesPerfil/SuperAdmin1.jpg");
-        administradorService.createAdminIfNotExists("admin", "admin@caba.com", "Normal", "Admin", "adminpassword", "ADMIN", "/ImagenesPerfil/Admin1.jpg");
+        administradorService.createAdminIfNotExists("restrepoadmin", "restrepoadmin@caba.com", "Juan", "Restrepo", "adminpassword", "ADMIN", "/ImagenesPerfil/Admin1.jpg");
 
         // ARBITRO: username, email, nombre, apellido, rawPassword, especialidad, escalafon, disponibilidad
-        arbitroService.createArbitroIfNotExists("ref1", "arbitro1@caba.com", "Pedro", "Perez",
+        arbitroService.createArbitroIfNotExists("Camiloref", "Camiloref@caba.com", "Camilo", "Perez",
                 "refpassword", "Fútbol", "Categoria A", true,"/ImagenesPerfil/Arbitro1.jpg");
     }
 }
