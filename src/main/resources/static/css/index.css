@@ -8,7 +8,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(180deg, #181717 0%, #444 100%);
+    background: linear-gradient(180deg, #4C4A4A 0%, black 100%);
 
 
 }
@@ -69,7 +69,7 @@ nav .right a:hover {
 .carousel {
     position: relative;
     width: 100%;
-    height: 80vh;
+    height: 100vh;
     overflow: hidden;
 }
 
@@ -93,7 +93,6 @@ nav .right a:hover {
     opacity: 1; /* inicia en negro */
     pointer-events: none;
     z-index: 2;
-    /* la duración real la controla el JS (inserta inline), pero dejamos un valor por defecto */
     transition: opacity 1500ms cubic-bezier(0.22, 0.8, 0.24, 1);
 }
 
@@ -104,7 +103,7 @@ nav .right a:hover {
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 8rem;
+    font-size: 7rem;
     font-weight: 800;
     text-align: center;
     color: #fff;
@@ -113,6 +112,60 @@ nav .right a:hover {
     letter-spacing: 2px;
     backdrop-filter: blur(1px);
     pointer-events: none; /* evita capturar eventos */
+}
+
+
+.intro {
+    max-width: 50%;          /* ancho contenido */
+    margin: 2em 0;
+    padding: 0 2rem;            /* espacio lateral */
+    text-align: justify ;
+    line-height: 1.5;
+    color: white;
+}
+
+.intro h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    letter-spacing: 1px;
+}
+
+.intro p {
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+    color: #d0d0d2;
+}
+
+.intro strong {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.intro-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    margin-top: 2em;
+}
+
+
+.intro-img {
+    max-width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.intro-img img {
+    max-width: 100%;
+    max-height: 300px;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
 }
 
 /* Footer oscuro */
@@ -197,6 +250,21 @@ footer {
     color: #fff;
 }
 
+
+.login-blur-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 10;
+}
+
+.register-link {
+    margin-top: 12px;
+    text-align: center;
+}
+
 .label {
     font-size: 0.95rem;
     color: white;
@@ -217,6 +285,17 @@ footer {
     color: #7d7e82;
 }
 
+.link-white {
+    color: #fff !important;
+    text-decoration: none;
+    transition: none;
+}
+.link-white:hover,
+.link-white:active,
+.link-white:focus {
+    color: #fff !important;
+    text-decoration: none;
+}
 
 
 
