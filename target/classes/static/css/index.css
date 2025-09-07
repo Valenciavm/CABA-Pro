@@ -1,51 +1,122 @@
 body {
     margin: 0;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: #f5f5f5;
-    color: #222;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    background: #000;
 }
+
+/* Navbar ordenado con left y right */
 nav {
-    background: #0f0f10;
-    padding: 0.5rem 2rem;
+    background: rgba(30, 30, 30, 0.12);
+    backdrop-filter: blur(3px);
+    box-shadow: 0 0 20px rgba(0,0,0,0.08);
+    padding: 0.5rem 0.1rem;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    justify-content: space-between;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 2;
 }
-nav a {
+
+nav .left {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-left: 4rem;
+}
+
+nav .logo {
+    width: 2rem;
+}
+
+nav .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+nav .right {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-right: 3rem;
+}
+
+nav .right a {
     color: #fff;
     text-decoration: none;
-    margin-left: 0.8rem;
-    padding: 0.6rem 1rem;
-    border-radius: 8px;
-    transition: background 0.2s, color 0.2s;
     font-weight: 500;
-    letter-spacing: 0.5px;
-    background: #222;
-    box-sizing: border-box;
+    transition: color 0.3s;
 }
-nav a:hover {
-    background: #fff;
-    color: #111;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+
+nav .right a:hover {
+    color: grey;
 }
-h1 {
-    margin-top: 3rem;
+
+/* Carrusel */
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 70vh;
+    overflow: hidden;
+}
+
+.carousel-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    animation: fade 1s ease-in-out;
+    transition: opacity 2s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* Título centrado */
+.title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 8rem;
+    font-weight: 800;
     text-align: center;
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #222;
-    letter-spacing: 1px;
+    color: #fff;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+    z-index: 2;
+    letter-spacing: 2px;
+    backdrop-filter: blur(1px);
 }
+
+/* Footer oscuro */
+footer {
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+}
+
+/* Animación de transición */
+@keyframes fade {
+    from { opacity: 0.6; }
+    to { opacity: 1; }
+}
+
 .login-container {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 5rem;
     min-height: 70vh;
 }
 
 .login-form {
-    background: #fff;
+    background: #0f0f10;
+    color: #e9e9ea;
     padding: 2rem 2.5rem;
     border-radius: 12px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.08);
@@ -89,70 +160,40 @@ h1 {
     transition: background 0.2s, color 0.2s;
 }
 
+.login-blur-bg {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black; /* Fondo semitransparente */
+    backdrop-filter: blur(6px);   /* Difuminado */
+}
+
 .login-form button:hover {
     background: #111;
     color: #fff;
 }
 
-/* Tarjetas estilo general */
-.card {
-    background: #fff; /* Fondo blanco */
-    color: #222; /* Texto oscuro */
-    border-radius: 12px;
-    padding: 1rem 1.5rem;
-    margin: 1rem 0;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: transform 0.2s, box-shadow 0.2s;
-    max-width: 600px;
-    width: 100%;
+.label {
+    font-size: 0.95rem;
+    color: white;
+    margin-bottom: 0.4rem;
 }
-
-/* Hover efecto */
-.card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-}
-
-/* Fecha dentro de la tarjeta */
-.card .date {
-    font-weight: bold;
-}
-
-/* Nombre del partido */
-.card .match {
-    flex: 1;
-    text-align: center;
+.login-form label {
+    margin-top: 1rem;
+    margin-bottom: 0.3rem;
+    color: #c6c7cb; /* Igual que register.css */
     font-weight: 500;
 }
-
-/* Icono de menú */
-.card .menu-icon {
-    cursor: pointer;
-    font-size: 1.2rem;
-}   
-
-.button {
-    background-color: #03fc49;
-    color: #fff;
-    border-radius: 12px;
-    padding: 1.5rem 1.5rem;
-    transition: transform 0.2s, box-shadow 0.2s; /* transición suave */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 100px;
-    max-height: 5px;
-    width: 100%;
-    height: 100%;
-    border: none;
-    cursor: pointer; /* importante para indicar que se puede hacer click */
+.login-form input {
+    color: #e9e9ea; /* Igual que register.css */
+    background: #141416;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+.login-form input::placeholder {
+    color: #7d7e82; /* Igual que register.css */
 }
 
-/* Hover efecto (igual que la tarjeta) */
-button:hover {
-    transform: translateY(-2px); /* se eleva un poquito */
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12); /* sombra más intensa */
-}   
+
+
+

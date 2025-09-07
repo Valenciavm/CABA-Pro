@@ -1,12 +1,70 @@
-<!-- src/main/resources/templates/home/index.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+  <meta charset="utf-8" />
   <title>Home</title>
   <link rel="stylesheet" th:href="@{/css/index.css}">
+  <!-- Fuente Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 </head>
 <body>
 <div th:replace="fragments/header_login :: header_login"></div>
-<h1>CABA PRO</h1>
+
+<!-- Contenedor del carrusel -->
+<div class="carousel">
+  <div class="carousel-slide" aria-hidden="true"></div>
+  <h1 class="title">CABA PRO</h1>
+</div>
+
+<!-- Footer -->
+<footer>
+  <p>© 2025 CABA PRO</p>
+</footer>
+
+<script>
+  (function() {
+    const images = [
+      '/Imageneshome/estadio.png',
+      '/Imageneshome/torneo.png',
+      '/Imageneshome/cancha.png'
+    ];
+
+    let current = 0;
+    const slide = document.querySelector('.carousel-slide');
+    if (!slide) return;
+
+    function setBackground(idx) {
+      slide.style.backgroundImage = "url('" + images[idx] + "')";
+    }
+
+    function changeImage() {
+      slide.style.opacity = 0.2;
+      setTimeout(function() {
+        setBackground(current);
+        slide.style.opacity = 1;
+        current = (current + 1) % images.length;
+      }, 3000);
+    }
+
+    setBackground(current);
+    current = (current + 1) % images.length;
+
+    setTimeout(function() {
+      changeImage();
+      window.__carouselInterval = setInterval(changeImage, 9000);
+    }, 1200);
+
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        if (window.__carouselInterval) clearInterval(window.__carouselInterval);
+      } else {
+        if (window.__carouselInterval) clearInterval(window.__carouselInterval);
+        window.__carouselInterval = setInterval(changeImage, 7000);
+      }
+    });
+  })();
+</script>
 </body>
 </html>

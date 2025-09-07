@@ -32,6 +32,7 @@
     header {
         z-index: 200;
         width: 100%;
+        height: 3.5rem;
         display: flex;
         justify-content: space-between;
         padding: 0.45rem 2rem 0.45rem 1.27rem;
@@ -61,7 +62,7 @@
 
     .menu{
         width: 1.5rem;
-        height: 35%;
+        height: 55%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -85,12 +86,13 @@
     }
 
     .brand .logo{
-        width: 2.5rem;
+        width: 2rem;
     }
 
-    .brand .name{
-        font-size: 1.5rem;
-        font-weight: 900;
+    .brand .name {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem; /* Puedes ajustar el tamaño */
+        font-weight: 700; /* Un peso en negrita para que resalte bien */
         color: var(--text-title-color);
     }
 
@@ -103,6 +105,7 @@
         width: auto;
         margin: 0.5rem;
         gap: 1.5rem;
+        box-shadow: none;
     }
 
     .right a{
@@ -111,22 +114,38 @@
         align-items: center;
         border-radius: 0.5rem;
         transition: background-color 0.2s ease;
+
     }
 
     .right a:hover{
         background-color: var(--background-hover);
+        box-shadow: none;
 
     }
-    .right img{
+    .right img {
         width: 2rem;
         filter: brightness(0) invert(1);
+    }
+    .right img:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+    .right a i {
+        font-size: 1.5rem;
+        color: white;
+    }
+
+    .right a:hover{
+        background-color: var(--background-hover);
+        box-shadow: none;
 
     }
 
     /*estilos sidebar*/
 
     .sidebar{
-        margin-top: 4rem;
+        margin-top: 3rem;
         width: 4rem;
         height: 100%;
         position: fixed;
