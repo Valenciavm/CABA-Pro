@@ -15,6 +15,7 @@ import com.example.CabaPro.repositories.ArbitroRepository;
 import com.example.CabaPro.models.Arbitro;
 
 import com.example.CabaPro.Services.UsuarioService;
+import com.example.CabaPro.Services.ArbitroService;
 
 import org.springframework.ui.Model;
 
@@ -23,9 +24,11 @@ import org.springframework.ui.Model;
 public class GestorArbitroController {
 
     private final ArbitroRepository arbitroRepository;
+    private final ArbitroService arbitroService;
 
-    public GestorArbitroController(ArbitroRepository arbitroRepository){
+    public GestorArbitroController(ArbitroRepository arbitroRepository, ArbitroService arbitroService){
         this.arbitroRepository = arbitroRepository;
+        this.arbitroService = arbitroService;
     }
 
     @GetMapping("/gestion-arbitros")
@@ -35,9 +38,15 @@ public class GestorArbitroController {
         return "admin/gestion-arbitros/general-arbitros";
     }
 
-    @GetMapping("gestion-arbitros/nuevo")
+    @GetMapping("/gestion-arbitros/nuevo")
     public String crearArbitro(Model model){
         model.addAttribute("arbitro", new Arbitro());
         return "admin/gestion-arbitros/arbitro-form";
+    }
+
+    @PostMapping("/gestion-arbitros/guardar")
+    public String guardarArbitro(Model model, @ModelAttribute("arbitro") Arbitro arbitro){
+        arbitroService.createArbitroIfNotExists(arbitro);
+        return "redirect:/admin/gestion-arbitros";
     }
 }

@@ -47,6 +47,21 @@ public class ArbitroService {
         return arbitroRepository.save(a);
     }
 
+
+    @Transactional
+    public Arbitro createArbitroIfNotExists(Arbitro arbitro) {
+        Optional<Arbitro> maybe = arbitroRepository.findByUsuarioEmail(arbitro.getUsuario().getEmail());
+        if (maybe.isPresent()) {
+            return maybe.get();
+        }
+
+        Usuario usuario = usuarioService.createUsuarioIfNotExists(arbitro.getUsuario(), "ROLE_ARBITRO"); //QUE HAGO CON LA FOTO??
+         // Si el usuario ya existía pero no era arbitro, actualizar su rol
+
+        arbitro.setUsuario(usuario);
+        return arbitroRepository.save(arbitro);
+    }
+
     @Transactional(readOnly = true)
     public Optional<Arbitro> findByUsuarioEmail(String email) {
         return arbitroRepository.findByUsuarioEmail(email);

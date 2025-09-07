@@ -16,7 +16,7 @@
 
         <div class="form-card">
             <h2>Crear Arbitro</h2>
-            <form th:object="${arbitro}" th:action="@{/admin/cancha/guardar}" method="post">
+            <form th:object="${arbitro}" th:action="@{/admin/gestion-arbitros/guardar}" method="post">
                 <label for="nombre">Nombre:</label>
                 <input type="text" id="nombre" th:field="*{nombre}">
 

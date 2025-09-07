@@ -85,6 +85,21 @@ public class UsuarioService {
         return usuarioRepository.save(u);
     }
 
+    @Transactional
+    public Usuario createUsuarioIfNotExists(Usuario usuario, String role) {
+        Optional<Usuario> existing = usuarioRepository.findByUsername(usuario.getUsername());
+        if (existing.isPresent()) {
+            return existing.get();
+        }
+
+        usuario.setRole(role);
+
+        // Encriptar la contraseña antes de guardar
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+
+        return usuarioRepository.save(usuario);
+    }
+
     private String prettyRole(String role) {
         if (role == null || role.isBlank()) return "";
         String r = role.startsWith("ROLE_") ? role.substring(5) : role;
