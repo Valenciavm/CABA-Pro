@@ -12,8 +12,18 @@
 </head>
 <body>
 
-    <div th:replace="fragments/header_login :: header_login"></div>
+<!-- Navbar -->
+<div th:replace="fragments/header_login :: header_login"></div>
 
+<!-- Carrusel de fondo -->
+<div class="carousel" aria-live="polite">
+    <div class="carousel-image" aria-hidden="true"></div>
+    <div class="carousel-black-overlay"></div>
+    <h1 class="title">CABA PRO</h1>
+</div>
+
+<!-- Blur encima del carrusel -->
+<div class="login-blur-bg" >
     <div class="register-wrapper">
         <div class="register-card">
             <div class="register-header">
@@ -107,9 +117,53 @@
                     Registro exitoso. Ahora puedes iniciar sesión.
                 </div>
             </form>
-            <div class="divider"></div>
-            <p class="note">¿Ya tienes cuenta? <a th:href="@{/login}" class="link">Inicia sesión</a>.</p>
+
         </div>
     </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>© 2025 CABA PRO</p>
+</footer>
+
+<!-- Script del carrusel -->
+<script>
+    (function() {
+        const images = [
+            '/Imageneshome/estadio.png',
+            '/Imageneshome/torneo.png',
+            '/Imageneshome/cancha.png',
+            '/Imageneshome/encesta.png'
+        ];
+        const fadeDuration = 1500;
+        const imageVisible = 8000;
+        const blackFull = 3000;
+        const imageEl = document.querySelector('.carousel-image');
+        const overlay = document.querySelector('.carousel-black-overlay');
+        if (!imageEl || !overlay) return;
+        overlay.style.transition = `opacity ${fadeDuration}ms cubic-bezier(0.22, 0.8, 0.24, 1)`;
+        imageEl.style.transition = `opacity ${fadeDuration}ms ease-in-out`;
+        images.forEach(src => { const img = new Image(); img.src = src; });
+        let current = 0;
+        function setBackground(idx) { imageEl.style.backgroundImage = "url('" + images[idx] + "')"; }
+        function showImage(index) {
+            setBackground(index);
+            void overlay.offsetWidth;
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.opacity = '1';
+                setTimeout(() => {
+                    const next = (index + 1) % images.length;
+                    setBackground(next);
+                    setTimeout(() => { showImage(next); }, blackFull);
+                }, fadeDuration);
+            }, fadeDuration + imageVisible);
+        }
+        overlay.style.opacity = '1';
+        setBackground(current);
+        setTimeout(() => { showImage(current); }, 400);
+    })();
+</script>
 </body>
 </html>
