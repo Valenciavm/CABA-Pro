@@ -4,7 +4,13 @@ body {
     font-size: 1rem;
     font-weight: 700;
     color: #fff;
-    background: #000;
+    background: #181717;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, #181717 0%, #444 100%);
+
+
 }
 
 /* Navbar ordenado con left y right */
@@ -19,7 +25,7 @@ nav {
     position: fixed;
     width: 100%;
     top: 0;
-    z-index: 2;
+    z-index: 1000;
 }
 
 nav .left {
@@ -58,28 +64,44 @@ nav .right a:hover {
     color: grey;
 }
 
+
 /* Carrusel */
 .carousel {
     position: relative;
     width: 100%;
-    height: 70vh;
+    height: 80vh;
     overflow: hidden;
 }
 
-.carousel-slide {
+/* Capa que contiene la imagen (fondo dinámico) */
+.carousel-image {
     position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     background-size: cover;
-    background-position: center;
-    animation: fade 1s ease-in-out;
-    transition: opacity 2s cubic-bezier(0.4,0,0.2,1);
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 1;
+    will-change: background-image;
 }
+
+.carousel-black-overlay {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    opacity: 1; /* inicia en negro */
+    pointer-events: none;
+    z-index: 2;
+    /* la duración real la controla el JS (inserta inline), pero dejamos un valor por defecto */
+    transition: opacity 1500ms cubic-bezier(0.22, 0.8, 0.24, 1);
+}
+
 
 /* Título centrado */
 .title {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 8rem;
@@ -90,6 +112,7 @@ nav .right a:hover {
     z-index: 2;
     letter-spacing: 2px;
     backdrop-filter: blur(1px);
+    pointer-events: none; /* evita capturar eventos */
 }
 
 /* Footer oscuro */
@@ -98,6 +121,7 @@ footer {
     color: #fff;
     text-align: center;
     padding: 1rem;
+    margin-top: auto;
 }
 
 /* Animación de transición */
@@ -165,7 +189,6 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: black; /* Fondo semitransparente */
     backdrop-filter: blur(6px);   /* Difuminado */
 }
 
@@ -182,16 +205,16 @@ footer {
 .login-form label {
     margin-top: 1rem;
     margin-bottom: 0.3rem;
-    color: #c6c7cb; /* Igual que register.css */
+    color: #c6c7cb;
     font-weight: 500;
 }
 .login-form input {
-    color: #e9e9ea; /* Igual que register.css */
+    color: #e9e9ea;
     background: #141416;
     border: 1px solid rgba(255,255,255,0.08);
 }
 .login-form input::placeholder {
-    color: #7d7e82; /* Igual que register.css */
+    color: #7d7e82;
 }
 
 
