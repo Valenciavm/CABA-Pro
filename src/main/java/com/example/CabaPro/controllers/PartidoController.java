@@ -24,60 +24,51 @@ public class PartidoController {
         this.service = service;
     }
     
-
-    //Menú principal
-    @GetMapping("/partido")
-    public String partido(Model model){
-       
-        return "partido/menu_partido";
-    }
-
-
     //Para recibir la solicitud GET y mostrar el formulario del pardido
-    @GetMapping("/partido/nuevo")
+    @GetMapping("admin/partido/nuevo_partido")
     public String nuevoPartido(Model model){
         model.addAttribute("partido", new Partido());
-        return "partido/nuevo_partido";
+        return "admin/partido/nuevo_partido";
     }
     
     
     //para recibir el formulario y crear el partido 
-    @PostMapping("/partido/nuevo")
+    @PostMapping("admin/partido/nuevo_partido")
     public String crearPartido(@ModelAttribute("partido") Partido partido, RedirectAttributes redirectAttributes,Model model) {
         try {
             //utilizo el servicio para crear el partido
             Partido partidoGuardado = service.save(partido);
             redirectAttributes.addFlashAttribute("mensaje", 
                 "Partido  " + partidoGuardado.getNombre()+" creado exitosamente");
-            return "redirect:/partido";
+            return "redirect:/admin/partido";
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
             model.addAttribute("partido", partido);
-            return "partido/nuevo_partido";
+            return "admin/partido/nuevo_partido";
         }
     }
 
     //para ver todos los partidos
-    @GetMapping("/partido/ver_partidos")
+    @GetMapping("admin/partido/admin_ver_partidos")
     public String verPartidos(Model model){
        
         List<Partido> partidos = service.findAll();
         model.addAttribute("partidos", partidos);
-        return "partido/ver_partidos";
+        return "admin/partido/admin_ver_partidos";
     }
     //para ver un partido
-    @GetMapping ("/partido/ver_partido/{id}")
+    @GetMapping ("admin/partido/ver_partido/{id}")
     public String verPartido(Model model,@PathVariable Long id){
         
         Optional<Partido> partido_encontrado= service.findById(id);
         model.addAttribute("partido", partido_encontrado.get());
-        return "partido/ver_partido";
+        return "admin/partido/ver_partido";
     }
 
     
 
  //para eliminar un partido
-    @PostMapping("/partido/eliminar/{id}")
+    @PostMapping("admin/partido/eliminar/{id}")
     public String eliminarPartido(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             service.deleteById(id);
@@ -85,7 +76,7 @@ public class PartidoController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error al eliminar el partido: " + e.getMessage());
         }
-        return "redirect:/partido/ver_partidos";
+        return "redirect:/admin/partido/admin_ver_partidos";
     }
     
 }

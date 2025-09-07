@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/partido.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <meta charset="UTF-8">
+    <title>Ver Partidos</title>
+</head>
+<body>
+    <!-- Header -->
+    <div th:replace="fragments/header_admin :: header_admin"></div>
+    
+    <div class="main-content">
+        <h1 class="h1">Lista de Partidos</h1>
+
+        <!-- Mensajes de notificación -->
+        <div class="message" th:if="${mensaje}" th:text="${mensaje}"></div>
+        <div class="error" th:if="${error}" th:text="${error}"></div>
+
+        <div class="partidos-container">
+            <div th:if="${partidos.empty}" class="no-partidos">No hay partidos registrados.</div>
+
+            <div th:each="p : ${partidos}" class="partido-card">
+                <div class="partido-nombre" th:text="${p.nombre}">Nombre del Partido</div>
+                <div class="partido-equipos">
+                    <span class="equipo" th:text="${p.equipo1}">Equipo 1</span>
+                    <span class="vs">VS</span>
+                    <span class="equipo" th:text="${p.equipo2}">Equipo 2</span>
+                </div>
+                <div class="partido-details">
+                    <span th:text="${p.fecha}">Fecha</span>
+                    <span th:text="${p.hora}">Hora</span>
+                    <a class="btn-secondary" th:href="@{/admin/partido/ver_partido/{id}(id=${p.id})}">Ver</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

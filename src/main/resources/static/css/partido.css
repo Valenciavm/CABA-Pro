@@ -1,0 +1,542 @@
+/* GENERAL.CSS */
+
+/* Reset general */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f5f5f5;
+    color: #222;
+}
+
+/* Barra de navegación */
+.nav {
+    background: #111;
+    padding: 0.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 0.8rem;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    background: #222;
+    box-sizing: border-box;
+}
+.nav a:hover {
+    background: #fff;
+    color: #111;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Encabezados principales */
+.h1 {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #222;
+    letter-spacing: 1px;
+}
+
+/* Tarjetas */
+.card {
+    background: #fff;
+    color: #222;
+    border-radius: 12px;
+     padding: 1rem 2rem;
+    margin: 1rem auto   ;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    max-width: 600px;
+    width: 100%;
+}
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+.card .date {
+    font-weight: bold;
+}
+.card .match {
+    flex: 1;
+    text-align: center;
+    font-weight: 500;
+}
+.card .menu-icon {
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+/* Mensajes de notificación */
+.message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 12px 20px;
+    margin: 16px auto;
+    border: 1px solid #c3e6cb;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 500;
+    max-width: 600px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    /* Animación automática para desvanecer */
+    animation: fadeOut 8s ease-in-out forwards;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 12px 20px;
+    margin: 16px auto;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 500;
+    max-width: 600px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    /* Animación automática para desvanecer */
+    animation: fadeOut 10s ease-in-out forwards;
+}
+
+/* Botones generales */
+.create_button, .delete_button, .view_button {
+  background-color: #10160a;       
+  color: #fff;
+  border-radius: 12px;
+  padding: 1rem 2rem;
+  border: none;
+  cursor: pointer;
+  margin: 1rem auto;
+  display: block;
+  text-align: center;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  font-family: "Inter", system-ui, -apple-system, Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  line-height: 1;
+  text-decoration: none;
+  max-width: 300px;
+}
+
+.create_button:hover, .delete_button:hover, .view_button:hover {
+  background-color: #1a2b0f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.delete_button {
+  background-color: #dc3545;
+}
+
+.delete_button:hover {
+  background-color: #c82333;
+}
+
+.view_button {
+  background-color: #007bff;
+}
+
+.view_button:hover {
+  background-color: #0056b3;
+}
+
+/* Grupo de botones */
+.button_group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.create_button:hover {
+  background-color: #00d504;    /* green on hover */
+  color: #111;                  /* better contrast on bright green */
+}
+
+.delete_button {
+  background-color: #10160a;       
+  color: #fff;
+  border-radius: 12px;
+  padding: 1rem 2rem;
+  border: none;
+  cursor: pointer;
+  margin: 2rem auto;
+  display: block;
+  text-align: center;
+  transition: background-color 0.5s, transform 0.5s, box-shadow 0.5s;
+  font-family: "Inter", system-ui, -apple-system, Arial, sans-serif;
+  font-size: 1rem;        
+  font-weight: 700;       
+  font-style: normal;    
+  text-transform: uppercase;
+  line-height: 1;        
+}
+
+.delete_button:hover{
+    background-color: #da0000;    
+  color: #111;  
+}
+/* Hover efecto igual que las tarjetas */
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.button_group{
+    display: flex;
+    justify-items: center;
+    gap: 1  rem;
+}
+
+/* hacer visible el contenido.*/
+    .main-content {
+        margin-top: 5rem;  
+        margin-left: 19rem;  
+        padding: 2rem;
+    }
+
+    .main-content.shifted{
+  margin-left: 15rem; 
+}
+
+/* Estilos para la lista de partidos */
+.h2 {
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.partidos-container {
+    margin-top: 2rem;
+}
+
+.partido-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1rem auto;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    max-width: 600px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.partido-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.partido-nombre {
+    color: #1a2b0f;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    text-align: center;
+}
+
+.partido-equipos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.equipo {
+    background: #f8f9fa;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #495057;
+}
+
+.vs {
+    font-weight: 700;
+    color: #dc3545;
+    font-size: 1.2rem;
+}
+
+.partido-details {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.partido-details span {
+    background: #e9ecef;
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.no-partidos {
+    text-align: center;
+    margin: 2rem 0;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Animación para desvanecer automáticamente las notificaciones */
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    70% { opacity: 1; }  /* Mantener visible por 70% del tiempo */
+    100% { opacity: 0; } /* Desvanecer al final */
+}
+
+/* Estilos para enlaces de partidos */
+.partido-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.2s;
+}
+
+.partido-link:hover {
+    transform: scale(1.02);
+}
+
+/* Estilos para el enlace del ID */
+.partido-id-link {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    display: inline-block;
+    transition: all 0.3s;
+}
+
+.partido-id-link:hover {
+    background: #007bff;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Estilos para la página de eliminar partidos */
+.warning-message {
+    background: #fff3cd;
+    color: #856404;
+    padding: 1rem;
+    margin: 1rem auto;
+    border: 1px solid #ffeaa7;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 600px;
+}
+
+.delete-mode {
+    border-left: 4px solid #dc3545;
+}
+
+.delete-actions {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.btn-delete {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.btn-delete:hover {
+    background: #c82333;
+}
+
+/* Estilos para la vista detallada del partido */
+.partido-detail-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.partido-detail-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    margin: 2rem 0;
+}
+
+.partido-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.partido-title {
+    color: #1a2b0f;
+    font-size: 2.5rem;
+    margin: 0 0 0.5rem 0;
+}
+
+.partido-id {
+    color: #6c757d;
+    font-size: 0.9rem;
+    background: #f8f9fa;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+}
+
+.partido-matchup {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem 0;
+    gap: 2rem;
+}
+
+.team {
+    flex: 1;
+    text-align: center;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    transition: transform 0.2s;
+}
+
+.team:hover {
+    transform: translateY(-2px);
+}
+
+.team-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+.team-score {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #dc3545;
+}
+
+.match-center {
+    text-align: center;
+    flex: 0 0 auto;
+}
+
+.vs-badge {
+    background: #dc3545;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.match-info {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.match-date, .match-time {
+    margin: 0.2rem 0;
+}
+
+.partido-result {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #f0f0f0;
+}
+
+.partido-result h3 {
+    color: #495057;
+    margin-bottom: 1rem;
+}
+
+.result-display {
+    background: #28a745;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: inline-block;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.btn-edit, .btn-back {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-edit {
+    background: #007bff;
+    color: white;
+}
+
+.btn-edit:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+}
+
+.btn-back {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-back:hover {
+    background: #545b62;
+    transform: translateY(-2px);
+}
+
+/* Botón secundario */
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+    display: inline-block;
+}
+
+.btn-secondary:hover {
+    background: #545b62;
+    transform: translateY(-2px);
+}

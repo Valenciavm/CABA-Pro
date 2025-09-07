@@ -36,9 +36,9 @@ public class AdminController {
         return "admin/perfil_admin";
     }
 
-    @GetMapping("/admin/partidos")
+    @GetMapping("/admin/partido")
     public String partidosAdmin(Model model){
-        return "admin/partidos_admin";
+        return "admin/partido/admin_partidos";
     }
 
     @GetMapping("/admin/asignaciones")

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/partido.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <meta charset="UTF-8">
+    <title>Ver Partido</title>
+</head>
+<body>
+    <div th:replace="fragments/header_admin :: header_admin"></div>
+    <div class="main-content">
+        <div class="partido-detail-container">
+            <h1 class="h1">Detalles del Partido</h1>
+            <div th:if="${partido == null}" class="no-partidos">Partido no encontrado.</div>
+
+            <div th:if="${partido != null}" class="partido-detail-card">
+                <div class="partido-header">
+                    <h2 class="partido-title" th:text="${partido.nombre}">Nombre del Partido</h2>
+                    <span class="partido-id">ID: <span th:text="${partido.id}">?</span></span>
+                </div>
+
+                <div class="partido-matchup">
+                    <div class="team team-left">
+                        <div class="team-name" th:text="${partido.equipo1}">Equipo 1</div>
+                        <div class="team-score">?</div>
+                    </div>
+
+                    <div class="match-center">
+                        <div class="vs-badge">VS</div>
+                        <div class="match-info">
+                            <div class="match-date" th:text="${partido.fecha}">Fecha</div>
+                            <div class="match-time" th:text="${partido.hora}">Hora</div>
+                        </div>
+                    </div>
+
+                    <div class="team team-right">
+                        <div class="team-name" th:text="${partido.equipo2}">Equipo 2</div>
+                        <div class="team-score">?</div>
+                    </div>
+                </div>
+
+                <div class="partido-result">
+                    <h3>Resultado</h3>
+                    <div class="result-display" th:text="${partido.resultado}">2-1</div>
+                </div>
+
+                <div class="action-buttons">
+                    <form th:action="@{/admin/partido/eliminar/{id}(id=${partido.id})}" method="post" 
+                          style="display: inline;" 
+                          onsubmit="return confirm('¿Estás seguro de que quieres eliminar este partido?')">
+                        <button type="submit" class="btn-delete">🗑️ Eliminar Partido</button>
+                    </form>
+                    <a class="btn-back" th:href="@{/admin/partido/admin_ver_partidos}">← Volver a la Lista</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Nuevo Partido</title>
+	<link rel="stylesheet" th:href="@{/css/partido.css}">
+	<link rel="stylesheet" th:href="@{/css/sidebar.css}">
+	<style>
+		/* Ajustes mínimos para el formulario si es necesario */
+		.form-card { max-width: 720px; margin: 24px auto; background: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(255, 0, 0, 0.08);} 
+		.form-row { display: flex; gap: 12px; margin-bottom: 12px; }
+		.form-row > div { flex: 1; }
+		label { display:block; font-weight:600; margin-bottom:6px; }
+		input { width:100%; padding:10px; border:1px solid #1f1212; border-radius:6px; }
+		.actions { display:flex; gap:12px; margin-top:16px; }
+		.btn { padding:10px 16px; border-radius:6px; text-decoration:none; border:none; cursor:pointer; }
+		.btn-primary { background:#1fa60a; color:#fff; }
+		.btn-secondary { background:#e5e7eb; color:#111827; }
+	</style>
+    
+</head>
+<body>
+	<div th:replace="fragments/header_admin :: header_admin"></div>
+
+	<div class="main-content">
+		<h1 class="h1">Crear nuevo partido</h1>
+
+		<!-- Mostrar mensajes de error si existen -->
+		<div class="error" th:if="${error}" th:text="${error}"></div>
+
+		<div class="form-card">
+			<form th:action="@{/admin/partido/nuevo_partido}" th:object="${partido}" method="post">
+				<div class="form-row">
+					<div>
+						<label for="nombre">Nombre</label>
+						<input id="nombre" type="text" th:field="*{nombre}" placeholder="Nombre del partido" required>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div>
+						<label for="equipo1">Equipo 1</label>
+						<input id="equipo1" type="text" placeholder="Nombre equipo 1" required th:field="*{equipo1}">
+					</div>
+					<div>
+						<label for="equipo2">Equipo 2</label>
+						<input id="equipo2" type="text" placeholder="Nombre equipo 2" required th:field="*{equipo2}">
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div>
+						<label for="fecha">Fecha</label>
+						<input id="fecha" type="date" th:field="*{fecha}" required>
+					</div>
+					<div>
+						<label for="hora">Hora</label>
+						<input id="hora" type="time" th:field="*{hora}" required>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div>
+						<label for="resultado">Resultado</label>
+						<input id="resultado" type="text" th:field="*{resultado}" placeholder="Ej: 2-1" required>
+					</div>
+				</div>
+
+				<div class="actions">
+					<button class="btn btn-primary" type="submit">Guardar</button>
+					<a class="btn btn-secondary" th:href="@{/admin/partido/admin_ver_partidos}">Cancelar</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
