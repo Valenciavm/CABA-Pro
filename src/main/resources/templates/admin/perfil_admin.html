@@ -13,11 +13,14 @@
 <div class="main-content">
     <h1>Perfil del Admin</h1>
     <div class="card">
-        <div>
-            <strong>Nombre:</strong> Admin Ejemplo
-        </div>
-        <div>
-            <strong>Email:</strong> admin@ejemplo.com
+        <!-- src/main/resources/templates/admin/perfil_admin.html -->
+        <div class="card">
+            <div>
+                <strong>Nombre:</strong> <span th:text="${usuario.nombre}"></span>
+            </div>
+            <div>
+                <strong>Email:</strong> <span th:text="${usuario.email}"></span>
+            </div>
         </div>
     </div>
     <button class="create_button">Editar Perfil</button>
