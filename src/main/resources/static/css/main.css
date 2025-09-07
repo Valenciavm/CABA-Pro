@@ -44,22 +44,41 @@ body {
     font-weight: 700;
     color: #222;
     letter-spacing: 1px;
+    margin-bottom: 4rem;
+}
+
+.h3 {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #222;
+    letter-spacing: 1px;
+    margin-bottom: 2rem;
 }
 
 /* Tarjetas */
 .card {
     background: #fff;
     color: #222;
-    border-radius: 12px;
-     padding: 1rem 2rem;
+    border-radius: 0.75rem;
+    padding: 1rem 2rem;
     margin: 1rem auto   ;
     box-shadow: 0 4px 16px rgba(0,0,0,0.08);
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: transform 0.2s, box-shadow 0.2s;
-    max-width: 600px;
+    max-width: 37.5rem;
     width: 100%;
+}
+
+/* Subtipo más grande */
+.card-large {
+    padding: 2rem 3rem;
+    max-width: 56.25rem; /* 900px */
+    font-size: 1.125rem; /* opcional: texto un poco más grande */
 }
 .card:hover {
     transform: translateY(-2px);
@@ -79,40 +98,93 @@ body {
 }
 
 /* Botones generales */
-.create_button {
-    background-color: #03fc49;
+.button {
+    background-color:  #0f0f10;
     color: #fff;
     border-radius: 12px;
     padding: 1rem 2rem;
     transition: transform 0.2s, box-shadow 0.2s;
     border: none;
     cursor: pointer;
-    margin: 2rem auto;
+    margin: 0.25rem ;
     display: block;
     text-align: center;
-}
-.delete_button {
-    background-color: #fc0303;
-    color: #fff;
-    border-radius: 12px;
-    padding: 1rem 2rem;
-    transition: transform 0.2s, box-shadow 0.2s;
-    border: none;
-    cursor: pointer;
-    margin: 2rem auto;
-    display: block;
-    text-align: center;
-}
-/* Hover efecto igual que las tarjetas */
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    flex: 0 0 auto;
 }
 
-.button_group{
+.create-button {
+    background-color: #03fc49;
+}
+
+.delete-button {
+    background-color: #fc0303;
+}
+
+.view-button {
+    background-color: #5996ff;
+}
+
+/* Hover efecto igual que las tarjetas */
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.082);
+}
+
+.button-group{
     display: flex;
-    justify-items: center;
-    gap: 1  rem;
+    justify-content:center;
+    gap: 0.25 rem;
+    padding: 1.5rem;
+    margin-left: 35rem;
+}
+
+.row {
+  display: flex;        
+  flex-wrap: wrap;       
+  margin: -0.5rem;        
+}
+
+.row-gap {
+  display: flex;
+  justify-content: flex-start; /* o center si quieres */
+  gap: 1rem; /* separación constante entre elementos */
+  flex-wrap: wrap;
+  margin: -0.5rem;
+}
+
+.row-between {
+  display: flex;
+  justify-content: space-between; /* elementos extremos pegados y resto repartidos */
+  align-items: center;
+  flex: 0 0 auto;
+  margin: -0.5rem;
+}
+
+.row > *, .row-between > *, .row-gap > *{
+    flex: 0 0 auto;
+}
+
+.col {
+  flex: 1;                
+  padding: 0.5rem;       
+  text-align: left;
+}
+
+
+.col-2 {
+  flex: 0 0 50%;          
+}
+
+.col-3 {
+  flex: 0 0 33.33%;       
+}
+
+.col-4 {
+  flex: 0 0 25%;          
+}
+
+.col-auto{
+    flex: 0 0 auto;
 }
 
 .bi {
@@ -125,6 +197,7 @@ button:hover {
     .main-content {
         margin-top: 5rem;   /* Altura del header */
         margin-left: 19rem;  /* Ancho del sidebar */
+        margin-right: 4rem;
         padding: 2rem;
     }
 
