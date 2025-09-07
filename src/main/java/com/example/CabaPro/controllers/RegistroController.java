@@ -13,6 +13,8 @@ import com.example.CabaPro.DTOs.RegistroForm;
 import com.example.CabaPro.models.Usuario;
 import com.example.CabaPro.repositories.UsuarioRepository;
 
+import java.util.Optional;
+
 @Controller
 public class RegistroController {
     @Autowired
@@ -39,10 +41,11 @@ public class RegistroController {
         }
 
         // Verificar si el usuario ya existe
-        Usuario usuarioExistente = usuarioRepository.findByUsername(registroForm.getUsername());
-        if (usuarioExistente != null) {
+        Optional<Usuario> usuarioExistente = usuarioRepository.findByUsername(registroForm.getUsername());
+        if (usuarioExistente.isPresent()) {
             result.rejectValue("username", "error.registroForm", "El usuario ya existe");
         }
+
 
         // Si hay errores, se regresa al formulario
         if (result.hasErrors()) {

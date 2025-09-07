@@ -19,25 +19,28 @@ import com.example.CabaPro.repositories.UsuarioRepository;
 @Service
 @Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
+
     @Autowired
-    UsuarioRepository userRepository;
+    private UsuarioRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        Usuario appUser = userRepository.findByUsername(username);
-        if (appUser == null) {
-            throw new UsernameNotFoundException("Usuario no encontrado: " + username);
-        }
+        Usuario appUser = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
 
         Set<GrantedAuthority> grantList = new HashSet<>();
         String role = appUser.getRole();
         if (role != null && !role.isBlank()) {
+            if (!role.startsWith("ROLE_")) {
+                // Normalizar para Spring Security (hasRole("ADMIN") busca "ROLE_ADMIN")
+                role = "ROLE_" + role;
+            }
             grantList.add(new SimpleGrantedAuthority(role));
+            System.out.println("Usuario: " + username + " - Rol asignado: " + role);
         }
 
-        UserDetails user = new User(username, appUser.getPassword(), grantList);
-
-        return user;
+        // Aseguramos las flags del usuario (enabled, accountNonExpired, credentialsNonExpired, accountNonLocked)
+        return new User(appUser.getUsername(), appUser.getPassword(),
+                true, true, true, true, grantList);
     }
 }

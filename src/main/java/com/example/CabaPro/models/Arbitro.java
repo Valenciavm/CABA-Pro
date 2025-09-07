@@ -5,9 +5,10 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "Arbitro")
 public class Arbitro {
+
     @Id
     @Column(name = "Usuario_idUsuario")
-    private Integer usuarioId;
+    private Long usuarioId;
 
     private String especialidad;
     private String escalafon;
@@ -16,10 +17,23 @@ public class Arbitro {
     private Boolean disponibilidad;
 
     @OneToOne
-    @JoinColumn(name = "Usuario_idUsuario", referencedColumnName = "idUsuario", insertable = false, updatable = false)
+    @MapsId
+    @JoinColumn(name = "Usuario_idUsuario", referencedColumnName = "idUsuario")
     private Usuario usuario;
+
+    // Getters y setters
+    public Long getUsuarioId() { return usuarioId; }
+    public void setUsuarioId(Long usuarioId) { this.usuarioId = usuarioId; }
+
+    public String getEspecialidad() { return especialidad; }
+    public void setEspecialidad(String especialidad) { this.especialidad = especialidad; }
+
+    public String getEscalafon() { return escalafon; }
+    public void setEscalafon(String escalafon) { this.escalafon = escalafon; }
+
+    public Boolean getDisponibilidad() { return disponibilidad; }
+    public void setDisponibilidad(Boolean disponibilidad) { this.disponibilidad = disponibilidad; }
+
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
 }
-
-
-
-

@@ -13,6 +13,7 @@ public class Usuario {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idUsuario") // coincide con el ERD
     private Long id;
     
     @Column(nullable = false, unique = true)
@@ -34,6 +35,10 @@ public class Usuario {
     private String role; // Ejemplo: ROLE_USER, ROLE_ADMIN
 
     // Getters y Setters
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
     public String getRole() {
         return role;
     }

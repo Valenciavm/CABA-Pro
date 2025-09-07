@@ -33,7 +33,7 @@ public class AdminController {
     }
 
     @GetMapping("/admin/analisis_arbitros")
-    public String analisis_arbitros(Model model){
+    public String analisisArbitros(Model model){
         return "admin/analisis_arbitros";
     }
 
