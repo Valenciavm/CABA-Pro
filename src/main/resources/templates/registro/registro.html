@@ -27,9 +27,6 @@
     <div class="register-wrapper">
         <div class="register-card">
             <div class="register-header">
-                <div class="icon">
-                    <span class="material-symbols-outlined">person_add</span>
-                </div>
                 <div>
                     <h1 class="register-title">Crear cuenta</h1>
                     <p class="register-subtitle">Únete para gestionar tus partidos y asignaciones</p>
@@ -70,7 +67,7 @@
                         <label class="label" for="password">Contraseña</label>
                         <div class="control">
                             <span class="material-symbols-outlined prefix-icon">lock</span>
-                            <input class="input" id="password" type="password" th:field="*{password}" placeholder="Mínimo 8 caracteres" required>
+                            <input class="input" id="password" type="password" th:field="*{password}" placeholder="Ingresa tu contraseña" required>
                         </div>
                         <div class="helper">Usa mayúsculas, minúsculas y un número</div>
                     </div>
@@ -92,6 +89,9 @@
                             </select>
                         </div>
                         <div class="helper">Si eliges Administrador, requerirá aprobación del Super Admin</div>
+                        <div th:if="${error}" class="message error">
+                            <span th:text="${error}"></span>
+                        </div>
                     </div>
                 </div>
 
