@@ -1,16 +1,19 @@
 package com.example.CabaPro.controllers;
 
+import com.example.CabaPro.DTOs.UsuarioPerfilDTO;
 import com.example.CabaPro.Services.UsuarioService;
-import com.example.CabaPro.models.Usuario;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 @Controller
 public class AdminController {
     private final UsuarioService usuarioService;
+    private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
+
 
     public AdminController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
@@ -23,10 +26,13 @@ public class AdminController {
 
     @GetMapping("/admin/perfil")
     public String perfilAdmin(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        Usuario usuario = usuarioService.findByUsername(username).orElse(null);
-        model.addAttribute("usuario", usuario);
+        UsuarioPerfilDTO perfil = usuarioService.obtenerPerfilActual();
+        if (!perfil.authenticated) {
+            return "redirect:/login";
+        }
+        model.addAttribute("usuario", perfil.usuario);
+        model.addAttribute("usuarioMap", perfil.usuarioMap);
+        model.addAttribute("prettyRole", perfil.prettyRole);
         return "admin/perfil_admin";
     }
 
@@ -49,10 +55,6 @@ public class AdminController {
     public String analisisArbitros(Model model){
         return "admin/analisis_arbitros";
     }
-
-
-
-
 
 
 }

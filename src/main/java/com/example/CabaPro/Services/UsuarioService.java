@@ -1,12 +1,21 @@
 package com.example.CabaPro.Services;
 
+import com.example.CabaPro.DTOs.UsuarioPerfilDTO;
 import com.example.CabaPro.models.Usuario;
 import com.example.CabaPro.repositories.UsuarioRepository;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder; // 👈 importa esto
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.beans.PropertyDescriptor;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UsuarioService {
@@ -55,7 +64,8 @@ public class UsuarioService {
                                             String nombre,
                                             String apellido,
                                             String rawPassword,
-                                            String role) {
+                                            String role,
+                                            String foto) {
         Optional<Usuario> existing = usuarioRepository.findByUsername(username);
         if (existing.isPresent()) {
             return existing.get();
@@ -66,11 +76,45 @@ public class UsuarioService {
         u.setEmail(email);
         u.setNombre(nombre);
         u.setApellido(apellido);
+        u.setFoto(foto);
 
         // Encriptar la contraseña antes de guardar
         u.setPassword(passwordEncoder.encode(rawPassword));
 
         u.setRole(role); // p.ej. "ROLE_ADMIN"
         return usuarioRepository.save(u);
+    }
+
+    private String prettyRole(String role) {
+        if (role == null || role.isBlank()) return "";
+        String r = role.startsWith("ROLE_") ? role.substring(5) : role;
+        r = r.replace('_', ' ').toLowerCase();
+        if (r.isEmpty()) return "";
+        return Character.toUpperCase(r.charAt(0)) + r.substring(1);
+    }
+
+    public UsuarioPerfilDTO obtenerPerfilActual() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated() || "anonymousUser".equals(auth.getPrincipal())) {
+            return new UsuarioPerfilDTO(null, Map.of(), "", false);
+        }
+        String username = auth.getName();
+        Usuario usuario = findByUsername(username).orElse(null);
+        if (usuario == null) {
+            return new UsuarioPerfilDTO(null, Map.of(), "", true);
+        }
+        Set<String> excluded = Set.of("class", "password", "id", "username", "email", "nombre", "apellido", "role");
+        Map<String, Object> usuarioMap = new LinkedHashMap<>();
+        BeanWrapper wrapper = new BeanWrapperImpl(usuario);
+        for (PropertyDescriptor pd : wrapper.getPropertyDescriptors()) {
+            String name = pd.getName();
+            if (excluded.contains(name)) continue;
+            try {
+                Object val = wrapper.getPropertyValue(name);
+                usuarioMap.put(name, val);
+            } catch (Exception ignored) { }
+        }
+        String prettyRole = prettyRole(usuario.getRole());
+        return new UsuarioPerfilDTO(usuario, usuarioMap, prettyRole, true);
     }
 }

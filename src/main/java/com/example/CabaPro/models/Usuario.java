@@ -34,6 +34,9 @@ public class Usuario {
     @Column
     private String role; // Ejemplo: ROLE_USER, ROLE_ADMIN
 
+    @Column
+    private String foto; // URL o path a la foto de perfil
+
     // Getters y Setters
 
     public Long getId() { return id; }
@@ -87,4 +90,8 @@ public class Usuario {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
+
+    public String getFoto() {return foto;}
+
+    public void setFoto(String foto) {this.foto = foto;}
 }

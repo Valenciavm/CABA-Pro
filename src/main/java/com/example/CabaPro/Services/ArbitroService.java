@@ -29,13 +29,15 @@ public class ArbitroService {
                                             String rawPassword,
                                             String especialidad,
                                             String escalafon,
-                                            boolean disponibilidad) {
+                                            boolean disponibilidad,
+                                            String foto) {
         Optional<Arbitro> maybe = arbitroRepository.findByUsuarioEmail(email);
         if (maybe.isPresent()) {
             return maybe.get();
         }
 
-        Usuario usuario = usuarioService.createUsuarioIfNotExists(username, email, nombre, apellido, rawPassword, "ROLE_ARBITRO");
+        Usuario usuario = usuarioService.createUsuarioIfNotExists(username, email, nombre, apellido, rawPassword, "ROLE_ARBITRO", foto);
+         // Si el usuario ya existía pero no era arbitro, actualizar su rol
 
         Arbitro a = new Arbitro();
         a.setUsuario(usuario);

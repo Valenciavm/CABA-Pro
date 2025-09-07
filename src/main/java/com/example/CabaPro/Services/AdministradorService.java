@@ -36,14 +36,17 @@ public class AdministradorService {
                                                 String nombre,
                                                 String apellido,
                                                 String rawPassword,
-                                                String tipo) {
+                                                String tipo,
+                                                String foto) {
         Optional<Administrador> maybeAdmin = administradorRepository.findByUsuarioEmail(email);
         if (maybeAdmin.isPresent()) {
             return maybeAdmin.get();
         }
 
         String role = "ROLE_" + tipo; // ej. ROLE_SUPER_ADMIN o ROLE_ADMIN
-        Usuario usuario = usuarioService.createUsuarioIfNotExists(username, email, nombre, apellido, rawPassword, role);
+        Usuario usuario = usuarioService.createUsuarioIfNotExists(username, email, nombre, apellido, rawPassword, role, foto);
+
+         // Si el usuario ya existía pero no era admin, actualizar su rol
 
         Administrador admin = new Administrador();
         admin.setUsuario(usuario);
