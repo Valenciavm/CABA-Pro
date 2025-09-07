@@ -35,7 +35,6 @@ public class CanchaController {
     @RequestMapping("/cancha") //@RequestMapping
     public String canchas(Model model){
         List<Cancha> canchas = canchaRepository.findAll();
-        System.out.println(canchas);
         model.addAttribute("canchas", canchas);
         return "/cancha/canchas";
     }

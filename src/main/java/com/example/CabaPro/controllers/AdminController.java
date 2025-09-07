@@ -46,10 +46,11 @@ public class AdminController {
         return "admin/asignaciones_admin";
     }
 
-    @GetMapping("/admin/gestion_arbitros")
+    /*@GetMapping("/admin/gestion-arbitros")
     public String gestionArbitros(Model model){
-        return "admin/gestion_arbitros";
+        return "admin/gestion-arbitros";
     }
+    */
 
     @GetMapping("/admin/analisis_arbitros")
     public String analisisArbitros(Model model){
