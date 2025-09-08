@@ -39,14 +39,15 @@
                         <input class="field" type="email" th:field="*{usuario.email}" placeholder="Correo electrónico">
                     </div>
 
-                    <div class="icon-text-group">
-                        <i class="bi bi-award-fill"></i>
-                        <input class="field" type="text" th:field="*{especialidad}" placeholder="Especialidad">
-                    </div>
 
                     <div class="icon-text-group">
                         <i class="bi bi-clipboard2-fill"></i>
-                        <input class="field" type="text" th:field="*{escalafon}" placeholder="Escalafón">
+                        <label for="escalafon" class="sr-only"></label>
+                        <select id="escalafon" class="field" th:field="*{escalafon}">
+                            <option value="Municipal">Municipal</option>
+                            <option value="Nacional">Nacional</option>
+                            <option value="Internacional">Internacional</option>
+                        </select>
                     </div>
 
                     <div class="icon-text-group">

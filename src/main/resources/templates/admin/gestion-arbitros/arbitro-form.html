@@ -40,11 +40,14 @@
                 <!-- Campos de Arbitro -->
                 <h3>Datos de Árbitro</h3>
 
-                <label for="especialidad">Especialidad:</label>
-                <input type="text" id="especialidad" th:field="*{especialidad}" required>
-
                 <label for="escalafon">Escalafón:</label>
-                <input type="text" id="escalafon" th:field="*{escalafon}">
+                    <select id="escalafon" th:field="*{escalafon}" required>
+                        <option value=""  th:selected="${arbitro.escalafon} == null">-- Seleccione el escalafón --</option>
+                        <option value="Arbitro principal">Municipal</option>
+                        <option value="Arbitro asistente">Nacional</option>
+                        <option value="Arbitro asistente">Internacional</option>
+                    </select>
+                        
 
                 <label for="disponibilidad">Disponible:</label>
                 <input type="checkbox" id="disponibilidad" th:field="*{disponibilidad}" checked>

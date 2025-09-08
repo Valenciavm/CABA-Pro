@@ -16,8 +16,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 @EnableWebSecurity
 public class SecurityConfig {
 
+    // Inyecta el servicio de detalles del usuario junto con el userDetailsServiceImpl
+
     @Autowired
     private UserDetailsService usuarioDetailsService;
+
+    // Inyecta el manejador de éxito de autenticación personalizado
 
     @Autowired
     private CustomAuthenticationSuccessHandler successHandler;
@@ -49,9 +53,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(usuarioDetailsService).passwordEncoder(passwordEncoder());
-    }
+    
 
     @Bean
     public PasswordEncoder passwordEncoder() {

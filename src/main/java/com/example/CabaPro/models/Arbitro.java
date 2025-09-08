@@ -13,6 +13,7 @@ public class Arbitro {
     private Long usuarioId;
 
     private String especialidad;
+    
     private String escalafon;
 
     @Column(nullable = false)

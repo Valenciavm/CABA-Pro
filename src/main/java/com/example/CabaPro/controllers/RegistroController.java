@@ -22,6 +22,7 @@ public class RegistroController {
     // Muestra el formulario de registro
     @GetMapping("/registro")
     public String mostrarRegistro(Model model) {
+        //utilizo el DTO RegistroForm para enlazar los datos del formulario
         model.addAttribute("registroForm", new RegistroForm());
         return "registro/registro"; // Corresponde a templates/registro/registro.html
     }
