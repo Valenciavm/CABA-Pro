@@ -60,10 +60,34 @@
 					</div>
 				</div>
 
+				<!-- Selección de árbitros -->
 				<div class="form-row">
 					<div>
-						<label for="resultado">Resultado</label>
-						<input id="resultado" type="text" th:field="*{resultado}" placeholder="Ej: 2-1" required>
+						<label for="principalId">Árbitro principal</label>
+						<select id="principalId" name="principalId" required>
+							<option value="" disabled th:if="${principalId} == null" selected>-- Seleccione --</option>
+							<option th:each="arb : ${arbitros}" th:value="${arb.usuarioId}"
+									th:text="${arb.usuario.nombre} + ' ' + ${arb.usuario.apellido}"
+									th:selected="${principalId} == ${arb.usuarioId}"></option>
+						</select>
+					</div>
+					<div>
+						<label for="auxiliarId">Árbitro auxiliar</label>
+						<select id="auxiliarId" name="auxiliarId" required>
+							<option value="" disabled th:if="${auxiliarId} == null" selected>-- Seleccione --</option>
+							<option th:each="arb : ${arbitros}" th:value="${arb.usuarioId}"
+									th:text="${arb.usuario.nombre} + ' ' + ${arb.usuario.apellido}"
+									th:selected="${auxiliarId} == ${arb.usuarioId}"></option>
+						</select>
+					</div>
+					<div>
+						<label for="segundoAuxId">Segundo auxiliar</label>
+						<select id="segundoAuxId" name="segundoAuxId" required>
+							<option value="" disabled th:if="${segundoAuxId} == null" selected>-- Seleccione --</option>
+							<option th:each="arb : ${arbitros}" th:value="${arb.usuarioId}"
+									th:text="${arb.usuario.nombre} + ' ' + ${arb.usuario.apellido}"
+									th:selected="${segundoAuxId} == ${arb.usuarioId}"></option>
+						</select>
 					</div>
 				</div>
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.List;
 
 @Service
 public class ArbitroService {
@@ -70,5 +71,10 @@ public class ArbitroService {
     @Transactional(readOnly = true)
     public Optional<Arbitro> findByUsuarioUsername(String username) {
         return arbitroRepository.findByUsuarioUsername(username);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Arbitro> findAll() {
+        return arbitroRepository.findAll();
     }
 }

@@ -31,4 +31,39 @@ public class PartidoArbitro {
     private Arbitro arbitro;
 
     // Getters y setters...
+    public Long getId() {
+        return id;
+    }
+
+    public String getRolPartido() {
+        return rolPartido;
+    }
+
+    public void setRolPartido(String rolPartido) {
+        this.rolPartido = rolPartido;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public Partido getPartido() {
+        return partido;
+    }
+
+    public void setPartido(Partido partido) {
+        this.partido = partido;
+    }
+
+    public Arbitro getArbitro() {
+        return arbitro;
+    }
+
+    public void setArbitro(Arbitro arbitro) {
+        this.arbitro = arbitro;
+    }
 }
