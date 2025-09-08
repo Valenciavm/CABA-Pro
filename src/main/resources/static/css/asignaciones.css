@@ -1,0 +1,76 @@
+
+
+/* Estilo general del contenedor */
+.container {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    margin-top: 5rem;
+    align-content: center;
+    margin-left: 22rem;
+    max-width: 900px;
+}
+
+/* Título de la página */
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+}
+
+/* Estilos de la tabla */
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.95rem;
+}
+
+/* Cabecera de la tabla */
+.table .thead-dark th {
+    background-color: #f8f9fa; /* Un gris muy claro */
+    color: #495057;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600; /* Un poco más de peso para la cabecera */
+    text-align: left;
+    padding: 0.75rem;
+    vertical-align: middle;
+}
+
+/* Celdas de la tabla */
+.table td, .table th {
+    padding: 0.75rem;
+    vertical-align: middle;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Filas de la tabla con efecto hover */
+.table-striped tbody tr:hover {
+    background-color: #f1f1f1; /* Sutil color de fondo al pasar el ratón */
+}
+
+/* Estilos para los badges de estado */
+.badge {
+    padding: 0.4em 0.7em;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.bg-warning {
+    background-color: #ffc107 !important;
+    color: #212529;
+}
+
+.bg-success {
+    background-color: #28a745 !important;
+    color: white;
+}
+
+.bg-danger {
+    background-color: #dc3545 !important;
+    color: white;
+}

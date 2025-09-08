@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Mis Asignaciones</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!-- Reutilizamos el mismo CSS que la vista de administrador para mantener la consistencia -->
+    <link rel="stylesheet" th:href="@{/css/asignaciones.css}">
+</head>
+<body>
+<!-- Asegúrate de tener un fragmento de header para el árbitro o ajústalo según sea necesario -->
+<div th:replace="~{fragments/header_arbitro :: header_arbitro}"></div>
+
+<div class="container mt-4">
+    <h1>Mis Asignaciones de Partidos</h1>
+
+    <!-- Mensaje si no hay asignaciones -->
+    <div th:if="${#lists.isEmpty(asignaciones)}" class="alert alert-info">
+        <p>No tienes asignaciones de partidos pendientes o confirmadas.</p>
+    </div>
+
+    <!-- Tabla de asignaciones si la lista no está vacía -->
+    <div th:unless="${#lists.isEmpty(asignaciones)}">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>Partido</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Mi Rol</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="asignacion : ${asignaciones}">
+                <td th:text="${asignacion.partido.nombre}"></td>
+                <td th:text="${asignacion.partido.fecha}"></td>
+                <td th:text="${asignacion.partido.hora}"></td>
+                <!-- Reemplaza guiones bajos para una mejor lectura del rol -->
+                <td th:text="${#strings.replace(asignacion.rolPartido, '_', ' ')}"></td>
+                <td>
+                    <!-- Badge de color según el estado -->
+                    <span th:class="${asignacion.estado == 'PENDIENTE'} ? 'badge bg-warning' : (${asignacion.estado == 'ACEPTADO'} ? 'badge bg-success' : 'badge bg-danger')"
+                          th:text="${asignacion.estado}">
+                    </span>
+                </td>
+                <td>
+                    <!-- Botones de acción solo si el estado es PENDIENTE -->
+                    <div th:if="${asignacion.estado == 'PENDIENTE'}">
+                        <a th:href="@{/arbitro/asignacion/{id}/aceptar(id=${asignacion.id})}" class="btn btn-success btn-sm">Aceptar</a>
+                        <a th:href="@{/arbitro/asignacion/{id}/rechazar(id=${asignacion.id})}" class="btn btn-danger btn-sm">Rechazar</a>
+                    </div>
+                    <!-- Muestra un guion si no hay acciones disponibles -->
+                    <span th:unless="${asignacion.estado == 'PENDIENTE'}">-</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

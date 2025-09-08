@@ -1,26 +1,81 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Asignaciones Admin</title>
-  <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-  <link rel="stylesheet" th:href="@{/css/main.css}">
+  <title>Gestión de Asignaciones</title>
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <!-- Añade esta línea para el nuevo estilo de la tabla -->
+  <link rel="stylesheet" th:href="@{/css/asignaciones.css}">
 </head>
 <body>
-<!-- Header -->
-<div th:replace="fragments/header_admin :: header_admin"></div>
+<div th:replace="~{fragments/header_admin :: header_admin}"></div>
 
-<div class="main-content">
-  <h1>Asignaciones</h1>
-  <div class="card">
-    <div>
-      <strong>Asignación:</strong> Ejemplo de asignación
-    </div>
-    <div>
-      <strong>Estado:</strong> Pendiente
-    </div>
+<div class="container mt-4">
+  <h1>Estado de Asignaciones de Árbitros</h1>
+
+  <div th:unless="${#lists.isEmpty(asignaciones)}">
+    <table class="table table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th>Partido</th>
+        <th>Fecha</th>
+        <th>Hora</th>
+        <th>Árbitro Principal</th>
+        <th>Estado</th>
+        <th>Árbitro Auxiliar</th>
+        <th>Estado</th>
+        <th>Segundo Auxiliar</th>
+        <th>Estado</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="asignacion : ${asignaciones}">
+        <td th:text="${asignacion.partido.nombre}"></td>
+        <td th:text="${asignacion.partido.fecha}"></td>
+        <td th:text="${asignacion.partido.hora}"></td>
+
+        <!-- Variables para filtrar las asignaciones por rol -->
+        <th:block th:with="
+                    principal=${#lists.isEmpty(asignacion.asignaciones.?[rolPartido == 'ARBITRO_PRINCIPAL']) ? null : asignacion.asignaciones.?[rolPartido == 'ARBITRO_PRINCIPAL'][0]},
+                    auxiliar=${#lists.isEmpty(asignacion.asignaciones.?[rolPartido == 'AUXILIAR']) ? null : asignacion.asignaciones.?[rolPartido == 'AUXILIAR'][0]},
+                    segundoAux=${#lists.isEmpty(asignacion.asignaciones.?[rolPartido == 'SEGUNDO_AUXILIAR']) ? null : asignacion.asignaciones.?[rolPartido == 'SEGUNDO_AUXILIAR'][0]}
+                ">
+          <!-- Árbitro Principal -->
+          <td th:text="${principal?.arbitro?.usuario?.nombre ?: '-'}"></td>
+          <td>
+            <span th:if="${principal}"
+                  th:class="${principal.estado == 'PENDIENTE'} ? 'badge bg-warning' : (${principal.estado == 'ACEPTADO'} ? 'badge bg-success' : 'badge bg-danger')"
+                  th:text="${principal.estado}"></span>
+            <span th:unless="${principal}">-</span>
+          </td>
+
+          <!-- Árbitro Auxiliar -->
+          <td th:text="${auxiliar?.arbitro?.usuario?.nombre ?: '-'}"></td>
+          <td>
+            <span th:if="${auxiliar}"
+                  th:class="${auxiliar.estado == 'PENDIENTE'} ? 'badge bg-warning' : (${auxiliar.estado == 'ACEPTADO'} ? 'badge bg-success' : 'badge bg-danger')"
+                  th:text="${auxiliar.estado}"></span>
+            <span th:unless="${auxiliar}">-</span>
+          </td>
+
+          <!-- Segundo Auxiliar -->
+          <td th:text="${segundoAux?.arbitro?.usuario?.nombre ?: '-'}"></td>
+          <td>
+            <span th:if="${segundoAux}"
+                  th:class="${segundoAux.estado == 'PENDIENTE'} ? 'badge bg-warning' : (${segundoAux.estado == 'ACEPTADO'} ? 'badge bg-success' : 'badge bg-danger')"
+                  th:text="${segundoAux.estado}"></span>
+            <span th:unless="${segundoAux}">-</span>
+          </td>
+        </th:block>
+      </tr>
+      </tbody>
+    </table>
   </div>
-  <button class="create_button">Nueva Asignación</button>
+  <div th:if="${#lists.isEmpty(asignaciones)}" class="alert alert-info">
+    <p>No hay partidos con asignaciones registrados.</p>
+  </div>
 </div>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>

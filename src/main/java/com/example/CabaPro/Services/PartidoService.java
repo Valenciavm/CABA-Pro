@@ -1,12 +1,15 @@
 package com.example.CabaPro.Services;
+import com.example.CabaPro.DTOs.AsignacionPartidoDTO;
 import com.example.CabaPro.repositories.PartidoRepository;
 import com.example.CabaPro.models.Partido;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.CabaPro.repositories.PartidoArbitroRepository;
 import com.example.CabaPro.repositories.CanchaRepository;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import com.example.CabaPro.models.PartidoArbitro;
@@ -14,17 +17,49 @@ import com.example.CabaPro.models.Arbitro;
 import com.example.CabaPro.repositories.ArbitroRepository;
 
 
+
 @Service
 public class PartidoService {
+
 
     private final PartidoArbitroRepository partidoArbitroRepository;
     private final PartidoRepository repository;
     private final ArbitroRepository arbitroRepository;
-    //Inyección de dependencias por constructor 
-    public PartidoService(PartidoRepository repository, PartidoArbitroRepository partidoArbitroRepository, ArbitroRepository arbitroRepository) {
+
+    public PartidoService(PartidoRepository repository, PartidoArbitroRepository partidoArbitroRepository,
+                          ArbitroRepository arbitroRepository) {
         this.repository = repository;
         this.partidoArbitroRepository = partidoArbitroRepository;
         this.arbitroRepository = arbitroRepository;
+
+    }
+    @Transactional(readOnly = true)
+    public List<AsignacionPartidoDTO> findAllWithAsignaciones() {
+        List<Partido> partidos = repository.findAll();
+        List<AsignacionPartidoDTO> result = new ArrayList<>();
+
+        for (Partido partido : partidos) {
+            List<PartidoArbitro> asignaciones = partidoArbitroRepository.findByPartidoId(partido.getId());
+            for (PartidoArbitro pa : asignaciones) {
+                Hibernate.initialize(pa.getArbitro());
+                if (pa.getArbitro() != null) {
+                    Hibernate.initialize(pa.getArbitro().getUsuario());
+                }
+            }
+
+            result.add(new AsignacionPartidoDTO(partido, asignaciones));
+        }
+
+        return result;
+    }
+    @Transactional(readOnly = true)
+    public List<PartidoArbitro> findAsignacionesByArbitroId(Long arbitroUsuarioId) {
+        List<PartidoArbitro> asignaciones = partidoArbitroRepository.findByArbitroUsuarioId(arbitroUsuarioId);
+        // Inicializar las entidades relacionadas para evitar errores de carga diferida en la vista
+        for (PartidoArbitro pa : asignaciones) {
+            Hibernate.initialize(pa.getPartido());
+        }
+        return asignaciones;
     }
 
     @Transactional(readOnly = true)
@@ -56,49 +91,49 @@ public class PartidoService {
 
     @Transactional
     public Partido save(Partido partido, Long principalId, Long auxiliarId, Long segundoAuxId) {
-    // Validación: el administrador debe asignar los tres árbitros explícitamente
-    if (principalId == null || auxiliarId == null || segundoAuxId == null) {
-        throw new IllegalArgumentException("Debe seleccionar los tres árbitros (principal, auxiliar y segundo auxiliar) antes de guardar el partido.");
+        // Validación: el administrador debe asignar los tres árbitros explícitamente
+        if (principalId == null || auxiliarId == null || segundoAuxId == null) {
+            throw new IllegalArgumentException("Debe seleccionar los tres árbitros (principal, auxiliar y segundo auxiliar) antes de guardar el partido.");
+        }
+
+        // comprobar que los árbitros existen
+        Arbitro arbitroPrincipal = arbitroRepository.findById(principalId)
+                .orElseThrow(null);
+        Arbitro arbitroAuxiliar = arbitroRepository.findById(auxiliarId)
+                .orElseThrow(null);
+        Arbitro arbitroSegundoAux = arbitroRepository.findById(segundoAuxId)
+                .orElseThrow(null);
+
+        // guardar el partido primero para obtener id
+        Partido saved = save(partido);
+
+        // crear y guardar las 3 asociaciones con estado PENDIENTE
+        PartidoArbitro pa1 = new PartidoArbitro();
+        pa1.setPartido(saved);
+        pa1.setArbitro(arbitroPrincipal);
+        pa1.setRolPartido("ARBITRO_PRINCIPAL");
+        pa1.setEstado("PENDIENTE");
+        partidoArbitroRepository.save(pa1);
+
+        PartidoArbitro pa2 = new PartidoArbitro();
+        pa2.setPartido(saved);
+        pa2.setArbitro(arbitroAuxiliar);
+        pa2.setRolPartido("AUXILIAR");
+        pa2.setEstado("PENDIENTE");
+        partidoArbitroRepository.save(pa2);
+
+        PartidoArbitro pa3 = new PartidoArbitro();
+        pa3.setPartido(saved);
+        pa3.setArbitro(arbitroSegundoAux);
+        pa3.setRolPartido("SEGUNDO_AUXILIAR");
+        pa3.setEstado("PENDIENTE");
+        partidoArbitroRepository.save(pa3);
+
+        return saved;
     }
 
-    // comprobar que los árbitros existen
-    Arbitro arbitroPrincipal = arbitroRepository.findById(principalId)
-        .orElseThrow(null);
-    Arbitro arbitroAuxiliar = arbitroRepository.findById(auxiliarId)
-        .orElseThrow(null);
-    Arbitro arbitroSegundoAux = arbitroRepository.findById(segundoAuxId)
-        .orElseThrow(null);
 
-    // guardar el partido primero para obtener id
-    Partido saved = save(partido);
-
-    // crear y guardar las 3 asociaciones con estado PENDIENTE
-    PartidoArbitro pa1 = new PartidoArbitro();
-    pa1.setPartido(saved);
-    pa1.setArbitro(arbitroPrincipal);
-    pa1.setRolPartido("ARBITRO_PRINCIPAL");
-    pa1.setEstado("PENDIENTE");
-    partidoArbitroRepository.save(pa1);
-
-    PartidoArbitro pa2 = new PartidoArbitro();
-    pa2.setPartido(saved);
-    pa2.setArbitro(arbitroAuxiliar);
-    pa2.setRolPartido("AUXILIAR");
-    pa2.setEstado("PENDIENTE");
-    partidoArbitroRepository.save(pa2);
-
-    PartidoArbitro pa3 = new PartidoArbitro();
-    pa3.setPartido(saved);
-    pa3.setArbitro(arbitroSegundoAux);
-    pa3.setRolPartido("SEGUNDO_AUXILIAR");
-    pa3.setEstado("PENDIENTE");
-    partidoArbitroRepository.save(pa3);
-
-    return saved;
-    }
-
-    
- //Una validación basiquita
+    //Una validación basiquita
     private boolean validarDatos(Partido partido){
         if(partido.getNombre() == null || partido.getNombre().isEmpty()){
             return false;
