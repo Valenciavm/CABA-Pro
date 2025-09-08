@@ -55,6 +55,12 @@ public class GestorArbitroController {
         return "redirect:/admin/gestion-arbitros";
     }
 
+    @PostMapping("/gestion-arbitros/guardar/{id}")
+    public String guardarArbitroCambios(@ModelAttribute("arbitro") Arbitro arbitro){
+        arbitroService.actualizarArbitro(arbitro);
+        return "redirect:/admin/gestion-arbitros";
+    }
+
     @GetMapping("/gestion-arbitros/ver-arbitro/{id}")
     public String verCancha(@PathVariable("id") Long id, Model model){
         Arbitro arbitro = arbitroRepository.findById(id).orElse(null);

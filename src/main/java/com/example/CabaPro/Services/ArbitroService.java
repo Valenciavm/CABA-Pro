@@ -63,6 +63,28 @@ public class ArbitroService {
         return arbitroRepository.save(arbitro);
     }
 
+    @Transactional
+    public void actualizarArbitro(Arbitro arbitroCambios) {
+
+        Arbitro arbitroExistente = arbitroRepository.findById(arbitroCambios.getUsuario().getId()).orElseThrow(() -> new RuntimeException("arbitro no encontrado"));
+
+
+        // actualizar datos del usuario
+        Usuario usuarioExistente = arbitroExistente.getUsuario();
+        usuarioExistente.setNombre(arbitroCambios.getUsuario().getNombre());
+        usuarioExistente.setApellido(arbitroCambios.getUsuario().getApellido());
+        usuarioExistente.setEmail(arbitroCambios.getUsuario().getEmail());
+
+        usuarioExistente.setPassword(usuarioExistente.getPassword());
+
+        arbitroExistente.setEspecialidad(arbitroCambios.getEspecialidad());
+        arbitroExistente.setEscalafon(arbitroCambios.getEscalafon());
+        arbitroExistente.setDisponibilidad(arbitroCambios.getDisponibilidad());
+
+        arbitroRepository.save(arbitroExistente);
+    }
+
+
     @Transactional(readOnly = true)
     public Optional<Arbitro> findByUsuarioEmail(String email) {
         return arbitroRepository.findByUsuarioEmail(email);
