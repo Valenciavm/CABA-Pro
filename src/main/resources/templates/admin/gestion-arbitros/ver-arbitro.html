@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+</head>
+
+<body>
+
+    <div th:replace="fragments/header_admin :: header_admin"></div>
+
+    <div class="main-content">
+        <h1 class="h1">Árbitro</h1>
+
+        <div class="card card-large">
+            <div class="col col-1">
+                <h3 class="card-title" th:text="${arbitro.usuario.nombre} + ${arbitro.usuario.apellido}">Tipo</h3>
+                <div class="row-between">
+                    <div class="col">
+                        <div class="icon-text-group">
+                            <i class="bi bi-person-fill"></i>
+                            <p th:text=" 'ID: ' + ${arbitro.usuario.id}">ID</p>
+                        </div>
+
+                        <div class="icon-text-group">
+                            <i class="bi bi-award-fill"></i>
+                            <p th:text=" 'Especialidad: ' + ${arbitro.especialidad}">Especialidad</p>
+                        </div>
+
+                        <div class="icon-text-group">
+                            <i class="bi bi-clipboard2-fill"></i>
+                            <p th:text=" 'Escalafón: ' + ${arbitro.escalafon}">Escalafón</p>
+                        </div>
+
+                        <div class="icon-text-group">
+                            <i class="bi bi-envelope-fill"></i>
+                            <p th:text=" 'Correo: ' + ${arbitro.usuario.email}">Correo</p>
+                        </div>
+
+                        <div class="icon-text-group">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <p th:text="${arbitro.disponibilidad} ? 'Disponible' : 'No Disponible'">Disponibilidad</p>
+                        </div>
+                    </div>
+
+
+                    <form th:action="@{/admin/gestion-arbitros/eliminar/{id}(id=${arbitro.usuario.id})}" method="post">
+                        <button type="submit" class="button delete-button">Eliminar</button>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

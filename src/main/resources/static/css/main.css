@@ -42,17 +42,18 @@ body {
     text-align: center;
     font-size: 2.5rem;
     font-weight: 700;
-    color: white;
+    color: #222;
     letter-spacing: 1px;
     margin-bottom: 4rem;
 }
 
 .h3 {
     margin-top: 3rem;
+    margin-bottom: 1rem;
     text-align: center;
     font-size: 1.5rem;
     font-weight: 700;
-    color: white;
+    color: #222;
     letter-spacing: 1px;
     margin-bottom: 2rem;
 }
@@ -192,13 +193,19 @@ body {
     vertical-align: middle;
 }
 
+.icon-text-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* espacio entre icono y texto */
+    margin-bottom: 0.75rem; /* separación entre filas */
+}
+
 /* hacer visible el contenido.*/
     .main-content {
         margin-top: 5rem;   /* Altura del header */
         margin-left: 19rem;  /* Ancho del sidebar */
         margin-right: 4rem;
         padding: 2rem;
-        color: white;
     }
 
     .main-content.shifted{
