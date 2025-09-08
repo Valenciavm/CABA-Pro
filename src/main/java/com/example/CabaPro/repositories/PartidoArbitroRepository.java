@@ -2,6 +2,7 @@ package com.example.CabaPro.repositories;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.CabaPro.models.Arbitro;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import com.example.CabaPro.models.PartidoArbitro;
@@ -12,6 +13,8 @@ public interface PartidoArbitroRepository extends JpaRepository<PartidoArbitro, 
     Optional<PartidoArbitro> findByPartidoIdAndArbitroUsuarioId(Long partidoId, Long arbitroUsuarioId);
     List<PartidoArbitro> findByPartidoId(Long partidoId);
     List<PartidoArbitro> findByArbitroUsuarioId(Long usuarioId);
+    List<PartidoArbitro> findAllByArbitro(Arbitro arbitro);
+
 
 
 }
