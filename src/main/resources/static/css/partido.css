@@ -94,65 +94,6 @@ body {
     animation: fadeOut 8s ease-in-out forwards;
 }
 
-/* Para el formulario de crear partido */
-.form-card { 
-    max-width: 720px; margin: 24px auto;
-    background: #ffffff; 
-    padding: 20px; 
-    border-radius: 8px; 
-    box-shadow: 0 2px 8px rgba(255, 0, 0, 0.08);
-    
-} 
-.form-row { 
-    display: flex; 
-    gap: 12px; 
-    margin-bottom: 12px; 
-}
-.form-row > div { 
-    flex: 1; 
-}
-label { 
-    display:block; 
-    font-weight:600;
-    margin-bottom:6px; 
-}
-input { width:100%;
-    padding:10px;
-    border:1px solid #1f1212;
-    border-radius:6px;
-}
-.actions { 
-    display:flex;
-    gap:12px;
-    margin-top:16px;
- }
-.btn { 
-    padding:10px 16px; 
-    border-radius:6px; 
-    text-decoration:none;
-     border:none; 
-     cursor:pointer; 
-}
-.btn-primary { 
-background:#1fa60a; 
-color:#fff; }
-
-
-.error {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 12px 20px;
-    margin: 16px auto;
-    border: 1px solid #f5c6cb;
-    border-radius: 8px;
-    text-align: center;
-    font-weight: 500;
-    max-width: 600px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    /* Animación automática para desvanecer */
-    animation: fadeOut 10s ease-in-out forwards;
-}
-
 /* Botones generales */
 .create_button, .delete_button, .view_button {
   background-color: #10160a;       

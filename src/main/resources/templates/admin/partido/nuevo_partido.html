@@ -6,7 +6,8 @@
 	<title>Nuevo Partido</title>
 	<link rel="stylesheet" th:href="@{/css/partido.css}">
 	<link rel="stylesheet" th:href="@{/css/sidebar.css}">
-	
+	<link rel="stylesheet" th:href="@{/css/partido_form.css}">
+
 </head>
 <body>
 	<div th:replace="fragments/header_admin :: header_admin"></div>
@@ -80,9 +81,16 @@
 				</div>
 
 				<div class="form-row">
-
-				</div> 
-					
+					<div>
+						<label for="canchaId">Cancha</label>
+						<select id="canchaId" name="canchaId" required>
+							<option value="" disabled th:if="${canchaId} == null" selected>-- Seleccione --</option>
+							<option th:each="can : ${canchas}" th:value="${can.idCancha}"
+									th:text="${can.tipo} + ' - ' + ${can.lugar} + ' - $' + ${can.precio}"
+									th:selected="${canchaId} == ${can.idCancha}"></option>
+						</select>
+					</div>
+				</div>
 
 				<div class="actions">
 					<button class="btn btn-primary" type="submit">Guardar</button>
