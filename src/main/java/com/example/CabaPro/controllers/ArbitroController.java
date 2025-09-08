@@ -2,6 +2,7 @@
 package com.example.CabaPro.controllers;
 
 import com.example.CabaPro.DTOs.UsuarioPerfilDTO;
+import com.example.CabaPro.Services.PartidoService;
 import com.example.CabaPro.Services.UsuarioService;
 import com.example.CabaPro.Services.ArbitroService;
 
@@ -15,19 +16,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 public class ArbitroController {
 
     private final UsuarioService usuarioService;
-    private final ArbitroService arbitroService;
+    private final PartidoService partidoService;
 
-    public ArbitroController(UsuarioService usuarioService, ArbitroService arbitroService) {
+
+    public ArbitroController(UsuarioService usuarioService, PartidoService partidoService) {
         this.usuarioService = usuarioService;
-        this.arbitroService = arbitroService;
+        this.partidoService = partidoService;
+
     }
 
     @GetMapping("/arbitro")
@@ -48,16 +54,31 @@ public class ArbitroController {
     }
 
     @GetMapping("/arbitro/asignaciones")
-    public String verAsignaciones(Authentication authentication, Model model){
+    public String verAsignaciones(Authentication authentication, Model model) {
+        String currentUsername = authentication.getName();
 
-        Usuario usuario = usuarioService.findUsuario(authentication);
+        // Llama al método corregido, por ejemplo 'findByUsername'
+        Usuario usuario = usuarioService.findByUsername(currentUsername)
+                .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado con nombre: " + currentUsername));
 
-        Arbitro arbitro = arbitroService.findByUsuario(usuario);
+        List<PartidoArbitro> asignaciones = partidoService.findAsignacionesByArbitroId(usuario.getId());
 
-        List<PartidoArbitro> asignaciones = arbitroService.asignacionesArbitro(arbitro);
         model.addAttribute("asignaciones", asignaciones);
-
         return "arbitro/asignaciones-arbitro";
+    }
+
+    @PostMapping("/arbitro/asignaciones/{id}/aceptar")
+    public String aceptarAsignacion(@PathVariable("id") Long asignacionId, Authentication authentication) {
+        Usuario usuario = usuarioService.findUsuario(authentication);
+        partidoService.actualizarEstadoAsignacion(asignacionId, usuario, "ACEPTADO");
+        return "redirect:/arbitro/asignaciones";
+    }
+
+    @PostMapping("/arbitro/asignaciones/{id}/rechazar")
+    public String rechazarAsignacion(@PathVariable("id") Long asignacionId, Authentication authentication) {
+        Usuario usuario = usuarioService.findUsuario(authentication);
+        partidoService.actualizarEstadoAsignacion(asignacionId, usuario, "RECHAZADO");
+        return "redirect:/arbitro/asignaciones";
     }
 
     

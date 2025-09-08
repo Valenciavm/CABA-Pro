@@ -15,7 +15,7 @@
         <h1 class="h1">Canchas</h1>
 
         <div th:if="${#lists.isEmpty(canchas)}">
-            <h3 class = "h3">No hay canchas disponibles, crea una nueva cancha.</h3>
+            <h2 class = "h2">No hay canchas disponibles, crea una nueva cancha.</h2>
         </div>
 
         <div th:each="cancha : ${canchas}" class="card">

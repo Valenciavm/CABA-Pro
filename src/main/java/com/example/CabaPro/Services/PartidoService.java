@@ -1,8 +1,10 @@
 package com.example.CabaPro.Services;
 import com.example.CabaPro.DTOs.AsignacionPartidoDTO;
+import com.example.CabaPro.models.Usuario;
 import com.example.CabaPro.repositories.PartidoRepository;
 import com.example.CabaPro.models.Partido;
 import org.hibernate.Hibernate;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.CabaPro.repositories.PartidoArbitroRepository;
@@ -11,6 +13,7 @@ import com.example.CabaPro.repositories.CanchaRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import com.example.CabaPro.models.PartidoArbitro;
 import com.example.CabaPro.models.Arbitro;
@@ -52,14 +55,40 @@ public class PartidoService {
 
         return result;
     }
+
     @Transactional(readOnly = true)
     public List<PartidoArbitro> findAsignacionesByArbitroId(Long arbitroUsuarioId) {
         List<PartidoArbitro> asignaciones = partidoArbitroRepository.findByArbitroUsuarioId(arbitroUsuarioId);
         // Inicializar las entidades relacionadas para evitar errores de carga diferida en la vista
         for (PartidoArbitro pa : asignaciones) {
             Hibernate.initialize(pa.getPartido());
+            // Añade esta línea para inicializar la cancha
+            if (pa.getPartido() != null) {
+                Hibernate.initialize(pa.getPartido().getCancha());
+            }
         }
         return asignaciones;
+    }
+
+    @Transactional
+    public void actualizarEstadoAsignacion(Long asignacionId, Usuario usuario, String nuevoEstado) {
+        // 1. Buscar la asignación por su ID
+        PartidoArbitro asignacion = partidoArbitroRepository.findById(asignacionId)
+                .orElseThrow(() -> new NoSuchElementException("Asignación no encontrada con ID: " + asignacionId));
+
+        // 2. Verificar que el usuario actual es el árbitro de esta asignación
+        if (!asignacion.getArbitro().getUsuario().getId().equals(usuario.getId())) {
+            throw new AccessDeniedException("No tienes permiso para modificar esta asignación.");
+        }
+
+        // 3. Verificar que el estado actual es PENDIENTE
+        if (!"PENDIENTE".equals(asignacion.getEstado())) {
+            throw new IllegalStateException("Solo se pueden modificar asignaciones en estado PENDIENTE.");
+        }
+
+        // 4. Actualizar el estado y guardar
+        asignacion.setEstado(nuevoEstado);
+        partidoArbitroRepository.save(asignacion);
     }
 
     @Transactional(readOnly = true)

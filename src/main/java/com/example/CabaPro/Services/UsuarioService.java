@@ -45,6 +45,10 @@ public class UsuarioService {
         return usuarioRepository.findById(id);
     }
 
+    public Optional<Usuario> findByNombre(String username) {
+        return usuarioRepository.findByUsername(username);
+    }
+
     @Transactional
     public Usuario save(Usuario usuario) {
         return usuarioRepository.save(usuario);

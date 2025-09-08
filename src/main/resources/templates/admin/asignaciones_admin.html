@@ -2,10 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Gestión de Asignaciones</title>
-  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-  <link rel="stylesheet" th:href="@{/css/styles.css}">
-  <!-- Añade esta línea para el nuevo estilo de la tabla -->
+  <link rel="stylesheet" th:href="@{/css/sidebar.css}">
   <link rel="stylesheet" th:href="@{/css/asignaciones.css}">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
 <div th:replace="~{fragments/header_admin :: header_admin}"></div>
@@ -72,10 +71,10 @@
     </table>
   </div>
   <div th:if="${#lists.isEmpty(asignaciones)}" class="alert alert-info">
-    <p>No hay partidos con asignaciones registrados.</p>
+    <p class="h4">No hay partidos con asignaciones registrados.</p>
   </div>
 </div>
 
-<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
 </body>
 </html>
