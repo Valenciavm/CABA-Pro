@@ -1,10 +1,16 @@
 package com.example.CabaPro.Services;
 
 import com.example.CabaPro.models.Arbitro;
+import com.example.CabaPro.models.PartidoArbitro;
 import com.example.CabaPro.models.Usuario;
+
 import com.example.CabaPro.repositories.ArbitroRepository;
+import com.example.CabaPro.repositories.PartidoArbitroRepository;
+
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.Optional;
 import java.util.List;
@@ -13,12 +19,15 @@ import java.util.List;
 public class ArbitroService {
 
     private final ArbitroRepository arbitroRepository;
+    private final PartidoArbitroRepository partidoArbitroRepository;
+
     private final UsuarioService usuarioService;
 
     public ArbitroService(ArbitroRepository arbitroRepository,
-                          UsuarioService usuarioService) {
+                          UsuarioService usuarioService, PartidoArbitroRepository partidoArbitroRepository) {
         this.arbitroRepository = arbitroRepository;
         this.usuarioService = usuarioService;
+        this.partidoArbitroRepository = partidoArbitroRepository;
     }
 
 
@@ -82,6 +91,15 @@ public class ArbitroService {
         arbitroExistente.setDisponibilidad(arbitroCambios.getDisponibilidad());
 
         arbitroRepository.save(arbitroExistente);
+    }
+
+    public List<PartidoArbitro> asignacionesArbitro(Arbitro arbitro) {
+        return partidoArbitroRepository.findAllByArbitro(arbitro);
+    }
+
+    public Arbitro findByUsuario(Usuario usuario) {
+        return arbitroRepository.findByUsuario(usuario)
+                .orElseThrow(() -> new RuntimeException("Arbitro no encontrado"));
     }
 
 
