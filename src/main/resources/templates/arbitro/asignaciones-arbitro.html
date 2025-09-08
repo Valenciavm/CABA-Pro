@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+</head>
+
+<body>
+    <div th:replace="fragments/header_arbitro :: header_arbitro"></div>
+
+    <div class="main-content">
+
+        <h1 class="h1">Mis Asignaciones</h1>
+
+        <!-- Si no tiene asignaciones -->
+        <div th:if="${#lists.isEmpty(asignaciones)}">
+            <h3 class="h3">No tienes asignaciones pendientes.</h3>
+        </div>
+
+        <!-- Lista de asignaciones -->
+        <div th:each="asignacion : ${asignaciones}" class="card">
+            <div class="col col-1">
+                <h3 class="card-title" th:text="${asignacion.partido.nombre}">Nombre del partido</h3>
+                <div class="row-between">
+                    <div class="col">
+                        <p><b>Fecha:</b> <span th:text="${asignacion.partido.fecha}"></span></p>
+                        <p><b>Cancha:</b> <span th:text="${asignacion.partido.cancha.lugar}"></span></p>
+                        <p><b>Precio:</b> <span th:text="${asignacion.partido.cancha.precio}"></span></p>
+                    </div>
+                    <div>
+                        <form th:action="@{/arbitro/ver-asignacion/{id}(id=${asignacion.id})}" method="get">
+                            <button type="submit" class="button view-button">Ver</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

@@ -100,6 +100,16 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
+    @Transactional
+    public Usuario findUsuario(Authentication authentication){
+        String username = authentication.getName(); // toma el username
+        return usuarioRepository.findByUsername(username)
+        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    }
+
+
+    
+
     private String prettyRole(String role) {
         if (role == null || role.isBlank()) return "";
         String r = role.startsWith("ROLE_") ? role.substring(5) : role;

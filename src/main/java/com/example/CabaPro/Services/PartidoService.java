@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import com.example.CabaPro.models.PartidoArbitro;
 import com.example.CabaPro.models.Arbitro;
+import com.example.CabaPro.models.Usuario;
 import com.example.CabaPro.repositories.ArbitroRepository;
 
 
@@ -98,9 +99,8 @@ public class PartidoService {
 
     return saved;
     }
-
     
- //Una validación basiquita
+    //Una validación basiquita
     private boolean validarDatos(Partido partido){
         if(partido.getNombre() == null || partido.getNombre().isEmpty()){
             return false;

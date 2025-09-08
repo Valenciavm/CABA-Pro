@@ -2,6 +2,8 @@ package com.example.CabaPro.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Arbitro")
 public class Arbitro {
@@ -20,6 +22,9 @@ public class Arbitro {
     @MapsId
     @JoinColumn(name = "Usuario_idUsuario", referencedColumnName = "idUsuario")
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "arbitro")
+    private List<PartidoArbitro> asignaciones;
 
     // Getters y setters
     public Long getUsuarioId() { return usuarioId; }
