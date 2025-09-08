@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.example.CabaPro.Services.PartidoService;
 import com.example.CabaPro.Services.ArbitroService;
+import com.example.CabaPro.Services.CanchaService;
+import com.example.CabaPro.models.Cancha;
 import com.example.CabaPro.models.Arbitro;
 import com.example.CabaPro.models.Partido;
 import org.springframework.ui.Model;
@@ -22,10 +24,12 @@ public class PartidoController {
 
     private final PartidoService service;
     private final ArbitroService arbitroService;
+    private final CanchaService canchaService;
 
-    public PartidoController(PartidoService service, ArbitroService arbitroService) {
+    public PartidoController(PartidoService service, ArbitroService arbitroService, CanchaService canchaService) {
         this.service = service;
         this.arbitroService = arbitroService;
+        this.canchaService = canchaService;
     }
     
     //Para recibir la solicitud GET y mostrar el formulario del pardido
@@ -35,11 +39,13 @@ public class PartidoController {
     // pasar lista de arbitros existentes para mostrarlos en el formulario
     List<Arbitro> arbitros = arbitroService.findAll();
     model.addAttribute("arbitros", arbitros);
-        return "admin/partido/nuevo_partido";
-    }
-    
-    
-    //para recibir el formulario y crear el partido 
+    List<Cancha> canchas = canchaService.findAll();
+    model.addAttribute("canchas", canchas);
+    return "admin/partido/nuevo_partido";
+}
+
+
+    //para recibir el formulario y crear el partido
     @PostMapping("admin/partido/nuevo_partido")
     public String crearPartido(@ModelAttribute("partido") Partido partido,
                                Long principalId,

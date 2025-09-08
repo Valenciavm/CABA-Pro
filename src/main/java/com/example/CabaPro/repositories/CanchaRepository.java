@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import com.example.CabaPro.models.Cancha;
 
+
 @Repository
 public interface CanchaRepository extends  JpaRepository<Cancha, Integer>{
+
 }

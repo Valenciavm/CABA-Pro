@@ -33,6 +33,10 @@ public class Cancha {
     @Column(name = "horario_reserva")
     private LocalDate horarioReserva;
 
+    @OneToOne
+    @JoinColumn(name = "partido_id")
+    private Partido partido;
+
     public Cancha(){}
 
     public Cancha(String tipo, String lugar, Long precio){
@@ -91,4 +95,6 @@ public class Cancha {
     public void setHorarioReserva(LocalDate horarioReserva) {
         this.horarioReserva = horarioReserva;
     }
+
+    
 }

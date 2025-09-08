@@ -29,6 +29,11 @@ public class Partido {
     @OneToMany(mappedBy = "partido", cascade = CascadeType.ALL, orphanRemoval =  true, fetch = FetchType.LAZY)
     private List<PartidoArbitro> listaArbitros = new ArrayList<>();
 
+    @OneToOne(mappedBy = "partido", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER )
+    private Cancha Cancha;
+
+    public Partido(){}
+
 
 
     private String resultado;
@@ -65,6 +70,10 @@ public class Partido {
         return listaArbitros;
     }
 
+    public Cancha getCancha(){
+        return Cancha;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -94,6 +103,10 @@ public class Partido {
     }
     public void setListaArbitros(List<PartidoArbitro> listaArbitros) {
         this.listaArbitros = listaArbitros;
+    }
+
+    public void setCancha(Cancha cancha){
+        this.Cancha=cancha;
     }
 }
 

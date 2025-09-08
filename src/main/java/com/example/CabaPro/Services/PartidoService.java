@@ -4,6 +4,7 @@ import com.example.CabaPro.models.Partido;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.CabaPro.repositories.PartidoArbitroRepository;
+import com.example.CabaPro.repositories.CanchaRepository;
 
 
 import java.util.List;
@@ -54,10 +55,7 @@ public class PartidoService {
         }
     }
 
-    /**
-     * Guarda el partido y crea hasta 3 asociaciones PartidoArbitro con rol y estado PENDIENTE.
-     * Si algún id de árbitro es null, se intenta asignar el siguiente árbitro disponible.
-     */
+    @Transactional
     public Partido save(Partido partido, Long principalId, Long auxiliarId, Long segundoAuxId) {
     // Validación: el administrador debe asignar los tres árbitros explícitamente
     if (principalId == null || auxiliarId == null || segundoAuxId == null) {
