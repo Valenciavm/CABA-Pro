@@ -9,28 +9,49 @@
 </head>
 
 <body>
-    <!--<div th:replace="fragments/header :: header"></div>-->
     <div class="main-content">
-
         <div th:replace="fragments/header_admin :: header_admin"></div>
 
         <div class="form-card">
-            <h2>Crear Arbitro</h2>
+            <h2>Crear Árbitro</h2>
             <form th:object="${arbitro}" th:action="@{/admin/gestion-arbitros/guardar}" method="post">
+
+                <!-- Campos de Usuario -->
+                <h3>Datos de Usuario</h3>
+
+                <label for="username">Usuario:</label>
+                <input type="text" id="username" th:field="*{usuario.username}" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" th:field="*{usuario.email}" required>
+
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" th:field="*{nombre}">
+                <input type="text" id="nombre" th:field="*{usuario.nombre}" required>
 
-                <label for="lugar">Lugar:</label>
-                <input type="text" id="lugar" th:field="*{lugar}">
+                <label for="apellido">Apellido:</label>
+                <input type="text" id="apellido" th:field="*{usuario.apellido}" required>
 
-                <label for="precio">Precio:</label>
-                <input type="number" id="precio" th:field="*{precio}">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" th:field="*{usuario.password}" required>
+
+                <label for="foto">Foto (opcional):</label>
+                <input type="text" id="foto" th:field="*{usuario.foto}">
+
+                <!-- Campos de Arbitro -->
+                <h3>Datos de Árbitro</h3>
+
+                <label for="especialidad">Especialidad:</label>
+                <input type="text" id="especialidad" th:field="*{especialidad}" required>
+
+                <label for="escalafon">Escalafón:</label>
+                <input type="text" id="escalafon" th:field="*{escalafon}">
+
+                <label for="disponibilidad">Disponible:</label>
+                <input type="checkbox" id="disponibilidad" th:field="*{disponibilidad}" checked>
 
                 <button class="button create-button" type="submit">Guardar</button>
             </form>
         </div>
-
-
     </div>
 </body>
 

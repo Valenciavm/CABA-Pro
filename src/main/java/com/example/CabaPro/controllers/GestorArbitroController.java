@@ -13,7 +13,8 @@ import java.util.List;
 import com.example.CabaPro.repositories.ArbitroRepository;
 
 import com.example.CabaPro.models.Arbitro;
-
+import com.example.CabaPro.models.Cancha;
+import com.example.CabaPro.models.Usuario;
 import com.example.CabaPro.Services.UsuarioService;
 import com.example.CabaPro.Services.ArbitroService;
 
@@ -40,13 +41,37 @@ public class GestorArbitroController {
 
     @GetMapping("/gestion-arbitros/nuevo")
     public String crearArbitro(Model model){
-        model.addAttribute("arbitro", new Arbitro());
+
+        Arbitro arbitro = new Arbitro();
+        arbitro.setUsuario(new Usuario());
+        model.addAttribute("arbitro", arbitro);
+
         return "admin/gestion-arbitros/arbitro-form";
     }
 
     @PostMapping("/gestion-arbitros/guardar")
     public String guardarArbitro(Model model, @ModelAttribute("arbitro") Arbitro arbitro){
         arbitroService.createArbitroIfNotExists(arbitro);
+        return "redirect:/admin/gestion-arbitros";
+    }
+
+    @PostMapping("/gestion-arbitros/guardar/{id}")
+    public String guardarArbitroCambios(@ModelAttribute("arbitro") Arbitro arbitro){
+        arbitroService.actualizarArbitro(arbitro);
+        return "redirect:/admin/gestion-arbitros";
+    }
+
+    @GetMapping("/gestion-arbitros/ver-arbitro/{id}")
+    public String verCancha(@PathVariable("id") Long id, Model model){
+        Arbitro arbitro = arbitroRepository.findById(id).orElse(null);
+        model.addAttribute("arbitro", arbitro);
+        return"admin/gestion-arbitros/ver-arbitro";
+    }
+
+    @PostMapping("/gestion-arbitros/eliminar/{id}")
+    public String eliminarArbitro(@PathVariable("id") Long id, Model model){
+        Arbitro arbitro = arbitroRepository.findById(id).orElse(null);
+        arbitroRepository.delete(arbitro);
         return "redirect:/admin/gestion-arbitros";
     }
 }

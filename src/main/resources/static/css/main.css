@@ -42,17 +42,18 @@ body {
     text-align: center;
     font-size: 2.5rem;
     font-weight: 700;
-    color: white;
+    color: #222;
     letter-spacing: 1px;
     margin-bottom: 4rem;
 }
 
 .h3 {
     margin-top: 3rem;
+    margin-bottom: 1rem;
     text-align: center;
     font-size: 1.5rem;
     font-weight: 700;
-    color: white;
+    color: #222;
     letter-spacing: 1px;
     margin-bottom: 2rem;
 }
@@ -137,6 +138,33 @@ body {
     margin-left: 35rem;
 }
 
+.field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;           /* espacio entre icono y texto */
+  padding: 0.6rem 1rem;
+  margin-bottom: 0.6rem;
+  background: #f9f9f9;   /* fondo suave */
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: background 0.2s ease-in-out;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #555;
+  border-radius: 4px;
+  cursor: pointer;
+}
+input[type="checkbox"]:checked {
+  background-color: #00ff08; /* se rellena, sin palomita */
+}
+
+
+
 .row {
   display: flex;        
   flex-wrap: wrap;       
@@ -192,13 +220,19 @@ body {
     vertical-align: middle;
 }
 
+.icon-text-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* espacio entre icono y texto */
+    margin-bottom: 0.75rem; /* separación entre filas */
+}
+
 /* hacer visible el contenido.*/
     .main-content {
         margin-top: 5rem;   /* Altura del header */
         margin-left: 19rem;  /* Ancho del sidebar */
         margin-right: 4rem;
         padding: 2rem;
-        color: white;
     }
 
     .main-content.shifted{
