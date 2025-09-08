@@ -6,19 +6,7 @@
 	<title>Nuevo Partido</title>
 	<link rel="stylesheet" th:href="@{/css/partido.css}">
 	<link rel="stylesheet" th:href="@{/css/sidebar.css}">
-	<style>
-		/* Ajustes mínimos para el formulario si es necesario */
-		.form-card { max-width: 720px; margin: 24px auto; background: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(255, 0, 0, 0.08);} 
-		.form-row { display: flex; gap: 12px; margin-bottom: 12px; }
-		.form-row > div { flex: 1; }
-		label { display:block; font-weight:600; margin-bottom:6px; }
-		input { width:100%; padding:10px; border:1px solid #1f1212; border-radius:6px; }
-		.actions { display:flex; gap:12px; margin-top:16px; }
-		.btn { padding:10px 16px; border-radius:6px; text-decoration:none; border:none; cursor:pointer; }
-		.btn-primary { background:#1fa60a; color:#fff; }
-		.btn-secondary { background:#e5e7eb; color:#111827; }
-	</style>
-    
+	
 </head>
 <body>
 	<div th:replace="fragments/header_admin :: header_admin"></div>
@@ -90,6 +78,11 @@
 						</select>
 					</div>
 				</div>
+
+				<div class="form-row">
+
+				</div> 
+					
 
 				<div class="actions">
 					<button class="btn btn-primary" type="submit">Guardar</button>
