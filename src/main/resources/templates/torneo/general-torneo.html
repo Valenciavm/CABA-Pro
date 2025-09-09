@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+</head>
+
+<body>
+    <div th:replace="fragments/header_admin :: header_admin"></div>
+
+    <div class="main-content">
+
+        <h1 class="h1">Torneos</h1>
+
+        <div th:if="${#lists.isEmpty(torneos)}">
+            <h2 class="h2">No hay torneos disponibles, crea un nuevo torneo.</h2>
+        </div>
+
+        <div th:each="torneo : ${torneos}" class="card">
+            <div class="col col-1">
+                <h3 class="card-title" th:text="${torneo.nombre}">Nombre del torneo</h3>
+                <div class="row-between">
+                    <div class="col">
+                        <p th:text="${torneo.descripcion}">Descripción</p>
+                    </div>
+                    <div>
+                        <form th:action="@{/admin/torneos/ver-torneo/{id}(id=${torneo.id})}" method="get">
+                            <button type="submit" class="button view-button">Ver</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <form action="/admin/torneos/crear" method="get">
+                <button type="submit" class="button create-button">Crear</button>
+            </form>
+            <!--<button class="button delete-button">Borrar</button>-->
+        </div>
+
+    </div>
+</body>
+
+</html>

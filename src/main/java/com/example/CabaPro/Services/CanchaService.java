@@ -18,7 +18,4 @@ public class CanchaService {
 
         return repository.findAll();
     }
-
-    
-
 }

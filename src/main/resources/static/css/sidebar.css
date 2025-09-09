@@ -2,7 +2,7 @@
 
     :root {
         --background-color: #0f0f10;
-        
+
         --text-title-color: white;
         --text-color: #32363B;
         --icon-color: #32363B;
@@ -40,7 +40,8 @@
         background: url('/Imageneshome/fondocancha.png') no-repeat center center fixed;
         background-size: cover;
         background-blend-mode: darken;
-        filter: blur(5px); /* Más borroso */
+        filter: blur(5px);
+        /* Más borroso */
         pointer-events: none;
 
     }
@@ -61,7 +62,7 @@
     }
 
     /*estilos izquierda navbar*/
-    .left{
+    .left {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -69,7 +70,7 @@
     }
 
     /*Menu hamburguesa*/
-    .menu-container{
+    .menu-container {
         height: 100%;
         display: flex;
         align-items: center;
@@ -77,7 +78,7 @@
 
     }
 
-    .menu{
+    .menu {
         width: 1.5rem;
         height: 55%;
         display: flex;
@@ -86,7 +87,7 @@
         padding: 0.2rem 0;
     }
 
-    .menu div{
+    .menu div {
         width: 100%;
         height: 0.15rem;
         background-color: var(--menu-color);
@@ -94,7 +95,7 @@
     }
 
 
-    .brand{
+    .brand {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -102,19 +103,21 @@
 
     }
 
-    .brand .logo{
+    .brand .logo {
         width: 2rem;
     }
 
     .brand .name {
         font-family: 'Playfair Display', serif;
-        font-size: 1.8rem; /* Puedes ajustar el tamaño */
-        font-weight: 700; /* Un peso en negrita para que resalte bien */
+        font-size: 1.8rem;
+        /* Puedes ajustar el tamaño */
+        font-weight: 700;
+        /* Un peso en negrita para que resalte bien */
         color: var(--text-title-color);
     }
 
     /*estilos derecha navbar*/
-    .right{
+    .right {
         display: flex;
         justify-content: center;
         flex-direction: row;
@@ -125,7 +128,7 @@
         box-shadow: none;
     }
 
-    .right a{
+    .right a {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -134,15 +137,17 @@
 
     }
 
-    .right a:hover{
+    .right a:hover {
         background-color: var(--background-hover);
         box-shadow: none;
 
     }
+
     .right img {
         width: 2rem;
         filter: brightness(0) invert(1);
     }
+
     .right img:focus {
         outline: none;
         box-shadow: none;
@@ -153,7 +158,7 @@
         color: white;
     }
 
-    .right a:hover{
+    .right a:hover {
         background-color: var(--background-hover);
         box-shadow: none;
 
@@ -161,7 +166,7 @@
 
     /*estilos sidebar*/
 
-    .sidebar{
+    .sidebar {
         margin-top: 3rem;
         width: 4rem;
         height: 100%;
@@ -172,16 +177,28 @@
         padding: 1.1rem 0;
         border-right: 1px solid var(--border-color);
         overflow-y: auto;
-        background: var(--background-color) ;
+        background: var(--background-color);
         transition: width 0.5s ease;
     }
 
-    .menu-toggle{
+    .sidebar ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .sidebar ul li {
+        margin: 0;
+        padding: 0;
+    }
+
+
+    .menu-toggle {
         width: 19rem;
 
     }
 
-    .sidebar a{
+    .sidebar a {
         display: flex;
         align-items: center;
         gap: 1.3rem;
@@ -193,11 +210,13 @@
         overflow: hidden;
         color: white;
     }
-    .sidebar a:hover{
+
+    .sidebar a:hover {
         background-color: var(--background-hover);
         color: white;
     }
-    .sidebar img{
+
+    .sidebar img {
         width: 2rem;
         display: flex;
         justify-content: center;

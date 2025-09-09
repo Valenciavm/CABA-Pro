@@ -26,7 +26,7 @@ public class PartidoService {
 
 
     private final PartidoArbitroRepository partidoArbitroRepository;
-    private final PartidoRepository repository;
+    private final PartidoRepository repository; // <- Quien le puso esto así al repositorio??
     private final ArbitroRepository arbitroRepository;
 
     public PartidoService(PartidoRepository repository, PartidoArbitroRepository partidoArbitroRepository,
@@ -125,7 +125,7 @@ public class PartidoService {
             throw new IllegalArgumentException("Debe seleccionar los tres árbitros (principal, auxiliar y segundo auxiliar) antes de guardar el partido.");
         }
 
-        // comprobar que los árbitros existen
+        
         Arbitro arbitroPrincipal = arbitroRepository.findById(principalId)
                 .orElseThrow(null);
         Arbitro arbitroAuxiliar = arbitroRepository.findById(auxiliarId)
@@ -182,9 +182,17 @@ public class PartidoService {
         return true;
     }
 
-
-
     public void deleteById(Long id) {
         repository.deleteById(id);
+    }
+
+    public List<Partido> gePartidosByToreno(Partido partido){
+        List<Partido> partidos = repository.findByTorneoId(partido.getId());
+        return partidos;
+    }
+
+    public List<Partido> gePartidosByTorenoAndFase(Partido partido){
+        List<Partido> partidos = repository.findByTorneoIdAndFase(partido.getId(), partido.getFase());
+        return partidos;
     }
 }

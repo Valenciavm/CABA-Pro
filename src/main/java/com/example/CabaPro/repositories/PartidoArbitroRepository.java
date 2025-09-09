@@ -15,6 +15,4 @@ public interface PartidoArbitroRepository extends JpaRepository<PartidoArbitro, 
     List<PartidoArbitro> findByArbitroUsuarioId(Long usuarioId);
     List<PartidoArbitro> findAllByArbitro(Arbitro arbitro);
 
-
-
 }

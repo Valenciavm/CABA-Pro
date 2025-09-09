@@ -77,12 +77,22 @@ body {
 }
 
 
-
+.style {
+    background: #b7b7b786;
+    color: #222;
+    border-radius: 0.75rem;
+    padding: 1rem 2rem;
+    margin: 1rem auto   ;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+    max-width: 37.5rem;
+    width: 100%;
+}
 
 
 /* Tarjetas */
 .card {
-    background: #fff;
+    background: #b7b7b786;
     color: #222;
     border-radius: 0.75rem;
     padding: 1rem 2rem;
@@ -165,7 +175,7 @@ body {
 }
 
 .view-button {
-    background-color: #5996ff;
+    background-color: #3a3a3a;
 }
 
 /* Hover efecto igual que las tarjetas */

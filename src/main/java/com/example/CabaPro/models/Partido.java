@@ -30,11 +30,15 @@ public class Partido {
     private List<PartidoArbitro> listaArbitros = new ArrayList<>();
 
     @OneToOne(mappedBy = "partido", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER )
-    private Cancha Cancha;
+    private Cancha cancha;
+
+    @ManyToOne
+    private Torneo torneo;
+
+    @Column
+    private String fase; //final, semifinal, cuartos, normal;
 
     public Partido(){}
-
-
 
     private String resultado;
 
@@ -71,7 +75,15 @@ public class Partido {
     }
 
     public Cancha getCancha(){
-        return Cancha;
+        return cancha;
+    }
+
+    public Torneo getTorneo(){
+        return this.torneo;
+    }
+
+    public String getFase(){
+        return this.fase;
     }
 
     public void setId(Long id) {
@@ -106,7 +118,15 @@ public class Partido {
     }
 
     public void setCancha(Cancha cancha){
-        this.Cancha=cancha;
+        this.cancha=cancha;
+    }
+
+    public void setTorneo(Torneo torneo){
+        this.torneo = torneo;
+    }
+
+    public void setFase(String fase){
+        this.fase = fase;
     }
 }
 
