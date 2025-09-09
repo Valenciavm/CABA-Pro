@@ -15,7 +15,10 @@ public class CanchaService {
     }
 
     public  List<Cancha> findAll (){
-
         return repository.findAll();
+    }
+
+    public Cancha findById(Integer id){
+        return repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Cancha no encontrada por id"));
     }
 }

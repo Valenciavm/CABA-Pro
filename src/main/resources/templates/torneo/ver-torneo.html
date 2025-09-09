@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -69,30 +69,27 @@
     <div th:replace="fragments/header_admin :: header_admin"></div>
 
     <div class="container mt-4">
+        <!-- Título y descripción del torneo -->
         <h1 class="text-center mb-4" th:text="${torneo.nombre}">Nombre del Torneo</h1>
         <p class="text-center text-muted" th:text="${torneo.descripcion}">Descripción del torneo</p>
 
+        <!-- Lista de equipos -->
         <ul class="list-group">
             <li th:each="equipo : ${torneo.equipos}" class="list-group-item" th:text="${equipo}">
                 Equipo
             </li>
         </ul>
 
-
         <!-- Bracket -->
         <div class="bracket">
 
-            <!-- Cuartos -->
+            <!-- Cuartos de final -->
             <div class="round">
                 <h5 class="text-center">Cuartos</h5>
                 <div th:each="partido : ${cuartos}" class="match">
-                    <p th:text="${partido.equipo1} ?: 'Equipo ?'"></p>
-                    <p>vs</p>
-                    <p th:text="${partido.equipo2} ?: 'Equipo ?'"></p>
-                    <form th:action="@{/admin/partido/crear}" method="get">
-                        <input type="hidden" name="torneoId" th:value="${torneo.id}">
-                        <button type="submit" class="btn btn-sm btn-primary w-100 mt-2">Crear/Editar</button>
-                    </form>
+                    <p class = "h4" th:text="${partido.equipo1} ?: 'Equipo ?'"></p>
+                    <p class = "h4" >vs</p>
+                    <p class = "h4" th:text="${partido.equipo2} ?: 'Equipo ?'"></p>
                 </div>
             </div>
 
@@ -103,10 +100,6 @@
                     <p th:text="${partido.equipo1} ?: 'Ganador ?'"></p>
                     <p>vs</p>
                     <p th:text="${partido.equipo2} ?: 'Ganador ?'"></p>
-                    <form th:action="@{/admin/partido/crear}" method="get">
-                        <input type="hidden" name="torneoId" th:value="${torneo.id}">
-                        <button type="submit" class="btn btn-sm btn-primary w-100 mt-2">Crear/Editar</button>
-                    </form>
                 </div>
             </div>
 
@@ -117,21 +110,16 @@
                     <p th:text="${partido.equipo1} ?: 'Ganador ?'"></p>
                     <p>vs</p>
                     <p th:text="${partido.equipo2} ?: 'Ganador ?'"></p>
-                    <form th:action="@{/admin/partido/crear}" method="get">
-                        <input type="hidden" name="torneoId" th:value="${torneo.id}">
-                        <button type="submit" class="btn btn-sm btn-primary w-100 mt-2">Crear/Editar</button>
-                    </form>
                 </div>
             </div>
 
-            
         </div>
-    </div>
 
-    <div class="button-group">
-        <form action="/admin/partido/nuevo_partido" method="get">
-            <button type="submit" class="button create-button">Crear</button>
-        </form>
+        <div>
+            <form action="/admin/partido/nuevo_partido" method="get">
+                <button type="submit" class="button create-button">Crear</button>
+            </form>
+        </div>
     </div>
 </body>
 

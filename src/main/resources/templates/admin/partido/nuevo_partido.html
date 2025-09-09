@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +9,10 @@
 	<link rel="stylesheet" th:href="@{/css/sidebar.css}">
 	<link rel="stylesheet" th:href="@{/css/partido_form.css}">
 	<link rel="stylesheet" th:href="@{/css/main.css}">
+	<link rel="stylesheet" th:href="@{/css/form.css}">
 
 </head>
+
 <body>
 	<div th:replace="fragments/header_admin :: header_admin"></div>
 
@@ -42,11 +45,15 @@
 				<div class="form-row">
 					<div>
 						<label for="fecha">Fecha</label>
-						<input id="fecha" type="date" th:field="*{fecha}" required>
+						<!--<input id="fecha" type="date" th:field="*{fecha}" required>-->
+						<input id="fecha" type="date" th:field="*{fecha}"
+							th:value="*{fecha} != null ? ${#dates.format(fecha, 'yyyy-MM-dd')} : ''" required>
 					</div>
 					<div>
 						<label for="hora">Hora</label>
-						<input id="hora" type="time" th:field="*{hora}" required>
+						<!--<input id="hora" type="time" th:field="*{hora}" required>-->
+						<input id="hora" type="time" th:field="*{hora}" th:value="*{hora} != null ? ${hora} : ''"
+							required>
 					</div>
 				</div>
 
@@ -57,8 +64,8 @@
 						<select id="principalId" name="principalId" required>
 							<option value="" disabled th:if="${principalId} == null" selected>-- Seleccione --</option>
 							<option th:each="arb : ${arbitros}" th:value="${arb.usuarioId}"
-									th:text="${arb.usuario.nombre} + ' ' + ${arb.usuario.apellido}"
-									th:selected="${principalId} == ${arb.usuarioId}"></option>
+								th:text="${arb.usuario.nombre} + ' ' + ${arb.usuario.apellido}"
+								th:selected="${principalId} == ${arb.usuarioId}"></option>
 						</select>
 					</div>
 					<div>
@@ -66,8 +73,8 @@
 						<select id="auxiliarId" name="auxiliarId" required>
 							<option value="" disabled th:if="${auxiliarId} == null" selected>-- Seleccione --</option>
 							<option th:each="arb : ${arbitros}" th:value="${arb.usuarioId}"
-									th:text="${arb.usuario.nombre} + ' ' + ${arb.usuario.apellido}"
-									th:selected="${auxiliarId} == ${arb.usuarioId}"></option>
+								th:text="${arb.usuario.nombre} + ' ' + ${arb.usuario.apellido}"
+								th:selected="${auxiliarId} == ${arb.usuarioId}"></option>
 						</select>
 					</div>
 					<div>
@@ -75,8 +82,8 @@
 						<select id="segundoAuxId" name="segundoAuxId" required>
 							<option value="" disabled th:if="${segundoAuxId} == null" selected>-- Seleccione --</option>
 							<option th:each="arb : ${arbitros}" th:value="${arb.usuarioId}"
-									th:text="${arb.usuario.nombre} + ' ' + ${arb.usuario.apellido}"
-									th:selected="${segundoAuxId} == ${arb.usuarioId}"></option>
+								th:text="${arb.usuario.nombre} + ' ' + ${arb.usuario.apellido}"
+								th:selected="${segundoAuxId} == ${arb.usuarioId}"></option>
 						</select>
 					</div>
 				</div>
@@ -87,18 +94,44 @@
 						<select id="canchaId" name="canchaId" required>
 							<option value="" disabled th:if="${canchaId} == null" selected>-- Seleccione --</option>
 							<option th:each="can : ${canchas}" th:value="${can.idCancha}"
-									th:text="${can.tipo} + ' - ' + ${can.lugar} + ' - $' + ${can.precio}"
-									th:selected="${canchaId} == ${can.idCancha}"></option>
+								th:text="${can.tipo} + ' - ' + ${can.lugar} + ' - $' + ${can.precio}"
+								th:selected="${canchaId} == ${can.idCancha}"></option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div>
+						<label for="torneo">Torneo (opcional)</label>
+						<select id="torneo" th:field="*{torneo.id}">
+							<option value="" selected>-- Ninguno --</option>
+							<option th:each="torneo : ${torneos}" th:value="${torneo.id}" th:text="${torneo.nombre}">
+							</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div>
+						<label for="fase">Fase(Opcional)</label>
+						<select id="fase" th:field="*{fase}" required>
+							<option value="" disabled selected>-- Seleccione fase --</option>
+							<option value="Ninguno">-- Ninguno --</option>
+							<option value="Cuartos">Cuartos</option>
+							<option value="Semifinales">Semifinales</option>
+							<option value="Final">Final</option>
 						</select>
 					</div>
 				</div>
 
 				<div class="actions">
-					<button class="btn btn-primary" type="submit">Guardar</button>
-					<a class="btn btn-secondary" th:href="@{/admin/partido/admin_ver_partidos}">Cancelar</a>
+					<button class="button btn-primary create-button" type="submit">Guardar</button>
+					<a class="button btn-secondary delete-button"
+						th:href="@{/admin/partido/admin_ver_partidos}">Cancelar</a>
 				</div>
 			</form>
 		</div>
 	</div>
 </body>
+
 </html>

@@ -89,6 +89,10 @@ body {
     width: 100%;
 }
 
+.ml-70{
+    margin-left: 70rem;
+}
+
 
 /* Tarjetas */
 .card {
