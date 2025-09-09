@@ -12,6 +12,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 @Service
 public class TarifaService {
@@ -26,12 +29,35 @@ public class TarifaService {
         this.partidoArbitroRepository = partidoArbitroRepository;
         this.partidoRepository = partidoRepository;
     }
-    // Encuentra todas las tarifas del árbitro de aquellos partidos que ha aceptado
+    // Encuentra todas las tarifas del árbitro de aquellos partidos que el árbitro ha aceptado
     @Transactional
     public List<Tarifa> EncontrarTarifas(Long arbitroUsuarioId) {
     if (arbitroUsuarioId == null) return java.util.Collections.emptyList();
      return tarifaRepository.findByPartidoArbitroArbitroUsuarioIdAndPartidoArbitroEstado(arbitroUsuarioId, "ACEPTADO");
         
+    }
+
+    @Transactional
+    public List<Map<String, Object>> obtenerTarifaDetalles(Long arbitroUsuarioId) {
+        List<Tarifa> tarifas = EncontrarTarifas(arbitroUsuarioId);
+        List<Map<String,Object>> detalles = new ArrayList<>();
+        for (Tarifa t : tarifas) {
+            Map<String,Object> detalle = new HashMap<>();
+            detalle.put("tarifa", t);
+            PartidoArbitro pa = t.getPartidoArbitro();
+            String nombrePartido = null;
+            String rol = null;
+            if (pa != null) {
+                rol = pa.getRolPartido();
+                if (pa.getPartido() != null) {
+                    nombrePartido = pa.getPartido().getNombre();
+                }
+            }
+            detalle.put("partidoNombre", nombrePartido);
+            detalle.put("rol", rol);
+            detalles.add(detalle);
+        }
+        return detalles;
     }
     
 
@@ -55,7 +81,7 @@ public class TarifaService {
             }
         }
 
-        
+
 
         List<PartidoArbitro> asignaciones = partidoArbitroRepository.findByPartidoId(partidoId);
 

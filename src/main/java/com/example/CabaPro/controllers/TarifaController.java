@@ -6,13 +6,13 @@ import com.example.CabaPro.models.Tarifa;
 import com.example.CabaPro.Services.TarifaService;
 import com.example.CabaPro.security.CustomUserDetails;
 import org.springframework.ui.Model;
-
-
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
-
-
+import com.example.CabaPro.models.PartidoArbitro;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 
 @Controller
@@ -28,8 +28,8 @@ public class TarifaController {
     @GetMapping("/arbitro/pagos")
     public String ListarPagos(@AuthenticationPrincipal CustomUserDetails user, Model model){
         Long userId = user.getId();
-        List<Tarifa> tarifas = tarifaService.EncontrarTarifas(userId);
-        model.addAttribute("tarifas", tarifas);
+    List<Map<String,Object>> tarifaDetalles = tarifaService.obtenerTarifaDetalles(userId);
+    model.addAttribute("tarifaDetalles", tarifaDetalles);
 
         return "arbitro/pagos";
 

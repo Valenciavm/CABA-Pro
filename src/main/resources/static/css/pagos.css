@@ -1,0 +1,192 @@
+/* Pagos (vista de árbitro) - estilos específicos para la presentación de tarifas */
+
+/* Contenedor general */
+.pagos-container {
+	max-width: 1100px;
+	margin: 2.5rem auto;
+	padding: 1rem 1.25rem;
+}
+
+.pagos-title {
+	font-size: 1.8rem;
+	font-weight: 800;
+	color: #10160a;
+	margin-bottom: 1rem;
+	letter-spacing: 0.4px;
+}
+
+/* Mensaje cuando no hay tarifas */
+.no-tarifas {
+	text-align: center;
+	padding: 1.25rem;
+	background: #fff8f0;
+	border-radius: 12px;
+	color: #6c757d;
+	box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+/* Grid / fila responsiva que contiene las tarjetas */
+.tarifas-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	margin-top: 1rem;
+}
+
+/* Tarjeta individual de tarifa */
+.tarifa-card {
+	background: #ffffff;
+	border-radius: 12px;
+	padding: 1rem;
+	box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+	min-width: 220px;
+	max-width: 320px;
+	flex: 1 1 260px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.tarifa-card:hover {
+	transform: translateY(-6px);
+	box-shadow: 0 18px 48px rgba(0,0,0,0.12);
+}
+
+.tarifa-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.tarifa-partido {
+	font-weight: 700;
+	color: #1a2b0f;
+}
+
+.tarifa-rol {
+	background: #eef7ed;
+	color: #0b6623;
+	padding: 0.2rem 0.6rem;
+	border-radius: 8px;
+	font-weight: 600;
+	font-size: 0.85rem;
+}
+
+.tarifa-body {
+	margin-top: 0.5rem;
+	color: #6c757d;
+	font-size: 0.95rem;
+}
+
+.tarifa-meta {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 0.6rem;
+}
+
+.tarifa-monto {
+	font-size: 1.25rem;
+	font-weight: 800;
+	color: #10160a;
+}
+
+/* pequeñas utilidades */
+.muted { color: #6c757d; }
+.small { font-size: 0.9rem; }
+
+@media (max-width: 800px) {
+	.pagos-container { padding: 0.5rem; }
+	.tarifa-card { flex: 1 1 48%; max-width: 48%; }
+}
+
+@media (max-width: 480px) {
+	.tarifa-card { flex: 1 1 100%; max-width: 100%; }
+}
+
+/* --------- Estilos para mostrar tarifas como tarjetas responsivas --------- */
+.tarifas-container {
+    display: flex;
+    flex-wrap: wrap; /* permite que las tarjetas pasen a la siguiente fila */
+    gap: 1rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 1rem 0;
+}
+
+/* Alineamos el grid respecto a la zona principal para respetar el sidebar */
+.main-content .tarifas-container {
+	padding-left: 0.5rem; /* deja un pequeño margen desde el borde del main */
+}
+
+.tarifa-card {
+    background: #fff;
+    color: #222;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    min-width: 220px;
+    max-width: 320px;
+    flex: 1 1 260px; /* grow | shrink | base-width */
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: transform 0.18s, box-shadow 0.18s;
+}
+
+.tarifa-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.12);
+}
+
+.tarifa-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tarifa-partido {
+    color: #1a2b0f;
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+
+.tarifa-rol {
+    background: #e9f7ef; /* tono suave verde para rol aceptado */
+    color: #0b6623;
+    padding: 0.25rem 0.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.tarifa-body {
+    color: #6c757d;
+    font-size: 0.95rem;
+}
+
+.tarifa-monto {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #10160a;
+    margin-top: 0.5rem;
+    text-align: right;
+}
+
+@media (max-width: 600px) {
+    .tarifa-card {
+        flex: 1 1 100%;
+        max-width: 100%;
+        min-width: unset;
+    }
+    .tarifas-container {
+        gap: 0.75rem;
+    }
+}
+
+/* Fin estilos de tarifas */
+/* fin pagos.css */
+
