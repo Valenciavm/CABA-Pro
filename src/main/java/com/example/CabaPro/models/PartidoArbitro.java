@@ -30,6 +30,9 @@ public class PartidoArbitro {
     @JoinColumn(name = "Arbitro_Usuario_idUsuario", nullable = false)
     private Arbitro arbitro;
 
+    @OneToOne(mappedBy = "partidoArbitro", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
+    private Tarifa tarifa;
+
     // Getters y setters...
     public Long getId() {
         return id;

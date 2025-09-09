@@ -12,8 +12,6 @@ public class Arbitro {
     @Column(name = "Usuario_idUsuario")
     private Long usuarioId;
 
-    private String especialidad;
-    
     private String escalafon;
 
     @Column(nullable = false)
@@ -31,8 +29,7 @@ public class Arbitro {
     public Long getUsuarioId() { return usuarioId; }
     public void setUsuarioId(Long usuarioId) { this.usuarioId = usuarioId; }
 
-    public String getEspecialidad() { return especialidad; }
-    public void setEspecialidad(String especialidad) { this.especialidad = especialidad; }
+
 
     public String getEscalafon() { return escalafon; }
     public void setEscalafon(String escalafon) { this.escalafon = escalafon; }

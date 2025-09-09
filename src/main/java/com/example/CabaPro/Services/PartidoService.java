@@ -125,7 +125,6 @@ public class PartidoService {
             throw new IllegalArgumentException("Debe seleccionar los tres árbitros (principal, auxiliar y segundo auxiliar) antes de guardar el partido.");
         }
 
-        // comprobar que los árbitros existen
         Arbitro arbitroPrincipal = arbitroRepository.findById(principalId)
                 .orElseThrow(null);
         Arbitro arbitroAuxiliar = arbitroRepository.findById(auxiliarId)

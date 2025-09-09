@@ -22,7 +22,7 @@ public class Tarifa {
     private LocalDate fecha;
 
     // FK hacia PartidoArbitro (id único)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "partido_arbitro_id", nullable = false)
     private PartidoArbitro partidoArbitro;
 

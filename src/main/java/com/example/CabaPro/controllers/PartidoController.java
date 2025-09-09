@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.example.CabaPro.Services.PartidoService;
 import com.example.CabaPro.Services.ArbitroService;
 import com.example.CabaPro.Services.CanchaService;
+import com.example.CabaPro.Services.TarifaService;
 import com.example.CabaPro.models.Cancha;
 import com.example.CabaPro.models.Arbitro;
 import com.example.CabaPro.models.Partido;
@@ -25,11 +26,13 @@ public class PartidoController {
     private final PartidoService service;
     private final ArbitroService arbitroService;
     private final CanchaService canchaService;
+    private final TarifaService tarifaService;
 
-    public PartidoController(PartidoService service, ArbitroService arbitroService, CanchaService canchaService) {
+    public PartidoController(PartidoService service, ArbitroService arbitroService, CanchaService canchaService, TarifaService tarifaService) {
         this.service = service;
         this.arbitroService = arbitroService;
         this.canchaService = canchaService;
+        this.tarifaService = tarifaService;
     }
     
     //Para recibir la solicitud GET y mostrar el formulario del pardido
@@ -58,6 +61,9 @@ public class PartidoController {
             Partido partidoGuardado = service.save(partido, principalId, auxiliarId, segundoAuxId);
             redirectAttributes.addFlashAttribute("mensaje", 
                 "Partido  " + partidoGuardado.getNombre()+" creado exitosamente");
+            // Calcular la tarifa para el partido creado
+            tarifaService.CalcularTarifa(partidoGuardado.getId());
+
             return "redirect:/admin/partido";
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
