@@ -27,10 +27,10 @@ public class Datainitializer implements CommandLineRunner {
 
         // ARBITRO: username, email, nombre, apellido, rawPassword, especialidad, escalafon, disponibilidad
         arbitroService.createArbitroIfNotExists("Camiloref", "Camiloref@caba.com", "Camilo", "Perez",
-                "refpassword", "Baloncesto", "Categoria A", true,"/ImagenesPerfil/Arbitro1.jpg");
+                "refpassword", "Municipal", true,"/ImagenesPerfil/Arbitro1.jpg");
         arbitroService.createArbitroIfNotExists("arbitro2", "LuisaRef@caba.com", "Luisa", "Fernandez",
-                "abc123", "Baloncesto", "Categoria B", true,"/ImagenesPerfil/Arbitro2.jpg");
+                "abc123", "Internacional", true,"/ImagenesPerfil/Arbitro2.jpg");
         arbitroService.createArbitroIfNotExists("arbitro3", "CarlosRef@caba.com", "Carlos", "Gomez",
-                "def456", "Baloncesto", "Categoria C", true,"/ImagenesPerfil/Arbitro3.jpg");
+                "def456", "Nacional", true,"/ImagenesPerfil/Arbitro3.jpg");
     }
 }

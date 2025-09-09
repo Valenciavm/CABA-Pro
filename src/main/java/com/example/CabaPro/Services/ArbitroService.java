@@ -10,7 +10,6 @@ import com.example.CabaPro.repositories.PartidoArbitroRepository;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.Optional;
 import java.util.List;
@@ -37,7 +36,6 @@ public class ArbitroService {
                                             String nombre,
                                             String apellido,
                                             String rawPassword,
-                                            String especialidad,
                                             String escalafon,
                                             boolean disponibilidad,
                                             String foto) {
@@ -51,7 +49,6 @@ public class ArbitroService {
 
         Arbitro a = new Arbitro();
         a.setUsuario(usuario);
-        a.setEspecialidad(especialidad);
         a.setEscalafon(escalafon);
         a.setDisponibilidad(disponibilidad);
         return arbitroRepository.save(a);
@@ -86,8 +83,7 @@ public class ArbitroService {
 
         usuarioExistente.setPassword(usuarioExistente.getPassword());
 
-        arbitroExistente.setEspecialidad(arbitroCambios.getEspecialidad());
-        arbitroExistente.setEscalafon(arbitroCambios.getEscalafon());
+    arbitroExistente.setEscalafon(arbitroCambios.getEscalafon());
         arbitroExistente.setDisponibilidad(arbitroCambios.getDisponibilidad());
 
         arbitroRepository.save(arbitroExistente);
