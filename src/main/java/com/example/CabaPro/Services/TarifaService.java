@@ -26,6 +26,17 @@ public class TarifaService {
         this.partidoArbitroRepository = partidoArbitroRepository;
         this.partidoRepository = partidoRepository;
     }
+    // Encuentra todas las tarifas del árbitro de aquellos partidos que ha aceptado
+    @Transactional
+    public List<Tarifa> EncontrarTarifas(Long arbitroUsuarioId) {
+    if (arbitroUsuarioId == null) return java.util.Collections.emptyList();
+     return tarifaRepository.findByPartidoArbitroArbitroUsuarioIdAndPartidoArbitroEstado(arbitroUsuarioId, "ACEPTADO");
+        
+    }
+    
+
+
+    // Calcular las tarifas de los árbitros una vez creados sus partidoos para calcular las tarifas según la asignación que el árbitro haya hecho
 
     @Transactional
     public void CalcularTarifa(Long partidoId) {
@@ -43,6 +54,8 @@ public class TarifaService {
                 }
             }
         }
+
+        
 
         List<PartidoArbitro> asignaciones = partidoArbitroRepository.findByPartidoId(partidoId);
 
