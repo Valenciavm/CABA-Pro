@@ -29,14 +29,17 @@ public class PartidoService {
     private final ArbitroRepository arbitroRepository;
     private final ArbitroService arbitroService;
     private final CanchaService canchaService;
+    private final NotificacionService notificacionService;
+
 
     public PartidoService(PartidoRepository repository, PartidoArbitroRepository partidoArbitroRepository,
-            ArbitroRepository arbitroRepository, ArbitroService arbitroService, CanchaService canchaService) {
+                          ArbitroRepository arbitroRepository, ArbitroService arbitroService, CanchaService canchaService, NotificacionService notificacionService) {
         this.repository = repository;
         this.partidoArbitroRepository = partidoArbitroRepository;
         this.arbitroRepository = arbitroRepository;
         this.arbitroService = arbitroService;
         this.canchaService = canchaService;
+        this.notificacionService = notificacionService;
     }
 
     @Transactional(readOnly = true)
@@ -93,6 +96,8 @@ public class PartidoService {
         // 4. Actualizar el estado y guardar
         asignacion.setEstado(nuevoEstado);
         partidoArbitroRepository.save(asignacion);
+        notificacionService.crearNotificacionRespuestaAsignacion(asignacion);
+
     }
 
     @Transactional(readOnly = true)
@@ -147,6 +152,7 @@ public class PartidoService {
         pa1.setRolPartido("ARBITRO_PRINCIPAL");
         pa1.setEstado("PENDIENTE");
         partidoArbitroRepository.save(pa1);
+        notificacionService.crearNotificacionAsignacion(pa1);
 
         PartidoArbitro pa2 = new PartidoArbitro();
         pa2.setPartido(saved);
@@ -154,6 +160,8 @@ public class PartidoService {
         pa2.setRolPartido("AUXILIAR");
         pa2.setEstado("PENDIENTE");
         partidoArbitroRepository.save(pa2);
+        notificacionService.crearNotificacionAsignacion(pa2);
+
 
         PartidoArbitro pa3 = new PartidoArbitro();
         pa3.setPartido(saved);
@@ -161,6 +169,8 @@ public class PartidoService {
         pa3.setRolPartido("SEGUNDO_AUXILIAR");
         pa3.setEstado("PENDIENTE");
         partidoArbitroRepository.save(pa3);
+        notificacionService.crearNotificacionAsignacion(pa3);
+
 
         return saved;
     }
@@ -203,6 +213,8 @@ public class PartidoService {
                 principalPa.setRolPartido("ARBITRO_PRINCIPAL");
                 principalPa.setEstado("PENDIENTE");
                 partidoArbitroRepository.save(principalPa);
+                notificacionService.crearNotificacionAsignacion(principalPa);
+
         }
 
         // Auxiliar
@@ -213,6 +225,8 @@ public class PartidoService {
                 auxiliarPa.setRolPartido("AUXILIAR");
                 auxiliarPa.setEstado("PENDIENTE");
                 partidoArbitroRepository.save(auxiliarPa);
+                notificacionService.crearNotificacionAsignacion(auxiliarPa);
+
         }
 
         // Segundo auxiliar
@@ -223,7 +237,8 @@ public class PartidoService {
                 segundoPa.setRolPartido("SEGUNDO_AUXILIAR");
                 segundoPa.setEstado("PENDIENTE");
                 partidoArbitroRepository.save(segundoPa);
-            
+                notificacionService.crearNotificacionAsignacion(segundoPa);
+
         }
 
         // Antes de guardar el partido, si el administrador quiere marcarlo como finalizado
@@ -334,6 +349,8 @@ public class PartidoService {
         nuevaAsignacion.setArbitro(nuevoArbitro);
         nuevaAsignacion.setRolPartido(rol); // Asigna el rol como String
         nuevaAsignacion.setEstado("PENDIENTE");
+        notificacionService.crearNotificacionAsignacion(nuevaAsignacion);
+
 
         // 5. Guardar la nueva asignación en la base de datos.
         partidoArbitroRepository.save(nuevaAsignacion);
