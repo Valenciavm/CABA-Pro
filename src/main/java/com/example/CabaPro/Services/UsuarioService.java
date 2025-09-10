@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.beans.PropertyDescriptor;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UsuarioService {
@@ -59,6 +56,13 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
+    @Transactional(readOnly = true)
+    public List<Usuario> findAdmins() {
+        Set<Usuario> admins = new LinkedHashSet<>();
+        admins.addAll(usuarioRepository.findByRoleIgnoreCase("ROLE_ADMIN"));
+        admins.addAll(usuarioRepository.findByRoleIgnoreCase("ADMIN"));
+        return new ArrayList<>(admins);
+    }
     /*
      * Crea un Usuario si no existe (busca por username).
      */
