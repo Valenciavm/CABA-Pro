@@ -103,19 +103,3 @@
             color: #6c757d;
             font-weight: bold;
         }
-
-        /* Botón Crear */
-        .create-button {
-            margin-top: 20px;
-            background-color: #0d6efd;
-            color: #fff;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: background 0.3s;
-        }
-
-        .create-button:hover {
-            background-color: #0b5ed7;
-        }

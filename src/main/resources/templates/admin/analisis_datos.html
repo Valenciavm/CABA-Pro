@@ -5,17 +5,17 @@
 <body>
     <div th:replace="fragments/header_admin :: header_admin"></div>
     <div class="main-content">
-        <h1 class="page-title">Análisis de gastos</h1>
+        <h1 class="h1">Análisis de gastos</h1>
 
         <div class="gastos-grid">
-            <div th:each="fila : ${gastosPartidos}" class="gasto-card">
+            <div th:each="fila : ${gastosPartidos}" class="card">
                 <h3 th:text="${fila.partidoNombre}">Nombre Partido</h3>
                 <p class="monto">$<span th:text="${fila.totalPartido}">0</span></p>
             </div>
         </div>
 
-        <div class="gasto-total">
-            <h2>Total gastado</h2>
+        <div class="card">
+            <h2 class="text-white">Total gastado</h2>
             <p class="total-monto">$<span th:text="${gastoTotal}">0</span></p>
         </div>
     </div>
@@ -25,5 +25,6 @@
     <title>Análisis de Datos</title>
     <link rel="stylesheet" th:href="@{/css/sidebar.css}">
     <link rel="stylesheet" th:href="@{/css/analisis_datos.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>

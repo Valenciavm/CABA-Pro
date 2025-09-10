@@ -18,7 +18,7 @@
             <h2 class="h2">No hay torneos disponibles, crea un nuevo torneo.</h2>
         </div>
 
-        <div th:each="torneo : ${torneos}" class="card">
+        <div th:each="torneo : ${torneos}" class="card text-white">
             <div class="col col-1">
                 <h3 class="card-title" th:text="${torneo.nombre}">Nombre del torneo</h3>
                 <div class="row-between">
