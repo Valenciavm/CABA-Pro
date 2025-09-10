@@ -283,6 +283,35 @@ public class PartidoService {
         return partido;
     }
 
+    @Transactional
+    public void reasignarArbitro(Long partidoId, Long nuevoArbitroId, String rol) {
+        // 1. Buscar la asignación existente que fue rechazada para este partido y rol.
+        PartidoArbitro asignacionAntigua = partidoArbitroRepository.findByPartidoId(partidoId)
+                .stream()
+                .filter(pa -> pa.getRolPartido().equals(rol))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("No se encontró una asignación para el partido con ID " + partidoId + " y rol " + rol));
+
+        // 2. Eliminar la asignación antigua (la que fue rechazada).
+        partidoArbitroRepository.delete(asignacionAntigua);
+
+        // 3. Obtener las entidades necesarias para la nueva asignación.
+        Partido partido = repository.findById(partidoId)
+                .orElseThrow(() -> new NoSuchElementException("Partido no encontrado con ID: " + partidoId));
+
+        Arbitro nuevoArbitro = arbitroRepository.findById(nuevoArbitroId)
+                .orElseThrow(() -> new NoSuchElementException("Árbitro no encontrado con ID: " + nuevoArbitroId));
+
+        // 4. Crear la nueva asignación con estado PENDIENTE.
+        PartidoArbitro nuevaAsignacion = new PartidoArbitro();
+        nuevaAsignacion.setPartido(partido);
+        nuevaAsignacion.setArbitro(nuevoArbitro);
+        nuevaAsignacion.setRolPartido(rol); // Asigna el rol como String
+        nuevaAsignacion.setEstado("PENDIENTE");
+
+        // 5. Guardar la nueva asignación en la base de datos.
+        partidoArbitroRepository.save(nuevaAsignacion);
+    }
     /*public Partido saveFromDTO(PartidoDTO dto) {
         Partido partido = new Partido();
 
