@@ -1,7 +1,6 @@
 package com.example.CabaPro.Services;
 
 import com.example.CabaPro.DTOs.AsignacionPartidoDTO;
-import com.example.CabaPro.DTOs.PartidoDTO;
 import com.example.CabaPro.models.Usuario;
 import com.example.CabaPro.repositories.PartidoRepository;
 import com.example.CabaPro.models.Partido;
@@ -10,7 +9,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.CabaPro.repositories.PartidoArbitroRepository;
-import com.example.CabaPro.repositories.CanchaRepository;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -253,34 +252,6 @@ public class PartidoService {
         return existingPartido;
     }
 
-   
-
-
-    // Una validación basiquita
-    private boolean validarDatos(Partido partido) {
-        System.out.println("nombre = " + partido.getNombre());
-        System.out.println("equipo1 = " + partido.getEquipo1());
-        System.out.println("equipo2 = " + partido.getEquipo2());
-        System.out.println("fecha = " + partido.getFecha());
-        System.out.println("hora = " + partido.getHora());
-
-        if (partido.getNombre() == null || partido.getNombre().isEmpty()) {
-            return false;
-        }
-        if (partido.getEquipo1() == null || partido.getEquipo1().isEmpty()) {
-            return false;
-        }
-        if (partido.getEquipo2() == null || partido.getEquipo2().isEmpty()) {
-            return false;
-        }
-        if (partido.getFecha() == null || partido.getFecha().isEmpty()) {
-            return false;
-        }
-        if (partido.getHora() == null || partido.getHora().isEmpty()) {
-            return false;
-        }
-        return true;
-    }
 
     public void deleteById(Long id) {
         repository.deleteById(id);
