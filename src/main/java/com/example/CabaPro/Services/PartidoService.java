@@ -176,13 +176,13 @@ public class PartidoService {
         existingPartido.setEquipo2(partido.getEquipo2());
         existingPartido.setFecha(partido.getFecha());
         existingPartido.setHora(partido.getHora());
-        // Actualizar resultado y flag finalizado
+        // Actualizar resultado; deferir el guardado del flag 'finalizado' hasta
+        // comprobar que todas las asignaciones están aceptadas si se quiere finalizar
         if (partido.getResultado() != null && partido.getResultado().trim().isEmpty()) {
             existingPartido.setResultado(null);
         } else {
             existingPartido.setResultado(partido.getResultado());
         }
-        existingPartido.setFinalizado(partido.isFinalizado());
 
         // Actualizar o crear las asignaciones de árbitros para este partido
         List<PartidoArbitro> asignaciones = partidoArbitroRepository.findByPartidoId(partidoId);
@@ -224,6 +224,27 @@ public class PartidoService {
                 segundoPa.setEstado("PENDIENTE");
                 partidoArbitroRepository.save(segundoPa);
             
+        }
+
+        // Antes de guardar el partido, si el administrador quiere marcarlo como finalizado
+        // verificar que todas las asignaciones del partido estén en estado "ACEPTADO".
+        boolean quiereFinalizar = partido.isFinalizado();
+
+        if (quiereFinalizar) {
+            List<PartidoArbitro> asignacionesActuales = partidoArbitroRepository.findByPartidoId(partidoId);
+            boolean todosAceptaron = true;
+            for (PartidoArbitro asignacion : asignacionesActuales) {
+                if ( !asignacion.getEstado().equals("ACEPTADO")) {
+                    todosAceptaron = false;
+                    break;
+                }
+            }
+            if (!todosAceptaron) {
+                throw new IllegalStateException("No se puede finalizar el partido: todos los árbitros deben haber aceptado sus asignaciones.");
+            }
+            existingPartido.setFinalizado(true);
+        } else {
+            existingPartido.setFinalizado(false);
         }
 
         // Guardar cambios del partido

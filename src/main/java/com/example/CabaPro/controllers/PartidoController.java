@@ -169,12 +169,30 @@ public class PartidoController {
             }
 
             // utilizo el servicio para actualizar el partido y asignar árbitros
-            Partido partidoActualizado = service.update(id, partido, principalId, auxiliarId, segundoAuxId);
-            redirectAttributes.addFlashAttribute("mensaje", "Partido  " + partidoActualizado.getNombre() + " actualizado exitosamente");
-            // Calcular la tarifa para el partido actualizado
-            tarifaService.CalcularTarifa(partidoActualizado.getId());
-
-            return "redirect:/admin/partido/admin_ver_partidos";
+            try {
+                Partido partidoActualizado = service.update(id, partido, principalId, auxiliarId, segundoAuxId);
+                redirectAttributes.addFlashAttribute("mensaje", "Partido  " + partidoActualizado.getNombre() + " actualizado exitosamente");
+                // Calcular la tarifa para el partido actualizado
+                tarifaService.CalcularTarifa(partidoActualizado.getId());
+                return "redirect:/admin/partido/admin_ver_partidos";
+            } catch (IllegalStateException ex) {
+                // Si la validación del servicio falla (p. ej. intentar finalizar sin que todos acepten),
+                // devolver al formulario con un mensaje de error amigable.
+                redirectAttributes.addFlashAttribute("error", ex.getMessage());
+                model.addAttribute("partido", partido);
+                // recargar listas para que el formulario muestre selects
+                List<Arbitro> arbitros = arbitroService.findAll();
+                List<Cancha> canchas = canchaService.findAll();
+                List<Torneo> torneos = torneoService.findAll();
+                model.addAttribute("arbitros", arbitros);
+                model.addAttribute("canchas", canchas);
+                model.addAttribute("torneos", torneos);
+                // preservar las selecciones
+                model.addAttribute("principalId", principalId);
+                model.addAttribute("auxiliarId", auxiliarId);
+                model.addAttribute("segundoAuxId", segundoAuxId);
+                return "admin/partido/editar_partido";
+            }
     }
 }
 
