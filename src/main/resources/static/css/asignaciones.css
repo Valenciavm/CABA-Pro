@@ -1,5 +1,3 @@
-
-
 /* Estilo general del contenedor */
 .container {
     background-color: #ffffff;
@@ -7,70 +5,205 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     margin-top: 5rem;
-    align-content: center;
-    margin-left: 22rem;
-    max-width: 900px;
+    margin-left: 22rem; /* respeta el sidebar existente */
+    max-width: 1100px;
 }
 
-/* Título de la página */
+.table tbody td { color: #000; }
+
+/* Título */
 h1 {
     color: #333;
     text-align: center;
     margin-bottom: 1.5rem;
-    font-weight: 300;
+    font-weight: 500;
 }
 
-/* Estilos de la tabla */
+/* Tabla */
 .table {
     border-collapse: collapse;
     width: 100%;
     font-size: 0.95rem;
 }
 
-/* Cabecera de la tabla */
 .table .thead-dark th {
-    background-color: #f8f9fa; /* Un gris muy claro */
+    background-color: #f8f9fa;
     color: #495057;
     border-bottom: 2px solid #dee2e6;
-    font-weight: 600; /* Un poco más de peso para la cabecera */
+    font-weight: 600;
     text-align: left;
     padding: 0.75rem;
     vertical-align: middle;
 }
 
-/* Celdas de la tabla */
 .table td, .table th {
     padding: 0.75rem;
     vertical-align: middle;
     border-top: 1px solid #dee2e6;
 }
 
-/* Filas de la tabla con efecto hover */
 .table-striped tbody tr:hover {
-    background-color: #f1f1f1; /* Sutil color de fondo al pasar el ratón */
+    background-color: #f6f8fa;
 }
 
-/* Estilos para los badges de estado */
+/* Badges de estado */
 .badge {
     padding: 0.4em 0.7em;
     font-size: 0.8rem;
     font-weight: 600;
     border-radius: 10px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
 }
 
-.bg-warning {
-    background-color: #ffc107 !important;
-    color: #212529;
+.bg-warning { background-color: #ffc107 !important; color: #212529; }
+.bg-success { background-color: #28a745 !important; color: #fff; }
+.bg-danger  { background-color: #dc3545 !important; color: #fff; }
+
+/* Botones */
+.btn-sm {
+    padding: 0.3rem 0.55rem;
+    font-size: 0.8rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    color: #fff;
+    display: inline-inline;
+    line-height: 1.1;
+    cursor: pointer;
+    border: 1px solid transparent;
 }
 
-.bg-success {
-    background-color: #28a745 !important;
-    color: white;
+.btn-info {
+    background-color: #0dcaf0;
+    border-color: #0dcaf0;
+    color: #0b2730;
 }
 
-.bg-danger {
-    background-color: #dc3545 !important;
-    color: white;
+.btn-info:hover {
+    background-color: #05b6da;
+    border-color: #05b6da;
+    color: #0b2730;
+}
+
+/* Estado y botón en la misma línea (mejor alineación) */
+.status-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Modal overlay */
+.modal-overlay {
+    display: none;           /* se muestra con JS */
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.65);
+    backdrop-filter: blur(4px);
+    overflow: auto;
+}
+
+/* Contenido del modal */
+.modal-content {
+    background: #1f1f21;
+    color: #e9e9ea;
+    margin: 6% auto;         /* centrado vertical aproximado cuando display:block */
+    padding: 2rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    width: 92%;
+    max-width: 520px;
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+}
+
+.modal-content h2 {
+    margin: 0 0 1.2rem 0;
+    font-weight: 600;
+}
+
+/* Cerrar modal */
+.close-button {
+    color: #c9c9cb;
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Formulario del modal */
+.modal-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #c6c7cb;
+    font-weight: 500;
+}
+
+.modal-form select,
+.modal-form button {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    margin-top: 10px;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.modal-form select {
+    color: #e9e9ea;
+    background: #141416;
+    border: 1px solid rgba(255,255,255,0.12);
+    position: relative;
+    z-index: 2;
+}
+
+.modal-form button {
+    background: #0d6efd;
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, transform 0.05s ease-in-out;
+    position: relative;
+    z-index: 1;
+}
+
+.modal-form button:hover { background: #0b5ed7; }
+.modal-form button:active { transform: translateY(1px); }
+
+/* Mensajes flash (opcional) */
+.flash {
+    padding: .8rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: .95rem;
+}
+
+.flash-success { background: #e6f7ee; color: #0f5132; border: 1px solid #badbcc; }
+.flash-error   { background: #fdecea; color: #842029; border: 1px solid #f5c2c7; }
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .container {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .table { font-size: 0.9rem; }
+    .status-cell { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .modal-content { margin: 12% 1rem; }
 }
