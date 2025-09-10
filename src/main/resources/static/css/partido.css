@@ -48,7 +48,7 @@ body {
 
 /* Tarjetas */
 .card {
-    background: #fff;
+    background: #71717161;
     color: #222;
     border-radius: 12px;
      padding: 1rem 2rem;
@@ -214,7 +214,7 @@ button:hover {
 }
 
 .partido-card {
-    background: #fff;
+    background: #60606084;
     border-radius: 12px;
     padding: 1.5rem;
     margin: 1rem auto;
@@ -229,7 +229,7 @@ button:hover {
 }
 
 .partido-nombre {
-    color: #1a2b0f;
+    color: #ffffff;
     font-size: 1.3rem;
     font-weight: 700;
     margin: 0 0 1rem 0;
@@ -243,10 +243,11 @@ button:hover {
     gap: 1rem;
     margin-bottom: 1rem;
     font-size: 1.1rem;
+    color: white;
 }
 
 .equipo {
-    background: #f8f9fa;
+    background: #6c6c6c00;
     padding: 0.5rem 1rem;
     border-radius: 8px;
     font-weight: 600;
@@ -365,7 +366,7 @@ button:hover {
 }
 
 .partido-detail-card {
-    background: white;
+    background: rgba(96, 96, 96, 0.589);
     border-radius: 16px;
     padding: 2rem;
     box-shadow: 0 8px 32px rgba(0,0,0,0.1);
@@ -405,7 +406,7 @@ button:hover {
     flex: 1;
     text-align: center;
     padding: 1.5rem;
-    background: #f8f9fa;
+    background: #5c5c5c85;
     border-radius: 12px;
     transition: transform 0.2s;
 }
@@ -459,12 +460,12 @@ button:hover {
 }
 
 .partido-result h3 {
-    color: #495057;
+    color: #ffffff;
     margin-bottom: 1rem;
 }
 
 .result-display {
-    background: #28a745;
+    background: #1bff50;
     color: white;
     padding: 1rem 2rem;
     border-radius: 12px;

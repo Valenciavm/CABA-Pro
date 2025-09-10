@@ -1,18 +1,4 @@
 /* Estilos para analisis_datos.html */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.main-content {
-    max-width: 1000px;
-    margin: 24px auto;
-    padding: 16px;
-}
-
-.page-title {
-    color: #333;
-    margin-bottom: 18px;
-}
 
 .gastos-grid {
     display: grid;
@@ -53,7 +39,7 @@ body {
     margin: 0 0 6px 0;
 }
 
-.gasto-total .total-monto {
+.total-monto {
     font-size: 1.6rem;
     color: #b22424;
     font-weight: 800;

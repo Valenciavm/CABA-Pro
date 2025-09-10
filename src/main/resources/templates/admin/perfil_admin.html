@@ -15,7 +15,7 @@
 
     <div class="card">
         <!-- Columna principal: campos explícitos -->
-        <div th:if="${usuario != null}">
+        <div th:if="${usuario != null}" class = "text-white">
             <div><strong></strong><img th:src="@{${usuario.foto}}" alt="Foto de perfil"></div>
             <div><strong>ID:</strong> <span th:text="${usuario.id}">-</span></div>
             <div><strong>Usuario:</strong> <span th:text="${usuario.username}">-</span></div>

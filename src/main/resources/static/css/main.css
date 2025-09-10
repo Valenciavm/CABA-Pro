@@ -86,6 +86,10 @@ body {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
+.text-white strong {
+    color: inherit; /* hereda el blanco del padre */
+}
+
 
 .style {
     background: #b7b7b786;

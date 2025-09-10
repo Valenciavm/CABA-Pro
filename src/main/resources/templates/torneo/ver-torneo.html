@@ -17,7 +17,7 @@
 
         <!-- Título y descripción del torneo -->
         <h1 class="text-center mb-2" th:text="${torneo.nombre}">Nombre del Torneo</h1>
-        <p class="text-center text-muted mb-4" th:text="${torneo.descripcion}">Descripción del torneo</p>
+        <p class="text-center mb-4 text-white" th:text="${torneo.descripcion}">Descripción del torneo</p>
 
         <!-- Lista de participantes -->
         <div class="participants">
@@ -32,7 +32,7 @@
 
             <!-- Cuartos de final -->
             <div class="round">
-                <h5>Cuartos</h5>
+                <h5 class = "text-white">Cuartos</h5>
                 <div th:each="partido : ${cuartos}" class="match">
                     <p class="text-black" th:text="${partido.equipo1} ?: 'Equipo ?'"></p>
                     <p class="vs text-black">vs</p>
@@ -42,7 +42,7 @@
 
             <!-- Semifinales -->
             <div class="round">
-                <h5>Semifinales</h5>
+                <h5 class = "text-white">Semifinales</h5>
                 <div th:each="partido : ${semis}" class="match">
                     <p class="text-black" th:text="${partido.equipo1} ?: 'Ganador ?'"></p>
                     <p class="vs text-black">vs</p>
@@ -52,7 +52,7 @@
 
             <!-- Final -->
             <div class="round">
-                <h5>Final</h5>
+                <h5 class = "text-white">Final</h5>
                 <div th:each="partido : ${final}" class="match">
                     <p class="text-black" th:text="${partido.equipo1} ?: 'Ganador ?'"></p>
                     <p class="vs text-black">vs</p>
@@ -65,7 +65,7 @@
         <!-- Botón Crear Partido -->
         <div class="text-center">
             <form action="/admin/partido/nuevo_partido" method="get">
-                <button type="submit" class="create-button">Crear Partido</button>
+                <button type="submit" class="button create-button">Crear Partido</button>
             </form>
         </div>
 

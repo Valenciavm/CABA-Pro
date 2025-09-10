@@ -17,7 +17,7 @@
         <div class="form-card">
             <h2>Crear Cancha</h2>
             <form th:object="${cancha}" th:action="@{/admin/cancha/guardar}" method="post">
-                <label for="nombre">Nombre:</label>
+                <label for="nombre" class="text-white">Nombre:</label>
                 <input type="text" id="nombre" th:field="*{tipo}">
 
                 <label for="lugar">Lugar:</label>
