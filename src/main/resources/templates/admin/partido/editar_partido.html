@@ -15,7 +15,7 @@
             <h1 class="h1">Editar Partido</h1>
             <div th:if="${partido == null}" class="no-partidos">Partido no encontrado.</div>
     
-            <div th:if="${partido != null}" class="partido-detail-card">
+            <div th:if="${partido != null}" class="">
 				<div class="form-card">
 					<form th:action="@{/admin/partido/editar/{id}(id=${partido.id})}" th:object="${partido}" method="post">
 

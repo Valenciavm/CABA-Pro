@@ -22,11 +22,11 @@
             <div th:if="${partidos.empty}" class="no-partidos">No hay partidos registrados.</div>
 
             <div th:each="p : ${partidos}" class="partido-card">
-                <div class="partido-nombre" th:text="${p.nombre}">Nombre del Partido</div>
+                <div class="partido-nombre text-white" th:text="${p.nombre}">Nombre del Partido</div>
                 <div class="partido-equipos">
-                    <span class="equipo" th:text="${p.equipo1}">Equipo 1</span>
+                    <span class="equipo text-white" th:text="${p.equipo1}">Equipo 1</span>
                     <span class="vs">VS</span>
-                    <span class="equipo" th:text="${p.equipo2}">Equipo 2</span>
+                    <span class="equipo text-white" th:text="${p.equipo2}">Equipo 2</span>
                 </div>
                 <div class="partido-details">
                     <span th:text="${p.fecha}">Fecha</span>
