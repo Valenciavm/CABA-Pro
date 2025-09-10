@@ -22,9 +22,11 @@ public class NotificacionService {
         this.usuarioService = usuarioService;
     }
 
+    // java
     @Transactional
     public void crearNotificacionAsignacion(PartidoArbitro pa) {
-        if (pa == null || pa.getArbitro() == null || pa.getArbitro().getUsuario() == null) return;
+        if (pa == null || pa.getId() == null) return; // asegurar que está persistida
+        if (pa.getArbitro() == null || pa.getArbitro().getUsuario() == null) return;
 
         Partido partido = pa.getPartido();
         String nombrePartido = partido != null ? partido.getNombre() : "Partido";
@@ -41,12 +43,11 @@ public class NotificacionService {
         n.setTipo("ASIGNACION");
         n.setEstado(pa.getEstado());
         n.setMensaje(msg);
-        n.setFechaCreacion(Instant.now());
+        n.setFechaCreacion(java.time.Instant.now());
         n.setLeida(false);
         n.setDestinatario(pa.getArbitro().getUsuario());
         n.setEmisor(null);
-        n.setPartidoArbitro(pa);
-
+        n.setPartidoArbitro(pa); // pa ya persistido
         repo.save(n);
     }
 

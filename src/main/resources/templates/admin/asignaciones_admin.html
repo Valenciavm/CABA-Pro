@@ -1,7 +1,8 @@
 <!-- language: html -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
+  <meta charset="UTF-8">
   <title>Gestión de Asignaciones</title>
   <link rel="stylesheet" th:href="@{/css/sidebar.css}">
   <link rel="stylesheet" th:href="@{/css/asignaciones.css}">
@@ -15,9 +16,9 @@
 
   <div th:unless="${#lists.isEmpty(asignaciones)}">
     <table class="table table-striped">
-      <thead class = "thead-dark">
+      <thead class="thead-dark">
       <tr>
-        <th>Partido</th> 
+        <th>Partido</th>
         <th>Fecha</th>
         <th>Hora</th>
         <th>Árbitro Principal</th>
@@ -39,50 +40,59 @@
           auxiliar=${#lists.isEmpty(asignacion.asignaciones.?[rolPartido == 'AUXILIAR']) ? null : asignacion.asignaciones.?[rolPartido == 'AUXILIAR'][0]},
           segundoAux=${#lists.isEmpty(asignacion.asignaciones.?[rolPartido == 'SEGUNDO_AUXILIAR']) ? null : asignacion.asignaciones.?[rolPartido == 'SEGUNDO_AUXILIAR'][0]}
         ">
+
           <!-- Árbitro Principal -->
-          <td th:text="${principal?.arbitro?.usuario?.nombre ?: '-'}"></td>
+          <td>
+            <span th:if="${principal != null and principal.arbitro != null and principal.arbitro.usuario != null}"
+                  th:text="${principal.arbitro.usuario.nombre + ' ' + principal.arbitro.usuario.apellido}"></span>
+            <span th:unless="${principal != null and principal.arbitro != null and principal.arbitro.usuario != null}">-</span>
+          </td>
           <td class="status-cell">
             <span th:if="${principal}"
                   th:class="${principal.estado == 'PENDIENTE'} ? 'badge bg-warning' : (${principal.estado == 'ACEPTADO'} ? 'badge bg-success' : 'badge bg-danger')"
                   th:text="${principal.estado}"></span>
             <span th:unless="${principal}">-</span>
-            <button type="button"
-                    class="btn-sm btn-info btn-reasignar"
-                    th:if="${principal != null and principal.estado == 'RECHAZADO'}"
-                    th:attr="data-partido-id=${asignacion.partido.id},data-rol='ARBITRO_PRINCIPAL'">
+            <a class="btn-sm btn-info"
+               th:if="${principal != null and principal.estado == 'RECHAZADO'}"
+               th:href="@{/admin/partido/editar/{id}(id=${asignacion.partido.id})}">
               Reasignar
-            </button>
+            </a>
           </td>
 
           <!-- Árbitro Auxiliar -->
-          <td th:text="${auxiliar?.arbitro?.usuario?.nombre ?: '-'}"></td>
+          <td>
+            <span th:if="${auxiliar != null and auxiliar.arbitro != null and auxiliar.arbitro.usuario != null}"
+                  th:text="${auxiliar.arbitro.usuario.nombre + ' ' + auxiliar.arbitro.usuario.apellido}"></span>
+            <span th:unless="${auxiliar != null and auxiliar.arbitro != null and auxiliar.arbitro.usuario != null}">-</span>
+          </td>
           <td class="status-cell">
             <span th:if="${auxiliar}"
                   th:class="${auxiliar.estado == 'PENDIENTE'} ? 'badge bg-warning' : (${auxiliar.estado == 'ACEPTADO'} ? 'badge bg-success' : 'badge bg-danger')"
                   th:text="${auxiliar.estado}"></span>
             <span th:unless="${auxiliar}">-</span>
-            <button type="button"
-                    class="button btn-sm btn-reasignar text-black"
-                    th:if="${auxiliar != null and auxiliar.estado == 'RECHAZADO'}"
-                    th:attr="data-partido-id=${asignacion.partido.id},data-rol='AUXILIAR'"><strong>
+            <a class="btn-sm btn-info"
+               th:if="${auxiliar != null and auxiliar.estado == 'RECHAZADO'}"
+               th:href="@{/admin/partido/editar/{id}(id=${asignacion.partido.id})}">
               Reasignar
-              </strong>
-            </button>
+            </a>
           </td>
 
           <!-- Segundo Auxiliar -->
-          <td th:text="${segundoAux?.arbitro?.usuario?.nombre ?: '-'}"></td>
+          <td>
+            <span th:if="${segundoAux != null and segundoAux.arbitro != null and segundoAux.arbitro.usuario != null}"
+                  th:text="${segundoAux.arbitro.usuario.nombre + ' ' + segundoAux.arbitro.usuario.apellido}"></span>
+            <span th:unless="${segundoAux != null and segundoAux.arbitro != null and segundoAux.arbitro.usuario != null}">-</span>
+          </td>
           <td class="status-cell">
             <span th:if="${segundoAux}"
                   th:class="${segundoAux.estado == 'PENDIENTE'} ? 'badge bg-warning' : (${segundoAux.estado == 'ACEPTADO'} ? 'badge bg-success' : 'badge bg-danger')"
                   th:text="${segundoAux.estado}"></span>
             <span th:unless="${segundoAux}">-</span>
-            <button type="button"
-                    class="btn-sm btn-info btn-reasignar"
-                    th:if="${segundoAux != null and segundoAux.estado == 'RECHAZADO'}"
-                    th:attr="data-partido-id=${asignacion.partido.id},data-rol='SEGUNDO_AUXILIAR'">
+            <a class="btn-sm btn-info"
+               th:if="${segundoAux != null and segundoAux.estado == 'RECHAZADO'}"
+               th:href="@{/admin/partido/editar/{id}(id=${asignacion.partido.id})}">
               Reasignar
-            </button>
+            </a>
           </td>
         </th:block>
       </tr>
@@ -94,65 +104,5 @@
     <p class="h4">No hay partidos con asignaciones registrados.</p>
   </div>
 </div>
-
-<!-- Modal (pop‑up) -->
-<div id="reasignarModal" class="modal-overlay" style="display:none;">
-  <div class="modal-content">
-    <span class="close-button" id="closeReasignar">&times;</span>
-    <h2>Reasignar árbitro</h2>
-
-    <form th:action="@{/admin/partido/reasignar}" method="post" class="modal-form" id="reasignarForm">
-      <input type="hidden" name="partidoId" id="partidoId">
-      <input type="hidden" name="rol" id="rol">
-
-      <label for="nuevoArbitroId">Seleccione un árbitro disponible</label>
-      <select id="nuevoArbitroId" name="nuevoArbitroId" required>
-        <option value="" disabled selected>-- Seleccione --</option>
-        <option th:each="arb : ${arbitrosDisponibles}"
-                th:value="${arb.usuarioId}"
-                th:text="${arb.usuario.nombre} + ' ' + ${arb.usuario.apellido}">
-        </option>
-      </select>
-
-      <!-- CSRF (si aplica) -->
-      <input type="hidden"
-             th:if="${_csrf != null}"
-             th:name="${_csrf.parameterName}"
-             th:value="${_csrf.token}">
-      <button type="submit">Guardar</button>
-    </form>
-  </div>
-</div>
-
-<script>
-  (function () {
-    const overlay = document.getElementById('reasignarModal');
-    const closeBtn = document.getElementById('closeReasignar');
-    const inpPartido = document.getElementById('partidoId');
-    const inpRol = document.getElementById('rol');
-    const selectArb = document.getElementById('nuevoArbitroId');
-
-    // Abrir modal al hacer click en "Reasignar"
-    document.addEventListener('click', function (e) {
-      const btn = e.target.closest('.btn-reasignar');
-      if (!btn) return;
-      inpPartido.value = btn.dataset.partidoId;
-      inpRol.value = btn.dataset.rol;
-      // Reset selección
-      if (selectArb) selectArb.selectedIndex = 0;
-      overlay.style.display = 'block';
-    });
-
-    // Cerrar modal
-    function closeModal() { overlay.style.display = 'none'; }
-    closeBtn.addEventListener('click', closeModal);
-    overlay.addEventListener('click', function (e) {
-      if (e.target === overlay) closeModal();
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeModal();
-    });
-  })();
-</script>
 </body>
 </html>
