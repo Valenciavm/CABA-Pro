@@ -5,6 +5,7 @@ import com.example.CabaPro.repositories.TarifaRepository;
 import com.example.CabaPro.models.Tarifa;
 import com.example.CabaPro.repositories.PartidoArbitroRepository;
 import com.example.CabaPro.repositories.PartidoRepository;
+import com.example.CabaPro.models.Partido;
 import com.example.CabaPro.models.PartidoArbitro;
 import jakarta.transaction.Transactional;
 
@@ -18,10 +19,13 @@ import java.util.ArrayList;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import java.util.Optional;
 
 @Service
 public class TarifaService {
@@ -103,6 +107,7 @@ public class TarifaService {
 
     @Transactional
     public void CalcularTarifa(Long partidoId) {
+        Optional<Partido> partido = partidoRepository.findById(partidoId);
         // Traer la fecha del partido
         LocalDate fechaPartido = null;
         String fechaStr = partidoRepository.findFechaById(partidoId);
@@ -123,6 +128,11 @@ public class TarifaService {
         List<PartidoArbitro> asignaciones = partidoArbitroRepository.findByPartidoId(partidoId);
 
     for (PartidoArbitro asignacion : asignaciones) {
+        int pagoPorTorneo = 0;
+        if (partido.isPresent() && partido.get().getTorneo() != null) {
+            pagoPorTorneo = 10;
+
+        }
 
         int montoEspecialidad = 0;
         int montoEscalafon = 0;
@@ -154,15 +164,16 @@ public class TarifaService {
             default:
                 montoEscalafon = 0;
         }
+        
 
-        int montoTotal = (montoEspecialidad + montoEscalafon) * 10_000;
+        double montoTotal = (montoEspecialidad + montoEscalafon + pagoPorTorneo) * 10_000;
 
         // Agregar o actualizar la tarifa
         Tarifa tarifa = tarifaRepository.findByPartidoArbitroId(asignacion.getId())
                 .orElseGet(Tarifa::new);
 
         tarifa.setPartidoArbitro(asignacion);
-        tarifa.setMonto(montoTotal);
+        tarifa.setMonto((int) montoTotal);
         tarifa.setFecha(fechaPartido);
 
         tarifaRepository.save(tarifa);

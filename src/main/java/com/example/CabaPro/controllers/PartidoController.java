@@ -128,4 +128,49 @@ public class PartidoController {
         return "redirect:/admin/partido/admin_ver_partidos";
     }
 
+    // para editar un partido
+    @GetMapping("admin/partido/editar/{id}")
+    public String editarPartido(@PathVariable Long id, Model model) {
+        Optional<Partido> partido_encontrado = service.findById(id);
+        
+            model.addAttribute("partido", partido_encontrado.get());
+            // pasar lista de arbitros existentes para mostrarlos en el formulario
+            List<Arbitro> arbitros = arbitroService.findAll();
+            List<Cancha> canchas = canchaService.findAll();
+            List<Torneo> torneos = torneoService.findAll();
+
+            model.addAttribute("arbitros", arbitros);
+            model.addAttribute("canchas", canchas);
+            model.addAttribute("torneos", torneos);
+
+            return "admin/partido/editar_partido";
+
+        }
+    @PostMapping("admin/partido/editar/{id}")
+    public String actualizarPartido(@PathVariable Long id,
+            @ModelAttribute("partido") Partido partido,
+            Long principalId,
+            Long auxiliarId,
+            Long segundoAuxId,
+            RedirectAttributes redirectAttributes,
+            Model model) {
+       
+
+            if (partido.getTorneo() != null && partido.getTorneo().getId() != null) {
+                Torneo torneo = torneoService.findById(partido.getTorneo().getId());
+                partido.setTorneo(torneo);
+            } else {
+                partido.setTorneo(null); // partido sin torneo
+            }
+
+            // utilizo el servicio para actualizar el partido y asignar árbitros
+            Partido partidoActualizado = service.update(id, partido, principalId, auxiliarId, segundoAuxId);
+            redirectAttributes.addFlashAttribute("mensaje", "Partido  " + partidoActualizado.getNombre() + " actualizado exitosamente");
+            // Calcular la tarifa para el partido actualizado
+            tarifaService.CalcularTarifa(partidoActualizado.getId());
+
+            return "redirect:/admin/partido/admin_ver_partidos";
+    }
 }
+
+

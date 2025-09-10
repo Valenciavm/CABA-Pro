@@ -1,10 +1,10 @@
 /* Para el formulario de crear partido */
 .form-card { 
     max-width: 720px; margin: 24px auto;
-    background: #ffffff; 
+    background: #515151; 
     padding: 20px; 
     border-radius: 8px; 
-    box-shadow: 0 2px 8px rgba(255, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(32, 31, 31, 0.08);
     
 } 
 .form-row { 
