@@ -13,6 +13,9 @@
 <div th:replace="fragments/header_arbitro :: header_arbitro"></div>
 <div class="main-content">
     <h1 class="h1">Pagos del Árbitro</h1>
+    <div class="acciones-tarifas">
+        <a class="btn btn-primary" th:href="@{/arbitro/tarifas/descargar-total}">Descargar total en PDF</a>
+    </div>
     <div class="tarifas-container">
         <div class="tarifa-card" th:each="detalle : ${tarifaDetalles}">
             <div class="tarifa-header">
@@ -25,8 +28,7 @@
                 <div class="tarifa-monto" th:text="${detalle.tarifa.monto}">$0</div>
             </div>
         </div>
-    </div>
-</div>
+        </div>
 
-</body>
+    </body>
 </html>
