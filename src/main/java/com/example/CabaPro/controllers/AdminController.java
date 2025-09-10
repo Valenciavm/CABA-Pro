@@ -1,6 +1,7 @@
 package com.example.CabaPro.controllers;
 
 import com.example.CabaPro.DTOs.AsignacionPartidoDTO;
+import com.example.CabaPro.models.Partido;
 import com.example.CabaPro.DTOs.UsuarioPerfilDTO;
 import com.example.CabaPro.Services.PartidoService;
 import com.example.CabaPro.Services.UsuarioService;
@@ -24,14 +25,20 @@ public class AdminController {
     private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
     private final PartidoService partidoService;
     private final ArbitroRepository arbitroRepository; // <-- AÑADIR ESTA LÍNEA
+    private final com.example.CabaPro.repositories.TarifaRepository tarifaRepository;
+    private final com.example.CabaPro.Services.AnalisisDatosService analisisDatosService;
 
 
 
     public AdminController(UsuarioService usuarioService,
-                           PartidoService partidoService, ArbitroRepository arbitroRepository){
+                           PartidoService partidoService, ArbitroRepository arbitroRepository,
+                           com.example.CabaPro.repositories.TarifaRepository tarifaRepository,
+                           com.example.CabaPro.Services.AnalisisDatosService analisisDatosService){
         this.usuarioService = usuarioService;
         this.partidoService = partidoService;
         this.arbitroRepository = arbitroRepository;
+        this.tarifaRepository = tarifaRepository;
+        this.analisisDatosService = analisisDatosService;
     }
 
     @GetMapping("/admin")
@@ -106,6 +113,14 @@ public class AdminController {
     public String analisisArbitros(Model model){
         return "admin/analisis_arbitros";
     }
-
+    
+    @GetMapping("/admin/analisis_datos")
+    public String analisisDatos(Model model){
+    // Delegar la lógica al servicio de análisis
+    java.util.Map<String, Object> resultado = analisisDatosService.calcularGastosPorPartido();
+    model.addAttribute("gastosPartidos", resultado.get("gastosPartidos"));
+    model.addAttribute("gastoTotal", resultado.get("gastoTotal"));
+    return "admin/analisis_datos";
+    }
 
 }

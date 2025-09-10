@@ -96,5 +96,9 @@ public class Cancha {
         this.horarioReserva = horarioReserva;
     }
 
+    public Partido getPartido() {
+        return this.partido;
+    }
+
     
 }
