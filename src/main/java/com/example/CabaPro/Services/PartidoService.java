@@ -165,6 +165,71 @@ public class PartidoService {
         return saved;
     }
 
+    // actualizar un partido 
+    @Transactional
+    public Partido update(Long partidoId,Partido partido, Long principalId, Long auxiliarId, Long segundoAuxId) {
+        Partido existingPartido = repository.findById(partidoId)
+                .orElseThrow(() -> new NoSuchElementException("Partido no encontrado con ID: " + partidoId));
+        // Actualizar los campos del partido existente
+        existingPartido.setNombre(partido.getNombre());
+        existingPartido.setEquipo1(partido.getEquipo1());
+        existingPartido.setEquipo2(partido.getEquipo2());
+        existingPartido.setFecha(partido.getFecha());
+        existingPartido.setHora(partido.getHora());
+
+        // Actualizar o crear las asignaciones de árbitros para este partido
+        List<PartidoArbitro> asignaciones = partidoArbitroRepository.findByPartidoId(partidoId);
+        PartidoArbitro principalPa = null;
+        PartidoArbitro auxiliarPa = null;
+        PartidoArbitro segundoPa = null;
+        for (PartidoArbitro pa : asignaciones) {
+            if ("ARBITRO_PRINCIPAL".equals(pa.getRolPartido())) principalPa = pa;
+            else if ("AUXILIAR".equals(pa.getRolPartido())) auxiliarPa = pa;
+            else if ("SEGUNDO_AUXILIAR".equals(pa.getRolPartido())) segundoPa = pa;
+        }
+
+        // Principal: sólo actualizar asignación existente si cambia el árbitro
+        if (principalId != null && principalPa != null) {
+            Arbitro nuevoPrincipal = arbitroRepository.findById(principalId)
+                    .orElseThrow(() -> new NoSuchElementException("Árbitro principal no encontrado con ID: " + principalId));
+            if (principalPa.getArbitro() == null || !principalPa.getArbitro().getUsuarioId().equals(nuevoPrincipal.getUsuarioId())) {
+                principalPa.setArbitro(nuevoPrincipal);
+                principalPa.setRolPartido("ARBITRO_PRINCIPAL");
+                principalPa.setEstado("PENDIENTE");
+                partidoArbitroRepository.save(principalPa);
+            }
+        }
+
+        // Auxiliar
+        if (auxiliarId != null && auxiliarPa != null) {
+            Arbitro nuevoAuxiliar = arbitroRepository.findById(auxiliarId)
+                    .orElseThrow(() -> new NoSuchElementException("Árbitro auxiliar no encontrado con ID: " + auxiliarId));
+                auxiliarPa.setArbitro(nuevoAuxiliar);
+                auxiliarPa.setRolPartido("AUXILIAR");
+                auxiliarPa.setEstado("PENDIENTE");
+                partidoArbitroRepository.save(auxiliarPa);
+        }
+
+        // Segundo auxiliar
+        if (segundoAuxId != null && segundoPa != null) {
+            Arbitro nuevoSegundoAux = arbitroRepository.findById(segundoAuxId)
+                    .orElseThrow(() -> new NoSuchElementException("Árbitro segundo auxiliar no encontrado con ID: " + segundoAuxId));
+                segundoPa.setArbitro(nuevoSegundoAux);
+                segundoPa.setRolPartido("SEGUNDO_AUXILIAR");
+                segundoPa.setEstado("PENDIENTE");
+                partidoArbitroRepository.save(segundoPa);
+            
+        }
+
+        // Guardar cambios del partido
+        repository.save(existingPartido);
+
+        return existingPartido;
+    }
+
+   
+
+
     // Una validación basiquita
     private boolean validarDatos(Partido partido) {
         System.out.println("nombre = " + partido.getNombre());
