@@ -176,6 +176,13 @@ public class PartidoService {
         existingPartido.setEquipo2(partido.getEquipo2());
         existingPartido.setFecha(partido.getFecha());
         existingPartido.setHora(partido.getHora());
+        // Actualizar resultado y flag finalizado
+        if (partido.getResultado() != null && partido.getResultado().trim().isEmpty()) {
+            existingPartido.setResultado(null);
+        } else {
+            existingPartido.setResultado(partido.getResultado());
+        }
+        existingPartido.setFinalizado(partido.isFinalizado());
 
         // Actualizar o crear las asignaciones de árbitros para este partido
         List<PartidoArbitro> asignaciones = partidoArbitroRepository.findByPartidoId(partidoId);

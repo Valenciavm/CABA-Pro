@@ -22,36 +22,36 @@
 						<div class="form-row">
 							<div class="form-group full-width">
 								<label for="nombre">Nombre del Partido</label>
-								<input type="text" id="nombre" th:field="*{nombre}" required />
+								<input type="text" id="nombre" th:field="*{nombre}" />
 							</div>
 						</div>
 
 						<div class="form-row">
 							<div class="form-group half-width">
 								<label for="equipo1">Equipo 1</label>
-								<input type="text" id="equipo1" th:field="*{equipo1}" required />
+								<input type="text" id="equipo1" th:field="*{equipo1}" />
 							</div>
 							<div class="form-group half-width">
 								<label for="equipo2">Equipo 2</label>
-								<input type="text" id="equipo2" th:field="*{equipo2}" required />
+								<input type="text" id="equipo2" th:field="*{equipo2}" />
 							</div>
 						</div>
 
 						<div class="form-row">
 							<div class="form-group half-width">
 								<label for="fecha">Fecha</label>
-								<input id="fecha" type="date" th:field="*{fecha}" required />
+								<input id="fecha" type="date" th:field="*{fecha}" />
 							</div>
 							<div class="form-group half-width">
 								<label for="hora">Hora</label>
-								<input id="hora" type="time" th:field="*{hora}" required />
+								<input id="hora" type="time" th:field="*{hora}" />
 							</div>
 						</div>
 
 						<div class="form-row">
 							<div class="form-group third-width">
 								<label for="principalId">Árbitro principal</label>
-								<select id="principalId" name="principalId" required>
+								<select id="principalId" name="principalId">
 									<option value="" th:if="${principalId} == null" selected>-- Seleccione --</option>
 									<option th:each="arb : ${arbitros}" th:value="${arb.usuarioId}"
 											th:text="${arb.usuario.nombre} + ' ' + ${arb.usuario.apellido}"
@@ -60,7 +60,7 @@
 							</div>
 							<div class="form-group third-width">
 								<label for="auxiliarId">Árbitro auxiliar</label>
-								<select id="auxiliarId" name="auxiliarId" required>
+								<select id="auxiliarId" name="auxiliarId">
 									<option value="" th:if="${auxiliarId} == null" selected>-- Seleccione --</option>
 									<option th:each="arb : ${arbitros}" th:value="${arb.usuarioId}"
 											th:text="${arb.usuario.nombre} + ' ' + ${arb.usuario.apellido}"
@@ -69,7 +69,7 @@
 							</div>
 							<div class="form-group third-width">
 								<label for="segundoAuxId">Segundo auxiliar</label>
-								<select id="segundoAuxId" name="segundoAuxId" required>
+								<select id="segundoAuxId" name="segundoAuxId">
 									<option value="" th:if="${segundoAuxId} == null" selected>-- Seleccione --</option>
 									<option th:each="arb : ${arbitros}" th:value="${arb.usuarioId}"
 											th:text="${arb.usuario.nombre} + ' ' + ${arb.usuario.apellido}"
@@ -81,7 +81,7 @@
 						<div class="form-row">
 							<div class="form-group half-width">
 								<label for="canchaId">Cancha</label>
-								<select id="canchaId" name="canchaId" required>
+								<select id="canchaId" name="canchaId">
 									<option value="" th:if="${canchaId} == null" selected>-- Seleccione --</option>
 									<option th:each="can : ${canchas}" th:value="${can.idCancha}"
 											th:text="${can.tipo} + ' - ' + ${can.lugar} + ' - $' + ${can.precio}"
@@ -113,9 +113,24 @@
 						</div>
 
 						<div class="form-row">
+						</div>
+
+						<!-- Resultado y estado terminado -->
+						<div class="form-row">
+							<div class="form-group half-width">
+								<label for="resultado">Resultado (Ej: 2-1)</label>
+								<input type="text" id="resultado" th:field="*{resultado}" placeholder="Ej: 2-1" />
+							</div>
+							<div class="form-group half-width">
+								<input type="checkbox" id="terminado" name="terminado" value="true" th:checked="${partido.resultado != null}" />
+							</div>
+						</div>
+									<label for="finalizado">Finalizado</label>
+									<input type="checkbox" id="finalizado" th:field="*{finalizado}" />
 							<div class="form-actions">
 								<button type="submit" class="btn btn-primary">Guardar Cambios</button>
 							</div>
+						</div>
 						</div>
 
 					</form>

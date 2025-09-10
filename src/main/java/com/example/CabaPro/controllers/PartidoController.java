@@ -163,6 +163,11 @@ public class PartidoController {
                 partido.setTorneo(null); // partido sin torneo
             }
 
+            // Si no está marcado como finalizado, limpiar el resultado
+            if (!partido.isFinalizado()) {
+                partido.setResultado(null);
+            }
+
             // utilizo el servicio para actualizar el partido y asignar árbitros
             Partido partidoActualizado = service.update(id, partido, principalId, auxiliarId, segundoAuxId);
             redirectAttributes.addFlashAttribute("mensaje", "Partido  " + partidoActualizado.getNombre() + " actualizado exitosamente");

@@ -44,7 +44,21 @@ public class TarifaService {
     @Transactional
     public List<Tarifa> EncontrarTarifas(Long arbitroUsuarioId) {
     if (arbitroUsuarioId == null) return java.util.Collections.emptyList();
-     return tarifaRepository.findByPartidoArbitroArbitroUsuarioIdAndPartidoArbitroEstado(arbitroUsuarioId, "ACEPTADO");
+     List<Tarifa> tarifas = tarifaRepository.findByPartidoArbitroArbitroUsuarioIdAndPartidoArbitroEstado(arbitroUsuarioId, "ACEPTADO");
+     // Filtrar sólo tarifas cuyos partidos ya tengan resultado (partido terminado)
+     List<Tarifa> filtradas = new ArrayList<>();
+        for (Tarifa t : tarifas) {
+         if (t == null) continue;
+         PartidoArbitro pa = t.getPartidoArbitro();
+         if (pa == null) continue;
+         Partido p = pa.getPartido();
+         if (p == null) continue;
+            // Considerar partido finalizado por el nuevo flag o por tener resultado (compatibilidad)
+            if (p.isFinalizado()) {
+                filtradas.add(t);
+            }
+     }
+     return filtradas;
         
     }
 

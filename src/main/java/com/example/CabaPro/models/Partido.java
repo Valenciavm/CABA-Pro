@@ -42,6 +42,9 @@ public class Partido {
 
     private String resultado;
 
+    @Column(name = "finalizado", nullable = false)
+    private boolean finalizado = false;
+
     // Getters y Setters
     public Long getId() {
         return id;
@@ -69,6 +72,9 @@ public class Partido {
 
     public String getResultado() {
         return resultado;
+    }
+    public boolean isFinalizado() {
+        return finalizado;
     }
     public List<PartidoArbitro> getListaArbitros() {
         return listaArbitros;
@@ -112,6 +118,10 @@ public class Partido {
 
     public void setResultado(String resultado) {
         this.resultado = resultado;
+    }
+
+    public void setFinalizado(boolean finalizado) {
+        this.finalizado = finalizado;
     }
     public void setListaArbitros(List<PartidoArbitro> listaArbitros) {
         this.listaArbitros = listaArbitros;
