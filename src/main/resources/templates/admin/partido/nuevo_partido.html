@@ -26,7 +26,7 @@
 			<form th:action="@{/admin/partido/nuevo_partido}" th:object="${partido}" method="post">
 				<div class="form-row">
 					<div>
-						<label for="nombre">Nombre</label>
+						<label class = "text-white" for="nombre">Nombre</label>
 						<input id="nombre" type="text" th:field="*{nombre}" placeholder="Nombre del partido" required>
 					</div>
 				</div>

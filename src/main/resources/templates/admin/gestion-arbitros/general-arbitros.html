@@ -13,7 +13,7 @@
     <div th:replace="fragments/header_admin :: header_admin"></div>
 
     <div class="main-content">
-        <h1>Gestión de Árbitros</h1>
+        <h1 class = "h1 text-white">Gestión de Árbitros</h1>
 
         <div th:if="${#lists.isEmpty(arbitros)}">
             <h3 class="h3">No hay árbitros disponibles</h3>
@@ -25,12 +25,12 @@
                 <h3 class="h3" th:text="${arbitro.usuario.nombre} + ' ' + ${arbitro.usuario.apellido}"></h3>
                 <div class="row-between">
                         <div class = "icon-text-group">
-                            <i class = "bi bi-bookmark-check"></i>
-                            <p th:text="${arbitro.disponibilidad} ? 'Disponible' : 'No Disponible' "></p>
+                            <i class = "bi bi-bookmark-check text-white"></i>
+                            <p class = "text-white" th:text="${arbitro.disponibilidad} ? 'Disponible' : 'No Disponible' "></p>
                         </div>
                         <div class = "icon-text-group">
-                            <i class = "bi bi-clipboard2"></i>
-                            <p th:text="${arbitro.escalafon}"></p>
+                            <i class = "bi bi-clipboard2 text-white"></i>
+                            <p class = "text-white" th:text="${arbitro.escalafon}"></p>
                         </div>
                         <form th:action="@{/admin/gestion-arbitros/ver-arbitro/{id}(id=${arbitro.usuario.id})}" method="get">
                             <button type="submit" class="button view-button">Ver</button>
