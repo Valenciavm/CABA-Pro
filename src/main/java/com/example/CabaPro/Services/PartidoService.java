@@ -192,12 +192,10 @@ public class PartidoService {
         if (principalId != null && principalPa != null) {
             Arbitro nuevoPrincipal = arbitroRepository.findById(principalId)
                     .orElseThrow(() -> new NoSuchElementException("Árbitro principal no encontrado con ID: " + principalId));
-            if (principalPa.getArbitro() == null || !principalPa.getArbitro().getUsuarioId().equals(nuevoPrincipal.getUsuarioId())) {
                 principalPa.setArbitro(nuevoPrincipal);
                 principalPa.setRolPartido("ARBITRO_PRINCIPAL");
                 principalPa.setEstado("PENDIENTE");
                 partidoArbitroRepository.save(principalPa);
-            }
         }
 
         // Auxiliar
