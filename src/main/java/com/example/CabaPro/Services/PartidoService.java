@@ -126,6 +126,12 @@ public class PartidoService {
         }
     }
 
+    // Guardar partido asignando adminId explícitamente
+    public Partido saveWithAdmin(Partido partido, Long adminId) {
+        partido.setAdminId(adminId);
+        return save(partido);
+    }
+
     @Transactional
     public Partido save(Partido partido, Long principalId, Long auxiliarId, Long segundoAuxId) {
         // Validación: el administrador debe asignar los tres árbitros explícitamente
@@ -142,7 +148,7 @@ public class PartidoService {
                 .orElseThrow(null);
 
         // guardar el partido primero para obtener id
-        Partido saved = save(partido);
+    Partido saved = save(partido);
 
         // crear y guardar las 3 asociaciones con estado PENDIENTE
         PartidoArbitro pa1 = new PartidoArbitro();
@@ -172,6 +178,11 @@ public class PartidoService {
 
 
         return saved;
+    }
+
+    // Obtener partidos por administrador
+    public List<Partido> findByAdminId(Long adminId){
+        return repository.findByAdminId(adminId);
     }
 
     // actualizar un partido 

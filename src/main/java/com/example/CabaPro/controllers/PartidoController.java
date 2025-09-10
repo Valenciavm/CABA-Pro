@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.CabaPro.Services.PartidoService;
-import com.example.CabaPro.DTOs.PartidoDTO;
 import com.example.CabaPro.Services.ArbitroService;
 import com.example.CabaPro.Services.CanchaService;
 import com.example.CabaPro.Services.TarifaService;
@@ -21,6 +20,8 @@ import com.example.CabaPro.models.Arbitro;
 import com.example.CabaPro.models.Partido;
 import com.example.CabaPro.models.Torneo;
 import org.springframework.ui.Model;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import com.example.CabaPro.security.CustomUserDetails;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,8 +66,13 @@ public class PartidoController {
             Long auxiliarId,
             Long segundoAuxId,
             RedirectAttributes redirectAttributes,
-            Model model) {
+            Model model,
+            @AuthenticationPrincipal CustomUserDetails user) {
         try {
+            // Asignar adminId del usuario autenticado
+            if (user != null) {
+                partido.setAdminId(user.getId());
+            }
 
             if (partido.getTorneo() != null && partido.getTorneo().getId() != null) {
                 Torneo torneo = torneoService.findById(partido.getTorneo().getId());
@@ -100,9 +106,13 @@ public class PartidoController {
 
     // para ver todos los partidos
     @GetMapping("admin/partido/admin_ver_partidos")
-    public String verPartidos(Model model) {
-
-        List<Partido> partidos = service.findAll();
+    public String verPartidos(Model model, @AuthenticationPrincipal CustomUserDetails user) {
+        List<Partido> partidos;
+        if (user != null) {
+            partidos = service.findByAdminId(user.getId());
+        } else {
+            partidos = service.findAll();
+        }
         model.addAttribute("partidos", partidos);
         return "admin/partido/admin_ver_partidos";
     }

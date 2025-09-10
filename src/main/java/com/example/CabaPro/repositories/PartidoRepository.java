@@ -6,8 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+// (imports Query, Param removed because only used in custom query already declared above)
 
 import java.util.List;
 import java.util.Optional;
@@ -25,4 +24,8 @@ public interface PartidoRepository extends JpaRepository<Partido, Long> {
 
     List<Partido> findByTorneoId(Long torneoId);
     List<Partido> findByTorneoIdAndFase(Long torneoId, String fase);
+
+    // Nuevos métodos para filtrar por administrador creador
+    List<Partido> findByAdminId(Long adminId);
+    List<Partido> findByAdminIdAndTorneoId(Long adminId, Long torneoId);
 }

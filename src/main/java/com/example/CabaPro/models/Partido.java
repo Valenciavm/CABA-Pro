@@ -26,6 +26,10 @@ public class Partido {
     @Column(name = "hora", nullable = false)
     private String hora;
 
+    // ID del administrador que creó el partido
+    @Column(name = "admin_id", nullable = false)
+    private Long adminId;
+
     @OneToMany(mappedBy = "partido", cascade = CascadeType.ALL, orphanRemoval =  true, fetch = FetchType.LAZY)
     private List<PartidoArbitro> listaArbitros = new ArrayList<>();
 
@@ -69,6 +73,8 @@ public class Partido {
     public String getHora() {
         return hora;
     }
+
+    public Long getAdminId() { return adminId; }
 
     public String getResultado() {
         return resultado;
@@ -115,6 +121,8 @@ public class Partido {
     public void setHora(String hora) {
         this.hora = hora;
     }
+
+    public void setAdminId(Long adminId) { this.adminId = adminId; }
 
     public void setResultado(String resultado) {
         this.resultado = resultado;
