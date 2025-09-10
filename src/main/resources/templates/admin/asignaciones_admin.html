@@ -10,14 +10,14 @@
 <body>
 <div th:replace="~{fragments/header_admin :: header_admin}"></div>
 
-<div class="container mt-4">
+<div class="main-content">
   <h1>Estado de Asignaciones de Árbitros</h1>
 
   <div th:unless="${#lists.isEmpty(asignaciones)}">
     <table class="table table-striped">
-      <thead class="thead-dark">
+      <thead class = "thead-dark">
       <tr>
-        <th>Partido</th>
+        <th>Partido</th> 
         <th>Fecha</th>
         <th>Hora</th>
         <th>Árbitro Principal</th>
@@ -62,10 +62,11 @@
                   th:text="${auxiliar.estado}"></span>
             <span th:unless="${auxiliar}">-</span>
             <button type="button"
-                    class="btn-sm btn-info btn-reasignar"
+                    class="button btn-sm btn-reasignar text-black"
                     th:if="${auxiliar != null and auxiliar.estado == 'RECHAZADO'}"
-                    th:attr="data-partido-id=${asignacion.partido.id},data-rol='AUXILIAR'">
+                    th:attr="data-partido-id=${asignacion.partido.id},data-rol='AUXILIAR'"><strong>
               Reasignar
+              </strong>
             </button>
           </td>
 
