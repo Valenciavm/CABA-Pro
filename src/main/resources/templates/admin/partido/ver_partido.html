@@ -49,7 +49,7 @@
                     <form th:action="@{/admin/partido/eliminar/{id}(id=${partido.id})}" method="post" 
                           style="display: inline;" 
                           onsubmit="return confirm('¿Estás seguro de que quieres eliminar este partido?')">
-                        <button type="submit" class="btn-delete">Eliminar Partido</button>
+                       
                     </form>
                     <a class="btn-back" th:href="@{/admin/partido/admin_ver_partidos}">← Volver a la Lista</a>
                     <a class="btn-edit" th:href="@{/admin/partido/editar/{id}(id=${partido.id})}">Editar Partido</a>

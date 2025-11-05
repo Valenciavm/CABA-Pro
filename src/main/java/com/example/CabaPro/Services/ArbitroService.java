@@ -108,6 +108,10 @@ public class ArbitroService {
     public Optional<Arbitro> findByUsuarioUsername(String username) {
         return arbitroRepository.findByUsuarioUsername(username);
     }
+    @Transactional(readOnly = true)
+    public Optional<Arbitro> findById(Long id) {
+        return arbitroRepository.findById(id);
+    }
 
     @Transactional(readOnly = true)
     public List<Arbitro> findAll() {
