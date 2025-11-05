@@ -1,5 +1,6 @@
 package com.example.CabaPro.Services;
 
+import com.example.CabaPro.DTOs.TarifaDetalleDTO;
 import org.springframework.stereotype.Service;
 import com.example.CabaPro.repositories.TarifaRepository;
 import com.example.CabaPro.models.Tarifa;
@@ -81,6 +82,17 @@ public class TarifaService {
             detalle.put("partidoNombre", nombrePartido);
             detalle.put("rol", rol);
             detalles.add(detalle);
+        }
+        return detalles;
+    }
+
+    // DEVUELVE DTOs en lugar de entidades para evitar LazyInitializationException al serializar
+    @Transactional
+    public List<TarifaDetalleDTO> obtenerTarifaDetallesDTO(Long arbitroUsuarioId) {
+        List<Tarifa> tarifas = EncontrarTarifas(arbitroUsuarioId);
+        List<TarifaDetalleDTO> detalles = new ArrayList<>();
+        for (Tarifa t : tarifas) {
+            detalles.add(TarifaDetalleDTO.from(t));
         }
         return detalles;
     }
