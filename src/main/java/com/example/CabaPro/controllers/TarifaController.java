@@ -2,6 +2,7 @@ package com.example.CabaPro.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import com.example.CabaPro.Services.TarifaService;
 import com.example.CabaPro.security.CustomUserDetails;
 import org.springframework.ui.Model;
@@ -37,17 +38,28 @@ public class TarifaController {
     }
     
     @GetMapping("/arbitro/tarifas/descargar-total")
-    public ResponseEntity<byte[]> descargarTotal(@AuthenticationPrincipal CustomUserDetails user) {
+    public ResponseEntity<byte[]> descargarTotal(
+            @AuthenticationPrincipal CustomUserDetails user,
+            @RequestParam(name = "format", defaultValue = "pdf") String format) {
         Long userId = user.getId();
         try {
-            byte[] pdf = tarifaService.generarPdfTotalTarifas(userId);
+            String fmt = (format == null ? "pdf" : format.trim().toLowerCase());
+            byte[] data;
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_PDF);
-            headers.setContentDispositionFormData("attachment", "total-tarifas.pdf");
-            return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
+            if ("excel".equals(fmt) || "csv".equals(fmt)) {
+                data = tarifaService.generarExcelTotalTarifas(userId);
+                headers.setContentType(new MediaType("text", "csv"));
+                headers.setContentDispositionFormData("attachment", "total-tarifas.csv");
+            } else { 
+                data = tarifaService.generarPdfTotalTarifas(userId);
+                headers.setContentType(MediaType.APPLICATION_PDF);
+                headers.setContentDispositionFormData("attachment", "total-tarifas.pdf");
+            }
+            return new ResponseEntity<>(data, headers, HttpStatus.OK);
         } catch (IOException ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+    
     
 }

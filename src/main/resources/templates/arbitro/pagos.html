@@ -17,9 +17,13 @@
 
     <div class = "button-group">
         <div class="button create-button">
-        <i class = "bi bi-currency-dollar"></i>
-        <a class = "text-white" th:href="@{/arbitro/tarifas/descargar-total}">Descargar total en PDF</a>
-    </div>
+            <i class = "bi bi-currency-dollar"></i>
+            <a class = "text-white" th:href="@{/arbitro/tarifas/descargar-total(format=${'pdf'})}">Descargar total en PDF</a>
+        </div>
+        <div class="button create-button" style="margin-left:1rem;">
+            <i class="bi bi-file-earmark-excel"></i>
+            <a class = "text-white" th:href="@{/arbitro/tarifas/descargar-total(format=${'excel'})}">Descargar total en Excel</a>
+        </div>
     </div>
     <div class="tarifas-container">
         <div class="tarifa-card" th:each="detalle : ${tarifaDetalles}">

@@ -30,17 +30,20 @@ public class TarifaService {
     private final TarifaRepository tarifaRepository;
     private final PartidoArbitroRepository partidoArbitroRepository;
     private final PartidoRepository partidoRepository;
-    // Dependencia invertida: ahora el servicio depende de la abstracción TarifaReportGenerator
-    private final TarifaReportGenerator tarifaReportGenerator;
+    // Dependencia invertida: ahora el servicio depende de la abstracción TarifaReportGenerator (D de SOLID)
+    private final TarifaReportGenerator pdfTarifaReportGenerator;
+    private final TarifaReportGenerator excelTarifaReportGenerator; // extensión para otros formatos
 
     public TarifaService(TarifaRepository tarifaRepository,
                          PartidoArbitroRepository partidoArbitroRepository,
                          PartidoRepository partidoRepository,
-                         @Qualifier("pdfTarifaReportGenerator") TarifaReportGenerator tarifaReportGenerator) {
+                         @Qualifier("pdfTarifaReportGenerator") TarifaReportGenerator pdfTarifaReportGenerator,
+                         @Qualifier("excelTarifaReportGenerator") TarifaReportGenerator excelTarifaReportGenerator) {
         this.tarifaRepository = tarifaRepository;
         this.partidoArbitroRepository = partidoArbitroRepository;
         this.partidoRepository = partidoRepository;
-        this.tarifaReportGenerator = tarifaReportGenerator; // Inyección de la implementación concreta (PDF) por ahora
+        this.pdfTarifaReportGenerator = pdfTarifaReportGenerator; // implementación PDF por defecto
+        this.excelTarifaReportGenerator = excelTarifaReportGenerator; // implementación Excel (CSV simplificado)
     }
     // Encuentra todas las tarifas del árbitro de aquellos partidos que el árbitro ha aceptado
     @Transactional
@@ -100,9 +103,9 @@ public class TarifaService {
 
     @Transactional
     public byte[] generarPdfTotalTarifas(Long arbitroUsuarioId) throws IOException {
-        // Método de compatibilidad que sigue retornando PDF. Internamente delega a la abstracción.
+        // Método de compatibilidad que sigue retornando PDF.
         List<Tarifa> tarifas = EncontrarTarifas(arbitroUsuarioId);
-        return tarifaReportGenerator.generarReporteTotalTarifas(tarifas, arbitroUsuarioId);
+        return pdfTarifaReportGenerator.generarReporteTotalTarifas(tarifas, arbitroUsuarioId);
     }
 
     /**
@@ -111,8 +114,16 @@ public class TarifaService {
      */
     @Transactional
     public byte[] generarReporteTotalTarifas(Long arbitroUsuarioId) throws IOException {
+        // Por defecto se usa PDF
         List<Tarifa> tarifas = EncontrarTarifas(arbitroUsuarioId);
-        return tarifaReportGenerator.generarReporteTotalTarifas(tarifas, arbitroUsuarioId);
+        return pdfTarifaReportGenerator.generarReporteTotalTarifas(tarifas, arbitroUsuarioId);
+    }
+
+    // Nuevo método para Excel/CSV
+    @Transactional
+    public byte[] generarExcelTotalTarifas(Long arbitroUsuarioId) throws IOException {
+        List<Tarifa> tarifas = EncontrarTarifas(arbitroUsuarioId);
+        return excelTarifaReportGenerator.generarReporteTotalTarifas(tarifas, arbitroUsuarioId);
     }
     
 
