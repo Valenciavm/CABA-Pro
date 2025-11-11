@@ -1,9 +1,8 @@
-<!-- language: html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Gestión de Asignaciones</title>
+  <title th:text="#{admin.assignments.title}">Gestión de Asignaciones</title>
   <link rel="stylesheet" th:href="@{/css/sidebar.css}">
   <link rel="stylesheet" th:href="@{/css/asignaciones.css}">
   <link rel="stylesheet" th:href="@{/css/main.css}">
@@ -12,21 +11,21 @@
 <div th:replace="~{fragments/header_admin :: header_admin}"></div>
 
 <div class="main-content">
-  <h1>Estado de Asignaciones de Árbitros</h1>
+  <h1 th:text="#{admin.assignments.heading}">Estado de Asignaciones de Árbitros</h1>
 
   <div th:unless="${#lists.isEmpty(asignaciones)}">
     <table class="table table-striped">
       <thead class="thead-dark">
       <tr>
-        <th>Partido</th>
-        <th>Fecha</th>
-        <th>Hora</th>
-        <th>Árbitro Principal</th>
-        <th>Estado</th>
-        <th>Árbitro Auxiliar</th>
-        <th>Estado</th>
-        <th>Segundo Auxiliar</th>
-        <th>Estado</th>
+        <th th:text="#{admin.assignments.col.match}">Partido</th>
+        <th th:text="#{admin.assignments.col.date}">Fecha</th>
+        <th th:text="#{admin.assignments.col.time}">Hora</th>
+        <th th:text="#{admin.assignments.col.mainRef}">Árbitro Principal</th>
+        <th th:text="#{admin.assignments.col.status}">Estado</th>
+        <th th:text="#{admin.assignments.col.assistantRef}">Árbitro Auxiliar</th>
+        <th th:text="#{admin.assignments.col.status}">Estado</th>
+        <th th:text="#{admin.assignments.col.secondAssistantRef}">Segundo Auxiliar</th>
+        <th th:text="#{admin.assignments.col.status}">Estado</th>
       </tr>
       </thead>
       <tbody>
@@ -50,11 +49,14 @@
           <td class="status-cell">
             <span th:if="${principal}"
                   th:class="${principal.estado == 'PENDIENTE'} ? 'badge bg-warning' : (${principal.estado == 'ACEPTADO'} ? 'badge bg-success' : 'badge bg-danger')"
-                  th:text="${principal.estado}"></span>
+                  th:text="${#messages.msgOrNull('status.' + principal.estado) ?: principal.estado}">
+              Estado
+            </span>
             <span th:unless="${principal}">-</span>
             <a class="btn-sm btn-info"
                th:if="${principal != null and principal.estado == 'RECHAZADO'}"
-               th:href="@{/admin/partido/editar/{id}(id=${asignacion.partido.id})}">
+               th:href="@{/admin/partido/editar/{id}(id=${asignacion.partido.id})}"
+               th:text="#{admin.assignments.reassign}">
               Reasignar
             </a>
           </td>
@@ -68,11 +70,13 @@
           <td class="status-cell">
             <span th:if="${auxiliar}"
                   th:class="${auxiliar.estado == 'PENDIENTE'} ? 'badge bg-warning' : (${auxiliar.estado == 'ACEPTADO'} ? 'badge bg-success' : 'badge bg-danger')"
-                  th:text="${auxiliar.estado}"></span>
+                  th:text="${#messages.msgOrNull('status.' + auxiliar.estado) ?: auxiliar.estado}">
+            </span>
             <span th:unless="${auxiliar}">-</span>
             <a class="btn-sm btn-info"
                th:if="${auxiliar != null and auxiliar.estado == 'RECHAZADO'}"
-               th:href="@{/admin/partido/editar/{id}(id=${asignacion.partido.id})}">
+               th:href="@{/admin/partido/editar/{id}(id=${asignacion.partido.id})}"
+               th:text="#{admin.assignments.reassign}">
               Reasignar
             </a>
           </td>
@@ -86,11 +90,13 @@
           <td class="status-cell">
             <span th:if="${segundoAux}"
                   th:class="${segundoAux.estado == 'PENDIENTE'} ? 'badge bg-warning' : (${segundoAux.estado == 'ACEPTADO'} ? 'badge bg-success' : 'badge bg-danger')"
-                  th:text="${segundoAux.estado}"></span>
+                  th:text="${#messages.msgOrNull('status.' + segundoAux.estado) ?: segundoAux.estado}">
+            </span>
             <span th:unless="${segundoAux}">-</span>
             <a class="btn-sm btn-info"
                th:if="${segundoAux != null and segundoAux.estado == 'RECHAZADO'}"
-               th:href="@{/admin/partido/editar/{id}(id=${asignacion.partido.id})}">
+               th:href="@{/admin/partido/editar/{id}(id=${asignacion.partido.id})}"
+               th:text="#{admin.assignments.reassign}">
               Reasignar
             </a>
           </td>
@@ -101,7 +107,7 @@
   </div>
 
   <div th:if="${#lists.isEmpty(asignaciones)}" class="alert alert-info">
-    <p class="h4">No hay partidos con asignaciones registrados.</p>
+    <p class="h4" th:text="#{admin.assignments.empty}">No hay partidos con asignaciones registrados.</p>
   </div>
 </div>
 </body>

@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
 <head>
-  <title>Menú del Admin</title>
+  <meta charset="utf-8" />
+  <title th:text="#{admin.menu.title}">Menú del Admin</title>
   <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-    <link rel="stylesheet" th:href="@{/css/main.css}">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
-<!-- Header -->
-<div th:replace="fragments/header_admin :: header_admin"></div>
+  <!-- Header admin con selector de idioma -->
+  <div th:replace="fragments/header_admin :: header_admin"></div>
 
-<div class="main-content">
-  <h1>Menú del Admin</h1>
-</div>
+  <div class="main-content">
+    <h1 th:text="#{admin.menu.title}">Menú del Admin</h1>
+  </div>
 </body>
 </html>

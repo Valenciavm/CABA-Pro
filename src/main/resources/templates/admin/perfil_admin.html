@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Perfil del Admin</title>
-    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-    <link rel="stylesheet" th:href="@{/css/perfil.css}">
-    <link rel="stylesheet" th:href="@{/css/main.css}">
+  <meta charset="UTF-8">
+  <title th:text="#{admin.profile.title}">Perfil del Admin</title>
+  <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+  <link rel="stylesheet" th:href="@{/css/perfil.css}">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
-<div th:replace="fragments/header_admin :: header_admin"></div>
+  <div th:replace="fragments/header_admin :: header_admin"></div>
 
-<div class="main-content">
-    <h1>Perfil del Admin</h1>
+  <div class="main-content">
+    <h1 th:text="#{admin.profile.title}">Perfil del Admin</h1>
 
     <div class="card">
-        <!-- Columna principal: campos explícitos -->
-        <div th:if="${usuario != null}" class = "text-white">
-            <div><strong></strong><img th:src="@{${usuario.foto}}" alt="Foto de perfil"></div>
-            <div><strong>ID:</strong> <span th:text="${usuario.id}">-</span></div>
-            <div><strong>Usuario:</strong> <span th:text="${usuario.username}">-</span></div>
-            <div><strong>Email:</strong> <span th:text="${usuario.email}">-</span></div>
-            <div><strong>Nombre:</strong> <span th:text="${usuario.nombre}">-</span></div>
-            <div><strong>Apellido:</strong> <span th:text="${usuario.apellido}">-</span></div>
-            <div><strong>Rol:</strong> <span th:text="${prettyRole}">-</span></div>
+      <div th:if="${usuario != null}" class="text-white">
+        <div>
+          <strong th:text="#{admin.profile.photo}">Foto</strong>
+          <img th:src="@{${usuario.foto}}" th:alt="#{admin.profile.photo.alt}" alt="Foto de perfil">
         </div>
+        <div><strong th:text="#{admin.profile.id}">ID:</strong> <span th:text="${usuario.id}">-</span></div>
+        <div><strong th:text="#{admin.profile.username}">Usuario:</strong> <span th:text="${usuario.username}">-</span></div>
+        <div><strong th:text="#{admin.profile.email}">Email:</strong> <span th:text="${usuario.email}">-</span></div>
+        <div><strong th:text="#{admin.profile.name}">Nombre:</strong> <span th:text="${usuario.nombre}">-</span></div>
+        <div><strong th:text="#{admin.profile.lastname}">Apellido:</strong> <span th:text="${usuario.apellido}">-</span></div>
+        <div><strong th:text="#{admin.profile.role}">Rol:</strong> <span th:text="${prettyRole}">-</span></div>
+      </div>
 
-        
-        <div th:if="${usuario == null}">
-            <p>No se encontró información del usuario.</p>
-        </div>
+      <div th:if="${usuario == null}">
+        <p th:text="#{admin.profile.notfound}">No se encontró información del usuario.</p>
+      </div>
     </div>
-</div>
+  </div>
 </body>
 </html>

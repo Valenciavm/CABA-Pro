@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.core.annotation.Order;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 
 @Configuration
 @EnableWebSecurity
@@ -21,6 +22,9 @@ public class SecurityConfig {
 
     @Autowired
     private CustomAuthenticationSuccessHandler successHandler;
+
+    // Nota i18n: El cambio de idioma con ?lang= lo maneja el LocaleChangeInterceptor
+    // definido en tu configuración i18n; aquí no se requiere nada especial.
 
     // Cadena 1: API - sin autenticación, sin formLogin, sin httpBasic
     @Bean
@@ -46,10 +50,21 @@ public class SecurityConfig {
     public SecurityFilterChain webFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/login", "/registro", "/css/**", "/js/**", "/h2-console/**", "/Imageneshome/**").permitAll()
+                        // Público: raíz y páginas básicas
+                        .requestMatchers("/", "/login", "/registro", "/error", "/favicon.ico").permitAll()
+
+                        // Recursos estáticos comunes: /css, /js, /images, /webjars, /favicon.ico
+                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+
+                        // Rutas estáticas personalizadas del proyecto
+                        .requestMatchers("/Imageneshome/**", "/ImagenesPerfil/**", "/h2-console/**").permitAll()
+
+                        // Zonas con roles
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/arbitro/**").hasRole("ARBITRO")
                         .requestMatchers("/superAdmin/**").hasRole("SUPER_ADMIN")
+
+                        // El resto autenticado
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

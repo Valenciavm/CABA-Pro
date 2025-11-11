@@ -1,10 +1,10 @@
-<!-- language: html -->
+<!-- src/main/resources/templates/fragments/header_admin.html -->
 <!DOCTYPE html>
-<html lang="es" th:fragment="header_admin">
+<html th:fragment="header_admin" th:lang="${#locale.language}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu</title>
+    <title th:text="#{admin.header.title}">Menú</title>
 
     <!-- CSRF (Spring Security) -->
     <meta name="_csrf" th:if="${_csrf != null}" th:content="${_csrf.token}">
@@ -20,8 +20,8 @@
 <body>
 <header>
     <div class="left">
-        <div class="menu-container" title="Menú">
-            <div class="menu" id="menu" role="button" tabindex="0" aria-label="Abrir menú lateral">
+        <div class="menu-container" th:title="#{admin.header.menu}" title="Menú">
+            <div class="menu" id="menu" role="button" tabindex="0" th:aria-label="#{admin.header.menu.aria}" aria-label="Abrir menú lateral">
                 <div></div>
                 <div></div>
                 <div></div>
@@ -29,36 +29,46 @@
         </div>
 
         <div class="brand">
-            <img th:src="@{/css/icons/Logo.png}" alt="Logo-Caba" class="logo">
-            <span class="name">CABA PRO</span>
+            <img th:src="@{/css/icons/Logo.png}" th:alt="#{logo.alt}" alt="Logo-Caba" class="logo">
+            <span class="name" th:text="#{app.title}">CABA PRO</span>
         </div>
     </div>
 
     <div class="right">
         <!-- Home -->
-        <a th:href="@{/admin}" title="Inicio">
+        <a th:href="@{/admin}" th:title="#{nav.home}" title="Inicio">
             <i class="bi bi-house"></i>
         </a>
 
         <!-- Notificaciones ADMIN -->
-        <div class="notif-container" id="notifContainer" title="Notificaciones" aria-haspopup="true" aria-expanded="false">
-            <i class="bi bi-bell notif-icon" aria-label="Notificaciones"></i>
+        <div class="notif-container" id="notifContainer" th:title="#{admin.notif.title}" title="Notificaciones" aria-haspopup="true" aria-expanded="false">
+            <i class="bi bi-bell notif-icon" th:aria-label="#{admin.notif.title}" aria-label="Notificaciones"></i>
             <span class="notif-badge" id="notifBadge" style="display:none;">0</span>
 
             <div class="notif-dropdown" id="notifDropdown" style="display:none;">
                 <div class="notif-header">
-                    <strong>Notificaciones</strong>
+                    <strong th:text="#{admin.notif.title}">Notificaciones</strong>
                 </div>
-                <div class="notif-list" id="notifList">
-                    <div class="notif-empty">Sin notificaciones</div>
+                <!-- Textos i18n para JS via data-* -->
+                <div class="notif-list" id="notifList"
+                     th:attr="data-empty-text=#{admin.notif.empty},
+                              data-error-text=#{admin.notif.error},
+                              data-item-default=#{admin.notif.item.default}">
+                    <div class="notif-empty" th:text="#{admin.notif.empty}">Sin notificaciones</div>
                 </div>
             </div>
         </div>
 
         <!-- Logout -->
-        <a th:href="@{/logout}" title="Salir">
+        <a th:href="@{/logout}" th:title="#{nav.logout}" title="Salir">
             <i class="bi bi-box-arrow-right"></i>
         </a>
+
+        <!-- Selector de idioma: añade ?lang=... a la URL actual -->
+        <span class="lang-switch" style="margin: 0 12px;">
+          <a class="link-white" href="?lang=es" th:text="#{lang.es}">ES</a> |
+          <a class="link-white" href="?lang=en" th:text="#{lang.en}">EN</a>
+        </span>
     </div>
 </header>
 
@@ -66,39 +76,37 @@
     <nav>
         <ul>
             <li>
-                <a href="/admin/perfil">
+                <a th:href="@{/admin/perfil}">
                     <i class="bi bi-person"></i>
-                    <span>Perfil</span>
+                    <span th:text="#{admin.menu.profile}">Perfil</span>
                 </a>
-                <a href="/admin/partido">
+                <a th:href="@{/admin/partido}">
                     <i class="bi bi-calendar-event"></i>
-                    <span>Partidos</span>
+                    <span th:text="#{admin.menu.matches}">Partidos</span>
                 </a>
-                <a href="/admin/torneos">
+                <a th:href="@{/admin/torneos}">
                     <i class="bi bi-trophy"></i>
-                    <span>Torneos</span>
+                    <span th:text="#{admin.menu.tournaments}">Torneos</span>
                 </a>
-                <a href="/admin/asignaciones">
+                <a th:href="@{/admin/asignaciones}">
                     <i class="bi bi-journal-check"></i>
-                    <span>Asignaciones</span>
+                    <span th:text="#{admin.menu.assignments}">Asignaciones</span>
                 </a>
-
-                <a href="/admin/cancha">
+                <a th:href="@{/admin/cancha}">
                     <i class="bi bi-geo-alt"></i>
-                    <span>Canchas</span>
+                    <span th:text="#{admin.menu.arenas}">Canchas</span>
                 </a>
-
-                <a href="/admin/gestion-arbitros">
+                <a th:href="@{/admin/gestion-arbitros}">
                     <i class="bi bi-people"></i>
-                    <span>Gestión Árbitros</span>
+                    <span th:text="#{admin.menu.referees}">Gestión Árbitros</span>
                 </a>
-                <a href="/admin/analisis_datos">
+                <a th:href="@{/admin/analisis_datos}">
                     <i class="bi bi-graph-up"></i>
-                    <span>Análisis</span>
+                    <span th:text="#{admin.menu.analytics}">Análisis</span>
                 </a>
-                <a href="/admin/clima">
+                <a th:href="@{/admin/clima}">
                     <i class="bi bi-cloud"></i>
-                    <span>Clima</span>
+                    <span th:text="#{admin.menu.weather}">Clima</span>
                 </a>
             </li>
         </ul>
@@ -124,6 +132,11 @@
         const notifDropdown = document.getElementById('notifDropdown');
         const notifBadge = document.getElementById('notifBadge');
         const notifList = document.getElementById('notifList');
+
+        const emptyText = notifList?.dataset.emptyText || 'Sin notificaciones';
+        const errorText = notifList?.dataset.errorText || 'Error al cargar';
+        const itemDefault = notifList?.dataset.itemDefault || 'Actualización de asignación';
+
         const csrfToken = document.querySelector('meta[name="_csrf"]')?.getAttribute('content');
         const csrfHeader = document.querySelector('meta[name="_csrf_header"]')?.getAttribute('content');
 
@@ -158,7 +171,7 @@
 
         function itemTemplate(n) {
             const fecha = n.fechaCreacion ? new Date(n.fechaCreacion).toLocaleString() : '';
-            const msg = n.mensaje || 'Actualización de asignación';
+            const msg = n.mensaje || itemDefault;
             return `
         <div class="notif-item ${n.leida ? '' : 'unread'}" data-id="${n.id}">
           <div class="notif-msg">${msg}</div>
@@ -173,12 +186,12 @@
                 if (!res.ok) return;
                 const list = await res.json();
                 if (!Array.isArray(list) || !list.length) {
-                    notifList.innerHTML = '<div class="notif-empty">Sin notificaciones</div>';
+                    notifList.innerHTML = '<div class="notif-empty">' + emptyText + '</div>';
                 } else {
                     notifList.innerHTML = list.map(itemTemplate).join('');
                 }
             } catch {
-                notifList.innerHTML = '<div class="notif-empty">Error al cargar</div>';
+                notifList.innerHTML = '<div class="notif-empty">' + errorText + '</div>';
             }
         }
 

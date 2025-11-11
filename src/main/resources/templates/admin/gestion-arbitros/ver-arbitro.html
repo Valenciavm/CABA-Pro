@@ -1,68 +1,140 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link th:href="@{/css/main.css}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title th:text="#{admin.referee.detail.title}">Perfil del Árbitro</title>
+
+  <link th:href="@{/css/main.css}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 </head>
 
 <body>
-    <div th:replace="fragments/header_admin :: header_admin"></div>
+<div th:replace="fragments/header_admin :: header_admin"></div>
 
-    <div class="main-content">
-        <h1 class="h1">Perfil del Árbitro</h1>
+<div class="main-content">
+  <h1 class="h1" th:text="#{admin.referee.detail.title}">Perfil del Árbitro</h1>
 
-        <div class="card card-large">
+  <div class="card card-large" th:if="${arbitro != null}">
+    <form th:object="${arbitro}"
+          th:action="@{/admin/gestion-arbitros/guardar/{id}(id=${arbitro.usuario.id})}"
+          method="post" class="col col-1">
 
-            <form th:object="${arbitro}" th:action="@{/admin/gestion-arbitros/guardar/{id}(id=${arbitro.usuario.id})}"
-                method="post" class="col col-1">
+      <!-- IDs necesarios -->
+      <input type="hidden" th:field="*{usuario.id}"/>
+      <input type="hidden" th:field="*{usuarioId}" th:if="${arbitro.usuarioId != null}"/>
 
-                <input type="hidden" th:field="*{usuario.id}" />
+      <h3 class="card-title">
+        <span th:text="*{usuario.nombre}">Nombre</span>
+        <span th:text="*{usuario.apellido}">Apellido</span>
+      </h3>
 
-                <h3 class="card-title">
-                    <span th:text="*{usuario.nombre}">Nombre</span>
-                    <span th:text="*{usuario.apellido}">Apellido</span>
-                </h3>
-
-                <div class="col">
-
-                    <div class="icon-text-group">
-                        <i class="bi bi-person-fill"></i>
-                        <input class="field" type="text" th:field="*{usuario.nombre}" placeholder="Nombre">
-                        <input class="field" type="text" th:field="*{usuario.apellido}" placeholder="Apellido">
-                    </div>
-
-                    <div class="icon-text-group">
-                        <i class="bi bi-envelope-fill"></i>
-                        <input class="field" type="email" th:field="*{usuario.email}" placeholder="Correo electrónico">
-                    </div>
-
-
-                    <div class="icon-text-group">
-                        <i class="bi bi-clipboard2-fill"></i>
-                        <label for="escalafon" class="sr-only"></label>
-                        <select id="escalafon" class="field" th:field="*{escalafon}">
-                            <option value="Municipal">Municipal</option>
-                            <option value="Nacional">Nacional</option>
-                            <option value="Internacional">Internacional</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="row-between">
-                    <button type="submit" class="button view-button">Guardar cambios</button>
-                </div>
-            </form>
-
-            <!-- Formulario separado para eliminar -->
-            <form th:action="@{/admin/gestion-arbitros/eliminar/{id}(id=${arbitro.usuario.id})}" method="post">
-                <button type="submit" class="button delete-button">Eliminar</button>
-            </form>
-
+      <div class="col">
+        <div class="icon-text-group">
+          <i class="bi bi-person-fill"></i>
+          <input class="field" type="text" th:field="*{usuario.nombre}" th:placeholder="#{admin.referee.detail.name.placeholder}">
+          <input class="field" type="text" th:field="*{usuario.apellido}" th:placeholder="#{admin.referee.detail.lastname.placeholder}">
         </div>
-    </div>
-</body>
 
+        <div class="icon-text-group">
+          <i class="bi bi-envelope-fill"></i>
+          <input class="field" type="email" th:field="*{usuario.email}" th:placeholder="#{admin.referee.detail.email.placeholder}">
+        </div>
+
+        <div class="icon-text-group">
+          <i class="bi bi-clipboard2-fill"></i>
+          <select id="escalafon" class="field" th:field="*{escalafon}">
+            <option value="Municipal" th:text="#{admin.referee.rank.municipal}">Municipal</option>
+            <option value="Nacional" th:text="#{admin.referee.rank.national}">Nacional</option>
+            <option value="Internacional" th:text="#{admin.referee.rank.international}">Internacional</option>
+          </select>
+        </div>
+
+        <!-- Disponibilidad (toggle) -->
+        <div class="icon-text-group availability-group">
+          <i class="bi bi-toggle-on"></i>
+
+          <!-- Hidden field para binding con Spring (Boolean) -->
+          <input type="hidden" th:field="*{disponibilidad}" id="disponibilidadHidden"/>
+
+          <!-- Botón toggle -->
+          <button type="button"
+                  id="disponibilidadBtn"
+                  class="availability-button"
+                  aria-pressed="false"
+                  th:data-label-on="#{admin.referee.status.available}"
+                  th:data-label-off="#{admin.referee.status.unavailable}">
+          </button>
+        </div>
+      </div>
+
+       <div class="row buttons-row">
+  <!-- Botón Guardar -->
+  <button type="submit"
+          class="button view-button"
+          th:text="#{admin.referee.detail.save}">
+    Guardar
+  </button>
+
+  <!-- Botón Eliminar -->
+  <button type="submit"
+          class="button delete-button"
+          formmethod="post"
+          formnovalidate
+          th:formaction="@{/admin/gestion-arbitros/eliminar/{id}(id=${arbitro.usuario.id})}"
+          th:attr="onclick=|return confirm('#{admin.referee.detail.delete.confirm}')|"
+          th:text="#{admin.referee.detail.delete}">
+    Eliminar
+  </button>
+</div>
+    </form>
+    </form>
+      </div>
+    </form>
+
+    
+  </div>
+
+  <div th:if="${arbitro == null}">
+    <p class="h3" th:text="#{admin.referee.detail.notfound}">Árbitro no encontrado</p>
+  </div>
+</div>
+
+<!-- JS del toggle de disponibilidad -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+(function() {
+  const hidden = document.getElementById('disponibilidadHidden');
+  const btn = document.getElementById('disponibilidadBtn');
+  if (!hidden || !btn) return;
+
+  const labelOn = btn.getAttribute('data-label-on');
+  const labelOff = btn.getAttribute('data-label-off');
+
+  function syncFromHidden() {
+    const val = (hidden.value === 'true');
+    btn.textContent = val ? labelOn : labelOff;
+    btn.classList.toggle('is-on', val);
+    btn.classList.toggle('is-off', !val);
+    btn.setAttribute('aria-pressed', String(val));
+  }
+
+  function toggle() {
+    const current = (hidden.value === 'true');
+    hidden.value = String(!current);
+    syncFromHidden();
+  }
+
+  // Inicializar (si viene null, forzar false)
+  if (hidden.value !== 'true' && hidden.value !== 'false') {
+    hidden.value = 'false';
+  }
+  syncFromHidden();
+
+  btn.addEventListener('click', toggle);
+})();
+/*]]>*/
+</script>
+</body>
 </html>

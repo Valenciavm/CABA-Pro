@@ -1,11 +1,16 @@
-<!-- src/main/resources/templates/fragments/header.html -->
 <nav th:fragment="header_login">
-    <div class="left">
-        <img th:src="@{/css/icons/Logo.png}" alt="Logo-Caba" class="logo">
-        <span class="name">CABA PRO</span>
-    </div>
-    <div class="right">
-        <a th:href="@{/}">Inicio</a>
-        <a th:href="@{/login}">Iniciar sesión</a>
-    </div>
+  <div class="left">
+    <img th:src="@{/css/icons/Logo.png}" th:alt="#{logo.alt}" alt="Logo-Caba" class="logo">
+    <span class="name" th:text="#{app.title}">CABA PRO</span>
+  </div>
+  <div class="right">
+    <a th:href="@{/}" th:text="#{nav.home}">Inicio</a>
+    <a th:href="@{/login}" th:text="#{nav.login}">Iniciar sesión</a>
+
+    <!-- Botón/cambiador de idioma: enlaces simples que agregan ?lang=... a la URL actual -->
+    <span class="lang-switch" style="margin-left: 12px;">
+      <a href="?lang=es" th:text="#{lang.es}">ES</a> |
+      <a href="?lang=en" th:text="#{lang.en}">EN</a>
+    </span>
+  </div>
 </nav>

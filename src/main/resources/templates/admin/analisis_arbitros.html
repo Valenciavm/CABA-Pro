@@ -1,26 +1,34 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
 <head>
     <meta charset="UTF-8">
-    <title>Análisis Árbitros Admin</title>
+    <title th:text="#{admin.analytics.referees.page.title}">Análisis Árbitros Admin</title>
     <link rel="stylesheet" th:href="@{/css/sidebar.css}">
     <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
-<!-- Header -->
 <div th:replace="fragments/header_admin :: header_admin"></div>
 
 <div class="main-content">
-    <h1>Análisis de Árbitros</h1>
+    <h1 th:text="#{admin.analytics.referees.title}">Análisis de Árbitros</h1>
+
+    <!-- Ejemplo de tarjeta (sustituir por iteración real si luego hay lista) -->
     <div class="card">
         <div>
-            <strong>Árbitro:</strong> Ejemplo Árbitro
+            <strong th:text="#{admin.analytics.referees.referee.label}">Árbitro:</strong>
+            <span th:text="${arbitroNombre != null ? arbitroNombre : #messages.msgOrNull('admin.analytics.referees.sample.name') ?: 'Ejemplo Árbitro'}">
+                Ejemplo Árbitro
+            </span>
         </div>
         <div>
-            <strong>Rendimiento:</strong> 90%
+            <strong th:text="#{admin.analytics.referees.performance.label}">Rendimiento:</strong>
+            <span th:text="${rendimiento != null ? rendimiento : #messages.msgOrNull('admin.analytics.referees.sample.performance') ?: '90%'}">90%</span>
         </div>
     </div>
-    <button class="button create_button">Nuevo Análisis</button>
+
+    <button class="button create_button" type="button" th:text="#{admin.analytics.referees.new.button}">
+        Nuevo Análisis
+    </button>
 </div>
 </body>
 </html>

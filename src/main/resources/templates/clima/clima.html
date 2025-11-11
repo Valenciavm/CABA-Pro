@@ -1,73 +1,88 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="#{admin.weather.page.title}">Clima Actual</title>
     <link th:href="@{/css/main.css}" rel="stylesheet">
-    <title>Clima Actual</title>
+    <link th:href="@{/css/sidebar.css}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
 <body>
-    <div th:replace="fragments/header_admin :: header_admin"></div>
+<div th:replace="fragments/header_admin :: header_admin"></div>
 
-    <div class="main-content">
+<div class="main-content">
+    <h1 class="h1" th:text="#{admin.weather.title}">Clima Actual</h1>
 
-        <h1 class="h1">Clima Actual</h1>
-
-        <!-- Contenedor donde se mostrará la información del clima -->
-        <div id="clima-card" class="card text-white" style="display:none;">
-            <div class="col col-1">
-                <h3 class="card-title" id="ciudad">Ciudad</h3>
-                <div class="row-between">
-                    <div class="col">
-                        <p id="descripcion">Descripción</p>
-                        <p id="temperatura">Temperatura</p>
-                        <p id="humedad">Humedad</p>
-                    </div>
+    <!-- Card de clima -->
+    <div id="clima-card" class="card text-white" style="display:none;">
+        <div class="col col-1">
+            <h3 class="card-title" id="ciudad" th:text="#{admin.weather.city}">Ciudad</h3>
+            <div class="row-between">
+                <div class="col">
+                    <p id="descripcion" th:text="#{admin.weather.description}">Descripción:</p>
+                    <p id="temperatura" th:text="#{admin.weather.temperature}">Temperatura:</p>
+                    <p id="humedad" th:text="#{admin.weather.humidity}">Humedad:</p>
                 </div>
             </div>
         </div>
-
-        <div id="error-msg" style="display:none;">
-            <h2 class="h2">No se pudo obtener la información del clima.</h2>
-        </div>
-
-        <div class="button-group">
-            <button class="button create-button" onclick="obtenerClima()">Actualizar</button>
-        </div>
     </div>
 
-    <script>
-        async function obtenerClima() {
-            const card = document.getElementById("clima-card");
-            const errorMsg = document.getElementById("error-msg");
+    <!-- Error -->
+    <div id="error-msg" style="display:none;">
+        <h2 class="h2" th:text="#{admin.weather.error}">No se pudo obtener la información del clima.</h2>
+    </div>
 
-            card.style.display = "none";
-            errorMsg.style.display = "none";
+    <!-- Botón -->
+    <div class="button-group">
+        <button class="button create-button" type="button" th:text="#{admin.weather.refresh}" onclick="obtenerClima()">
+            Actualizar
+        </button>
+    </div>
+</div>
 
-            try {
-                const response = await fetch("/api/clima");
-                if (!response.ok) throw new Error("Error al obtener datos");
-                
-                const data = await response.json();
+<!-- JS con i18n embebido -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+    const MSG_DESCRIPTION = /*[[#{admin.weather.description}]]*/ 'Descripción:';
+    const MSG_TEMPERATURE = /*[[#{admin.weather.temperature}]]*/ 'Temperatura:';
+    const MSG_HUMIDITY    = /*[[#{admin.weather.humidity}]]*/ 'Humedad:';
+    const UNIT_CELSIUS    = /*[[#{admin.weather.unit.celsius}]]*/ '°C';
+    const UNIT_PERCENT    = /*[[#{admin.weather.unit.percent}]]*/ '%';
+    const ERROR_FETCH     = /*[[#{admin.weather.error}]]*/ 'No se pudo obtener la información del clima.';
 
-                // Actualizar los valores en la interfaz
-                document.getElementById("ciudad").textContent = data.ciudad;
-                document.getElementById("descripcion").textContent = "Descripción: " + data.descripcion;
-                document.getElementById("temperatura").textContent = "Temperatura: " + data.temperatura + " °C";
-                document.getElementById("humedad").textContent = "Humedad: " + data.humedad + "%";
+    async function obtenerClima() {
+        const card = document.getElementById("clima-card");
+        const errorMsg = document.getElementById("error-msg");
 
-                card.style.display = "block";
+        card.style.display = "none";
+        errorMsg.style.display = "none";
 
-            } catch (error) {
-                console.error("Error:", error);
-                errorMsg.style.display = "block";
-            }
+        try {
+            const response = await fetch("/api/clima");
+            if (!response.ok) throw new Error("fetch-failed");
+
+            const data = await response.json();
+
+            // Valores del backend:
+            // data.ciudad, data.descripcion, data.temperatura (num), data.humedad (num)
+
+            document.getElementById("ciudad").textContent = data.ciudad;
+            document.getElementById("descripcion").textContent = `${MSG_DESCRIPTION} ${data.descripcion}`;
+            document.getElementById("temperatura").textContent = `${MSG_TEMPERATURE} ${data.temperatura} ${UNIT_CELSIUS}`;
+            document.getElementById("humedad").textContent = `${MSG_HUMIDITY} ${data.humedad}${UNIT_PERCENT}`;
+
+            card.style.display = "block";
+        } catch (error) {
+            console.error("Error:", error);
+            errorMsg.style.display = "block";
         }
+    }
 
-        // Llama automáticamente al cargar la página
-        obtenerClima();
-    </script>
+    // Cargar al entrar
+    obtenerClima();
+/*]]>*/
+</script>
 </body>
 </html>

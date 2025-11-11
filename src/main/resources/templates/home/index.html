@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
 <head>
   <meta charset="utf-8" />
-  <title>Home</title>
+  <title th:text="#{app.title}">CABA PRO</title>
   <link rel="stylesheet" th:href="@{/css/index.css}">
   <!-- Fuente Google -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,109 +10,115 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 </head>
 <body>
-<div th:replace="fragments/header_login :: header_login"></div>
+  <div th:replace="fragments/header_login :: header_login"></div>
 
-<div class="carousel" aria-live="polite">
-  <div class="carousel-image" aria-hidden="true"></div>
+  <div class="carousel" aria-live="polite">
+    <div class="carousel-image" aria-hidden="true"></div>
+    <div class="carousel-black-overlay"></div>
 
-  <div class="carousel-black-overlay"></div>
-  <h1 class="title">CABA PRO</h1>
-</div>
+    <h1 class="title" th:text="#{app.title}">CABA PRO</h1>
 
-<div class="intro-row">
-  <section class="intro">
-    <h2> CABA PRO: El futuro de la gestión arbitral en el baloncesto.</h2>
-    <p>
-      CABA PRO es un sistema de gestión integral diseñado para modernizar y centralizar las operaciones de arbitraje.
-      Reemplazamos los procesos manuales y las comunicaciones fragmentadas con una plataforma web robusta, eficiente y escalable.
-    </p>
-    <p>
-      Desde la creación de perfiles de árbitros y la programación de partidos, hasta la notificación de asignaciones
-      y la liquidación de pagos, CABA PRO actúa como el “sistema nervioso central” de la institución de arbitraje,
-      garantizando <strong>eficiencia, transparencia y comunicación unificada</strong>.
-    </p>
-  </section>
-  <div class="intro-img">
-    <img src="/Imageneshome/arbitrol.png" alt="Descripción" />
+    <!-- Selector de idioma con enlaces simples a la raíz -->
+    <div class="lang-selector" style="margin-top:12px; text-align:center;">
+      <span th:text="#{lang.switch.label}">Cambiar idioma</span>:
+      <a th:href="@{/?lang=es}" th:text="#{lang.button.es}">Español</a> |
+      <a th:href="@{/?lang=en}" th:text="#{lang.button.en}">Inglés</a>
+    </div>
   </div>
-</div>
-<footer>
-  <p>© 2025 CABA PRO</p>
-</footer>
 
-<script>
-  (function() {
-    const images = [
-      '/Imageneshome/estadio.png',
-      '/Imageneshome/torneo.png',
-      '/Imageneshome/cancha.png',
-      '/Imageneshome/encesta.png'
-    ];
+  <div class="intro-row">
+    <section class="intro">
+      <h2 th:text="#{home.headline}">CABA PRO: El futuro de la gestión arbitral en el baloncesto.</h2>
+      <p th:text="#{home.paragraph1}">
+        CABA PRO es un sistema de gestión integral diseñado para modernizar y centralizar las operaciones de arbitraje.
+      </p>
+      <p th:text="#{home.paragraph2}">
+        Desde la creación de perfiles de árbitros y la programación de partidos, hasta la notificación de asignaciones
+        y la liquidación de pagos, CABA PRO actúa como el “sistema nervioso central” de la institución de arbitraje,
+        garantizando eficiencia, transparencia y comunicación unificada.
+      </p>
+    </section>
+    <div class="intro-img">
+      <img th:src="@{/Imageneshome/arbitrol.png}" th:alt="#{home.hero.alt}" alt="Descripción" />
+    </div>
+  </div>
 
-    // Tiempos (ms)
-    const fadeDuration = 1500;     // duración de la transición (fade in/out)
-    const imageVisible = 8000;     // cuánto se ve la imagen (≈8s)
-    const blackFull = 3000;        // cuánto queda negro (≈3s)
+  <footer>
+    <p th:text="#{footer.copy(${#temporals.createNow().year})}">© 2025 CABA PRO</p>
+  </footer>
 
-    // Elementos
-    const imageEl = document.querySelector('.carousel-image');
-    const overlay = document.querySelector('.carousel-black-overlay');
-    if (!imageEl || !overlay) return;
+  <script>
+    (function() {
+      const images = [
+        '/Imageneshome/estadio.png',
+        '/Imageneshome/torneo.png',
+        '/Imageneshome/cancha.png',
+        '/Imageneshome/encesta.png'
+      ];
 
-    overlay.style.transition = `opacity ${fadeDuration}ms cubic-bezier(0.22, 0.8, 0.24, 1)`;
-    imageEl.style.transition = `opacity ${fadeDuration}ms ease-in-out`;
+      // Tiempos (ms)
+      const fadeDuration = 1500;     // duración de la transición (fade in/out)
+      const imageVisible = 8000;     // cuánto se ve la imagen (≈8s)
+      const blackFull = 3000;        // cuánto queda negro (≈3s)
 
-    images.forEach(src => {
-      const img = new Image();
-      img.src = src;
-    });
+      // Elementos
+      const imageEl = document.querySelector('.carousel-image');
+      const overlay = document.querySelector('.carousel-black-overlay');
+      if (!imageEl || !overlay) return;
 
-    let current = 0;
+      overlay.style.transition = `opacity ${fadeDuration}ms cubic-bezier(0.22, 0.8, 0.24, 1)`;
+      imageEl.style.transition = `opacity ${fadeDuration}ms ease-in-out`;
 
-    function setBackground(idx) {
-      imageEl.style.backgroundImage = "url('" + images[idx] + "')";
-    }
+      images.forEach(src => {
+        const img = new Image();
+        img.src = src;
+      });
 
-    function showImage(index) {
-      setBackground(index);
+      let current = 0;
 
-      void overlay.offsetWidth;
+      function setBackground(idx) {
+        imageEl.style.backgroundImage = "url('" + images[idx] + "')";
+      }
 
-      overlay.style.opacity = '0';
+      function showImage(index) {
+        setBackground(index);
 
-      setTimeout(() => {
-        overlay.style.opacity = '1';
+        void overlay.offsetWidth;
+
+        overlay.style.opacity = '0';
 
         setTimeout(() => {
-          const next = (index + 1) % images.length;
-          setBackground(next);
+          overlay.style.opacity = '1';
 
           setTimeout(() => {
-            showImage(next);
-          }, blackFull);
+            const next = (index + 1) % images.length;
+            setBackground(next);
 
-        }, fadeDuration);
-      }, fadeDuration + imageVisible);
-    }
+            setTimeout(() => {
+              showImage(next);
+            }, blackFull);
 
-
-    overlay.style.opacity = '1';
-    setBackground(current);
-
-    setTimeout(() => {
-      showImage(current);
-    }, 400);
-
-    document.addEventListener('visibilitychange', function() {
-      if (document.hidden) {
-        if (overlay) overlay.style.opacity = '1';
-      } else {
-        setTimeout(() => {
-          showImage(current);
-        }, 300);
+          }, fadeDuration);
+        }, fadeDuration + imageVisible);
       }
-    });
-  })();
-</script>
+
+      overlay.style.opacity = '1';
+      setBackground(current);
+
+      setTimeout(() => {
+        showImage(current);
+      }, 400);
+
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          if (overlay) overlay.style.opacity = '1';
+        } else {
+          setTimeout(() => {
+            showImage(current);
+          }, 300);
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

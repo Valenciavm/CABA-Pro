@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
 <head>
     <meta charset="UTF-8">
-    <title>Perfil del Árbitro</title>
+    <title th:text="#{arbitro.profile.title}">Perfil del Árbitro</title>
     <link rel="stylesheet" th:href="@{/css/sidebar.css}">
     <link rel="stylesheet" th:href="@{/css/perfil.css}">
     <link rel="stylesheet" th:href="@{/css/main.css}">
@@ -11,20 +11,45 @@
 <div th:replace="fragments/header_arbitro :: header_arbitro"></div>
 
 <div class="main-content">
-    <h1>Perfil del Árbitro</h1>
+    <h1 th:text="#{arbitro.profile.title}">Perfil del Árbitro</h1>
+
     <div class="card">
         <div th:if="${usuario != null}">
-            <img th:src="@{${usuario.foto}}" alt="Foto de perfil">
-            <div><strong>ID:</strong> <span th:text="${usuario.id}">-</span></div>
-            <div><strong>Usuario:</strong> <span th:text="${usuario.username}">-</span></div>
-            <div><strong>Email:</strong> <span th:text="${usuario.email}">-</span></div>
-            <div><strong>Nombre:</strong> <span th:text="${usuario.nombre}">-</span></div>
-            <div><strong>Apellido:</strong> <span th:text="${usuario.apellido}">-</span></div>
-            <div><strong>Rol:</strong> <span th:text="${prettyRole}">-</span></div>
+            <img th:src="@{${usuario.foto}}" th:alt="#{arbitro.profile.photo.alt}" alt="Foto de perfil">
+
+            <div>
+                <strong th:text="#{arbitro.profile.id}">ID:</strong>
+                <span th:text="${usuario.id}">-</span>
+            </div>
+
+            <div>
+                <strong th:text="#{arbitro.profile.username}">Usuario:</strong>
+                <span th:text="${usuario.username}">-</span>
+            </div>
+
+            <div>
+                <strong th:text="#{arbitro.profile.email}">Email:</strong>
+                <span th:text="${usuario.email}">-</span>
+            </div>
+
+            <div>
+                <strong th:text="#{arbitro.profile.name}">Nombre:</strong>
+                <span th:text="${usuario.nombre}">-</span>
+            </div>
+
+            <div>
+                <strong th:text="#{arbitro.profile.lastname}">Apellido:</strong>
+                <span th:text="${usuario.apellido}">-</span>
+            </div>
+
+            <div>
+                <strong th:text="#{arbitro.profile.role}">Rol:</strong>
+                <span th:text="${prettyRole}">-</span>
+            </div>
         </div>
 
         <div th:if="${usuario == null}">
-            <p>No se encontró información del árbitro.</p>
+            <p th:text="#{arbitro.profile.notfound}">No se encontró información del árbitro.</p>
         </div>
     </div>
 </div>

@@ -1,9 +1,9 @@
-<!Doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagos del árbitro</title>
+    <title th:text="#{arbitro.payments.title}">Pagos del Árbitro</title>
     <link rel="stylesheet" th:href="@{/css/sidebar.css}">
     <link rel="stylesheet" th:href="@{/css/pagos.css}">
     <link rel="stylesheet" th:href="@{/css/partido.css}">
@@ -12,32 +12,69 @@
 </head>
 <body>
 <div th:replace="fragments/header_arbitro :: header_arbitro"></div>
-<div class="main-content">
-    <h1 class="h1">Pagos del Árbitro</h1>
 
-    <div class = "button-group">
+<div class="main-content">
+    <h1 class="h1" th:text="#{arbitro.payments.title}">Pagos del Árbitro</h1>
+
+    <!-- Botones de descarga -->
+    <div class="button-group">
         <div class="button create-button">
-            <i class = "bi bi-currency-dollar"></i>
-            <a class = "text-white" th:href="@{/arbitro/tarifas/descargar-total(format=${'pdf'})}">Descargar total en PDF</a>
+            <i class="bi bi-currency-dollar"></i>
+            <a class="text-white"
+               th:href="@{/arbitro/tarifas/descargar-total(format=${'pdf'})}"
+               th:text="#{arbitro.payments.download.total.pdf}">
+                Descargar total en PDF
+            </a>
         </div>
         <div class="button create-button" style="margin-left:1rem;">
             <i class="bi bi-file-earmark-excel"></i>
-            <a class = "text-white" th:href="@{/arbitro/tarifas/descargar-total(format=${'excel'})}">Descargar total en Excel</a>
+            <a class="text-white"
+               th:href="@{/arbitro/tarifas/descargar-total(format=${'excel'})}"
+               th:text="#{arbitro.payments.download.total.excel}">
+                Descargar total en Excel
+            </a>
         </div>
     </div>
-    <div class="tarifas-container">
+
+    <!-- Mensaje si vacío -->
+    <div th:if="${#lists.isEmpty(tarifaDetalles)}" class="card">
+        <h3 class="h2" th:text="#{arbitro.payments.empty}">No hay pagos registrados.</h3>
+    </div>
+
+    <!-- Lista de pagos -->
+    <div class="tarifas-container" th:if="${!#lists.isEmpty(tarifaDetalles)}">
         <div class="tarifa-card" th:each="detalle : ${tarifaDetalles}">
             <div class="tarifa-header">
                 <div class="tarifa-partido" th:text="${detalle.partidoNombre}">Nombre del Partido</div>
-                <div class="tarifa-rol" th:text="${detalle.rol}">Rol</div>
+                <div class="tarifa-rol">
+                    <span th:text="#{arbitro.payments.role}">Rol:</span>
+                    <span th:text="${detalle.rol}">Rol</span>
+                </div>
             </div>
             <div class="tarifa-body">
-                <div>Detalles:</div>
-                <div th:text="${detalle.tarifa.partidoArbitro.partido.fecha}">Fecha</div>
-                    <div class="tarifa-monto" th:text=" '$' + ${detalle.tarifa.monto}">0</div>
+                <div>
+                    <span th:text="#{arbitro.payments.date}">Fecha:</span>
+                    <span th:text="${detalle.tarifa.partidoArbitro.partido.fecha}">Fecha</span>
+                </div>
+                <div class="tarifa-monto">
+                    <span th:text="#{arbitro.payments.amount}">Monto:</span>
+                    <span>
+                        <span th:text="#{common.currency.symbol}">$</span>
+                        <span th:text="${detalle.tarifa.monto}">0</span>
+                    </span>
+                </div>
             </div>
         </div>
-        </div>
+    </div>
 
-    </body>
+    <!-- Total calculado (opcional si el backend lo provee) -->
+    <div class="card" th:if="${totalMonto != null}">
+        <h2 class="h2" th:text="#{arbitro.payments.total.label}">Total acumulado</h2>
+        <p class="h3">
+            <span th:text="#{common.currency.symbol}">$</span>
+            <span th:text="${totalMonto}">0</span>
+        </p>
+    </div>
+</div>
+</body>
 </html>

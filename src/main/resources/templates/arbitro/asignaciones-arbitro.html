@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="#{arbitro.assignments.title}">Mis Asignaciones</title>
     <link th:href="@{/css/main.css}" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/sidebar.css}">
 </head>
@@ -12,48 +12,56 @@
 <div th:replace="fragments/header_arbitro :: header_arbitro"></div>
 
 <div class="main-content">
+    <h1 class="h1" th:text="#{arbitro.assignments.title}">Mis Asignaciones</h1>
 
-    <h1 class="h1">Mis Asignaciones</h1>
-
-    <!-- Si no tiene asignaciones -->
+    <!-- Sin asignaciones -->
     <div th:if="${#lists.isEmpty(asignaciones)}">
-        <h3 class="h2">No tienes asignaciones pendientes.</h3>
+        <h3 class="h2" th:text="#{arbitro.assignments.empty}">No tienes asignaciones pendientes.</h3>
     </div>
 
     <!-- Lista de asignaciones -->
     <div th:each="asignacion : ${asignaciones}" class="card">
-        <!-- Contenedor principal que alinea la información a la izquierda y los botones a la derecha -->
         <div class="row-between align-start" style="width: 100%;">
-
-            <!-- Columna de información -->
+            <!-- Información -->
             <div class="col">
                 <h3 class="card-title mt-0" th:text="${asignacion.partido.nombre}">Nombre del partido</h3>
-                <p><b>Fecha:</b> <span th:text="${asignacion.partido.fecha}"></span></p>
-                <p><b>Rol:</b> <span th:text="${asignacion.rolPartido}"></span></p>
-                <p><b>Estado:</b>
-                    <span th:text="${asignacion.estado}"
+
+                <p>
+                    <b th:text="#{arbitro.assignments.date}">Fecha:</b>
+                    <span th:text="${asignacion.partido.fecha}"></span>
+                </p>
+
+                <p>
+                    <b th:text="#{arbitro.assignments.role}">Rol:</b>
+                    <span th:text="${asignacion.rolPartido}"></span>
+                </p>
+
+                <p>
+                    <b th:text="#{arbitro.assignments.status}">Estado:</b>
+                    <span th:text="${#messages.msgOrNull('status.' + asignacion.estado) ?: asignacion.estado}"
                           th:class="${asignacion.estado == 'PENDIENTE'} ? 'status-pending' : (${asignacion.estado == 'ACEPTADO'} ? 'status-accepted' : 'status-rejected')">
                     </span>
                 </p>
             </div>
 
-            <!-- Columna de acciones (botones) -->
+            <!-- Acciones -->
             <div class="col-auto">
-                <!-- Mostrar botones solo si el estado es PENDIENTE -->
                 <div th:if="${asignacion.estado == 'PENDIENTE'}" class="card-actions">
                     <form th:action="@{/arbitro/asignaciones/{id}/aceptar(id=${asignacion.id})}" method="post">
-                        <button type="submit" class="button create-button">Aceptar</button>
+                        <button type="submit" class="button create-button" th:text="#{arbitro.assignments.accept}">
+                            Aceptar
+                        </button>
                     </form>
                     <form th:action="@{/arbitro/asignaciones/{id}/rechazar(id=${asignacion.id})}" method="post">
-                        <button type="submit" class="button delete-button">Rechazar</button>
+                        <button type="submit" class="button delete-button" th:text="#{arbitro.assignments.reject}">
+                            Rechazar
+                        </button>
                     </form>
                 </div>
             </div>
-
         </div>
     </div>
 
 </div>
 </body>
-
 </html>

@@ -1,30 +1,46 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{admin.analytics.expenses.page.title}">Análisis de Datos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-    <div th:replace="fragments/header_admin :: header_admin"></div>
-    <div class="main-content">
-        <h1 class="h1">Análisis de gastos</h1>
 
-        <div class="gastos-grid">
-            <div th:each="fila : ${gastosPartidos}" class="card">
-                <h3 th:text="${fila.partidoNombre}">Nombre Partido</h3>
-                <p class="monto">$<span th:text="${fila.totalPartido}">0</span></p>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2 class="text-white">Total gastado</h2>
-            <p class="total-monto">$<span th:text="${gastoTotal}">0</span></p>
-        </div>
-    </div>
-</body>
-</html>
-
-    <title>Análisis de Datos</title>
     <link rel="stylesheet" th:href="@{/css/sidebar.css}">
     <link rel="stylesheet" th:href="@{/css/analisis_datos.css}">
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
+<body>
+<div th:replace="fragments/header_admin :: header_admin"></div>
+
+<div class="main-content">
+    <h1 class="h1" th:text="#{admin.analytics.expenses.title}">Análisis de gastos</h1>
+
+    <!-- Estado sin datos -->
+    <div class="card" th:if="${#lists.isEmpty(gastosPartidos)}"
+         th:text="#{admin.analytics.expenses.empty}">
+        No hay datos de gastos
+    </div>
+
+    <!-- Grid de gastos por partido -->
+    <div class="gastos-grid" th:if="${!#lists.isEmpty(gastosPartidos)}">
+        <div th:each="fila : ${gastosPartidos}" class="card">
+            <h3 th:text="${fila.partidoNombre}">Nombre Partido</h3>
+            <p class="monto">
+                <span th:text="#{common.currency.symbol}">$</span>
+                <span th:text="${fila.totalPartido}">0</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Total gastado -->
+    <div class="card" th:if="${!#lists.isEmpty(gastosPartidos)}">
+        <h2 class="text-white" th:text="#{admin.analytics.expenses.total.title}">Total gastado</h2>
+        <p class="total-monto">
+            <span th:text="#{common.currency.symbol}">$</span>
+            <span th:text="${gastoTotal}">0</span>
+        </p>
+    </div>
+</div>
+</body>
+</html>

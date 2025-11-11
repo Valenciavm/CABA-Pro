@@ -1,41 +1,53 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link th:href="@{/css/main.css}" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link th:href="@{/css/main.css}" rel="stylesheet">
+  <title th:text="#{admin.arena.detail.title}">Cancha</title>
 </head>
-
 <body>
+<div th:replace="fragments/header_admin :: header_admin"></div>
 
-    <div th:replace="fragments/header_admin :: header_admin"></div>
+<div class="main-content">
+  <h1 class="h1" th:text="#{admin.arena.detail.title}">Cancha</h1>
 
-    <div class="main-content">
-        <h1 class="h1">Cancha</h1>
+  <div class="card card-large" th:if="${cancha != null}">
+    <div class="col col-1">
+      <h3 class="card-title" th:text="${cancha.tipo}">Tipo</h3>
+      <div class="row-between">
+        <div class="col">
+          <p>
+            <span th:text="#{admin.arena.detail.id}">ID:</span>
+            <span th:text="${cancha.idCancha}">1</span>
+          </p>
+          <p>
+            <span th:text="#{admin.arena.detail.address}">Dirección:</span>
+            <span th:text="${cancha.lugar}">Lugar</span>
+          </p>
+          <p>
+            <span th:text="#{admin.arena.detail.price}">Precio:</span>
+            <span th:text="'$' + ${cancha.precio}">0</span>
+          </p>
+          <p th:text="${cancha.disponibilidad} ? #{admin.arena.detail.available} : #{admin.arena.detail.unavailable}">
+            Disponible
+          </p>
+        </div>
 
-            <div class="card card-large">
-                <div class="col col-1">
-                    <h3 class="card-title" th:text="${cancha.tipo}">Tipo</h3>
-                    <div class="row-between">
-                        <div class="col">
-                            <p th:text=" 'ID: ' + ${cancha.idCancha}">ID</p>
-                            <p th:text=" ' Dirección: ' + ${cancha.lugar}">Lugar</p>
-                            <p th:text=" '$' + ${cancha.precio}">Precio</p>
-                            <p th:text="${cancha.disponibilidad} ? 'Disponible' : 'No Disponible' "></p>
-                        </div>
-
-                        <form th:action="@{/admin/eliminar-cancha/{id}(id=${cancha.idCancha})}" method = "post">
-                            <button type="submit" class="button delete-button">Eliminar</button>
-                        </form>
-                    </div>
-                </div>
-
-
-            </div>
-
+        <form th:action="@{/admin/eliminar-cancha/{id}(id=${cancha.idCancha})}"
+              method="post"
+              th:attr="onsubmit=|return confirm('#{admin.arena.detail.delete.confirm}')|">
+          <button type="submit" class="button delete-button" th:text="#{admin.arena.detail.delete}">
+            Eliminar
+          </button>
+        </form>
+      </div>
     </div>
+  </div>
 
+  <div th:if="${cancha == null}">
+    <p class="h3">Cancha no encontrada.</p>
+  </div>
+</div>
 </body>
-
 </html>

@@ -1,40 +1,44 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" th:href="@{/css/partido.css}">
-    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-    <link rel="stylesheet" th:href="@{/css/main.css}">
-    <meta charset="UTF-8">
-    <title>Ver Partidos</title>
+  <link rel="stylesheet" th:href="@{/css/partido.css}">
+  <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+  <meta charset="UTF-8">
+  <title th:text="#{admin.match.list.title}">Ver Partidos</title>
 </head>
 <body>
-    <!-- Header -->
-    <div th:replace="fragments/header_admin :: header_admin"></div>
-    
-    <div class="main-content">
-        <h1 class="h1">Lista de Partidos</h1>
+  <div th:replace="fragments/header_admin :: header_admin"></div>
 
-        <!-- Mensajes de notificación -->
-        <div class="message" th:if="${mensaje}" th:text="${mensaje}"></div>
-        <div class="error" th:if="${error}" th:text="${error}"></div>
+  <div class="main-content">
+    <h1 class="h1" th:text="#{admin.match.list.title}">Lista de Partidos</h1>
 
-        <div class="partidos-container">
-            <div th:if="${partidos.empty}" class="no-partidos">No hay partidos registrados.</div>
+    <div class="message" th:if="${mensaje}" th:text="${mensaje}"></div>
+    <div class="error" th:if="${error}" th:text="${error}"></div>
 
-            <div th:each="p : ${partidos}" class="partido-card">
-                <div class="partido-nombre text-white" th:text="${p.nombre}">Nombre del Partido</div>
-                <div class="partido-equipos">
-                    <span class="equipo text-white" th:text="${p.equipo1}">Equipo 1</span>
-                    <span class="vs">VS</span>
-                    <span class="equipo text-white" th:text="${p.equipo2}">Equipo 2</span>
-                </div>
-                <div class="partido-details">
-                    <span th:text="${p.fecha}">Fecha</span>
-                    <span th:text="${p.hora}">Hora</span>
-                    <a class="btn-secondary" th:href="@{/admin/partido/ver_partido/{id}(id=${p.id})}">Ver</a>
-                </div>
-            </div>
+    <div class="partidos-container">
+      <div th:if="${partidos.empty}" class="no-partidos" th:text="#{admin.match.list.empty}">
+        No hay partidos registrados.
+      </div>
+
+      <div th:each="p : ${partidos}" class="partido-card">
+        <div class="partido-nombre text-white" th:text="${p.nombre}">Nombre del Partido</div>
+
+        <div class="partido-equipos">
+          <span class="equipo text-white" th:text="${p.equipo1}">Equipo 1</span>
+          <span class="vs" th:text="#{admin.match.vs}">VS</span>
+          <span class="equipo text-white" th:text="${p.equipo2}">Equipo 2</span>
         </div>
+
+        <div class="partido-details">
+          <span th:text="${p.fecha}">Fecha</span>
+          <span th:text="${p.hora}">Hora</span>
+          <a class="btn-secondary" th:href="@{/admin/partido/ver_partido/{id}(id=${p.id})}" th:text="#{common.view}">
+            Ver
+          </a>
+        </div>
+      </div>
     </div>
+  </div>
 </body>
 </html>

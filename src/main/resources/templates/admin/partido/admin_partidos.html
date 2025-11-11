@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" th:href="@{/css/partido.css}">
-    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-    <link rel="stylesheet" th:href="@{/css/main.css}">
-    <meta charset="UTF-8">
-    <title>Menu Partido</title>
+  <link rel="stylesheet" th:href="@{/css/partido.css}">
+  <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+  <meta charset="UTF-8">
+  <title th:text="#{admin.match.menu.title}">Menu Partido</title>
 </head>
 <body>
-    <!-- Header -->
-    <div th:replace="fragments/header_admin :: header_admin"></div>
-    <div class="main-content">
-        <h1 class="h1">Bienvenido al Menu del Partido</h1>
-        <div class="button_group">
-            <a class="button create_button" th:href="@{/admin/partido/nuevo_partido}">Nuevo Partido</a>
-            <a class="button view_button" th:href="@{/admin/partido/admin_ver_partidos}">Ver Partidos</a>
-        </div>
-        
-        <!-- Mensajes de notificación -->
-        <div class="message" th:if="${mensaje}" th:text="${mensaje}"></div>
-        <div class="error" th:if="${error}" th:text="${error}"></div>
+  <div th:replace="fragments/header_admin :: header_admin"></div>
+  <div class="main-content">
+    <h1 class="h1" th:text="#{admin.match.menu.welcome}">Bienvenido al Menu del Partido</h1>
+
+    <div class="button_group">
+      <a class="button create_button" th:href="@{/admin/partido/nuevo_partido}" th:text="#{admin.match.new}">Nuevo Partido</a>
+      <a class="button view_button" th:href="@{/admin/partido/admin_ver_partidos}" th:text="#{admin.match.viewAll}">Ver Partidos</a>
     </div>
+
+    <!-- Mensajes de notificación -->
+    <div class="message" th:if="${mensaje}" th:text="${mensaje}"></div>
+    <div class="error" th:if="${error}" th:text="${error}"></div>
+  </div>
 </body>
 </html>

@@ -1,137 +1,127 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Nuevo Partido</title>
-	<link rel="stylesheet" th:href="@{/css/partido.css}">
-	<link rel="stylesheet" th:href="@{/css/sidebar.css}">
-	<link rel="stylesheet" th:href="@{/css/partido_form.css}">
-	<link rel="stylesheet" th:href="@{/css/main.css}">
-	<link rel="stylesheet" th:href="@{/css/form.css}">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="#{admin.match.new.title}">Nuevo Partido</title>
+  <link rel="stylesheet" th:href="@{/css/partido.css}">
+  <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+  <link rel="stylesheet" th:href="@{/css/partido_form.css}">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+  <link rel="stylesheet" th:href="@{/css/form.css}">
 </head>
-
 <body>
-	<div th:replace="fragments/header_admin :: header_admin"></div>
+  <div th:replace="fragments/header_admin :: header_admin"></div>
 
-	<div class="main-content">
-		<h1 class="h1">Crear nuevo partido</h1>
+  <div class="main-content">
+    <h1 class="h1" th:text="#{admin.match.new.heading}">Crear nuevo partido</h1>
 
-		<!-- Mostrar mensajes de error si existen -->
-		<div class="error" th:if="${error}" th:text="${error}"></div>
+    <div class="error" th:if="${error}" th:text="${error}"></div>
 
-		<div class="form-card">
-			<form th:action="@{/admin/partido/nuevo_partido}" th:object="${partido}" method="post">
-				<div class="form-row">
-					<div>
-						<label class = "text-white" for="nombre">Nombre</label>
-						<input id="nombre" type="text" th:field="*{nombre}" placeholder="Nombre del partido" required>
-					</div>
-				</div>
+    <div class="form-card">
+      <form th:action="@{/admin/partido/nuevo_partido}" th:object="${partido}" method="post">
+        <div class="form-row">
+          <div>
+            <label class="text-white" for="nombre" th:text="#{admin.match.name}">Nombre</label>
+            <input id="nombre" type="text" th:field="*{nombre}" th:placeholder="#{admin.match.name.placeholder}" required>
+          </div>
+        </div>
 
-				<div class="form-row">
-					<div>
-						<label for="equipo1">Equipo 1</label>
-						<input id="equipo1" type="text" placeholder="Nombre equipo 1" required th:field="*{equipo1}">
-					</div>
-					<div>
-						<label for="equipo2">Equipo 2</label>
-						<input id="equipo2" type="text" placeholder="Nombre equipo 2" required th:field="*{equipo2}">
-					</div>
-				</div>
+        <div class="form-row">
+          <div>
+            <label for="equipo1" th:text="#{admin.match.team1}">Equipo 1</label>
+            <input id="equipo1" type="text" th:placeholder="#{admin.match.team1.placeholder}" required th:field="*{equipo1}">
+          </div>
+          <div>
+            <label for="equipo2" th:text="#{admin.match.team2}">Equipo 2</label>
+            <input id="equipo2" type="text" th:placeholder="#{admin.match.team2.placeholder}" required th:field="*{equipo2}">
+          </div>
+        </div>
 
-				<div class="form-row">
-					<div>
-						<label for="fecha">Fecha</label>
-						<!--<input id="fecha" type="date" th:field="*{fecha}" required>-->
-						<input id="fecha" type="date" th:field="*{fecha}"
-							th:value="*{fecha} != null ? ${#dates.format(fecha, 'yyyy-MM-dd')} : ''" required>
-					</div>
-					<div>
-						<label for="hora">Hora</label>
-						<!--<input id="hora" type="time" th:field="*{hora}" required>-->
-						<input id="hora" type="time" th:field="*{hora}" th:value="*{hora} != null ? ${hora} : ''"
-							required>
-					</div>
-				</div>
+        <div class="form-row">
+          <div>
+            <label for="fecha" th:text="#{admin.match.date}">Fecha</label>
+            <input id="fecha" type="date" th:field="*{fecha}" th:value="*{fecha} != null ? ${#dates.format(fecha, 'yyyy-MM-dd')} : ''" required>
+          </div>
+          <div>
+            <label for="hora" th:text="#{admin.match.time}">Hora</label>
+            <input id="hora" type="time" th:field="*{hora}" th:value="*{hora} != null ? ${hora} : ''" required>
+          </div>
+        </div>
 
-				<!-- Selección de árbitros -->
-				<div class="form-row">
-					<div>
-						<label for="principalId">Árbitro principal</label>
-						<select id="principalId" name="principalId" required>
-							<option value="" disabled th:if="${principalId} == null" selected>-- Seleccione --</option>
-							<option th:each="arb : ${arbitros}" th:value="${arb.usuarioId}"
-								th:text="${arb.usuario.nombre} + ' ' + ${arb.usuario.apellido}"
-								th:selected="${principalId} == ${arb.usuarioId}"></option>
-						</select>
-					</div>
-					<div>
-						<label for="auxiliarId">Árbitro auxiliar</label>
-						<select id="auxiliarId" name="auxiliarId" required>
-							<option value="" disabled th:if="${auxiliarId} == null" selected>-- Seleccione --</option>
-							<option th:each="arb : ${arbitros}" th:value="${arb.usuarioId}"
-								th:text="${arb.usuario.nombre} + ' ' + ${arb.usuario.apellido}"
-								th:selected="${auxiliarId} == ${arb.usuarioId}"></option>
-						</select>
-					</div>
-					<div>
-						<label for="segundoAuxId">Segundo auxiliar</label>
-						<select id="segundoAuxId" name="segundoAuxId" required>
-							<option value="" disabled th:if="${segundoAuxId} == null" selected>-- Seleccione --</option>
-							<option th:each="arb : ${arbitros}" th:value="${arb.usuarioId}"
-								th:text="${arb.usuario.nombre} + ' ' + ${arb.usuario.apellido}"
-								th:selected="${segundoAuxId} == ${arb.usuarioId}"></option>
-						</select>
-					</div>
-				</div>
+        <!-- Árbitros -->
+        <div class="form-row">
+          <div>
+            <label for="principalId" th:text="#{admin.match.referee.main}">Árbitro principal</label>
+            <select id="principalId" name="principalId" required>
+              <option value="" disabled th:if="${principalId} == null" selected th:text="#{common.select}">-- Seleccione --</option>
+              <option th:each="arb : ${arbitros}" th:value="${arb.usuarioId}"
+                      th:text="${arb.usuario.nombre} + ' ' + ${arb.usuario.apellido}"
+                      th:selected="${principalId} == ${arb.usuarioId}"></option>
+            </select>
+          </div>
+          <div>
+            <label for="auxiliarId" th:text="#{admin.match.referee.assistant}">Árbitro auxiliar</label>
+            <select id="auxiliarId" name="auxiliarId" required>
+              <option value="" disabled th:if="${auxiliarId} == null" selected th:text="#{common.select}">-- Seleccione --</option>
+              <option th:each="arb : ${arbitros}" th:value="${arb.usuarioId}"
+                      th:text="${arb.usuario.nombre} + ' ' + ${arb.usuario.apellido}"
+                      th:selected="${auxiliarId} == ${arb.usuarioId}"></option>
+            </select>
+          </div>
+          <div>
+            <label for="segundoAuxId" th:text="#{admin.match.referee.secondAssistant}">Segundo auxiliar</label>
+            <select id="segundoAuxId" name="segundoAuxId" required>
+              <option value="" disabled th:if="${segundoAuxId} == null" selected th:text="#{common.select}">-- Seleccione --</option>
+              <option th:each="arb : ${arbitros}" th:value="${arb.usuarioId}"
+                      th:text="${arb.usuario.nombre} + ' ' + ${arb.usuario.apellido}"
+                      th:selected="${segundoAuxId} == ${arb.usuarioId}"></option>
+            </select>
+          </div>
+        </div>
 
-				<div class="form-row">
-					<div>
-						<label for="canchaId">Cancha</label>
-						<select id="canchaId" name="canchaId" required>
-							<option value="" disabled th:if="${canchaId} == null" selected>-- Seleccione --</option>
-							<option th:each="can : ${canchas}" th:value="${can.idCancha}"
-								th:text="${can.tipo} + ' - ' + ${can.lugar} + ' - $' + ${can.precio}"
-								th:selected="${canchaId} == ${can.idCancha}"></option>
-						</select>
-					</div>
-				</div>
+        <div class="form-row">
+          <div>
+            <label for="canchaId" th:text="#{admin.match.arena}">Cancha</label>
+            <select id="canchaId" name="canchaId" required>
+              <option value="" disabled th:if="${canchaId} == null" selected th:text="#{common.select}">-- Seleccione --</option>
+              <option th:each="can : ${canchas}" th:value="${can.idCancha}"
+                      th:text="${can.tipo} + ' - ' + ${can.lugar} + ' - $' + ${can.precio}"
+                      th:selected="${canchaId} == ${can.idCancha}"></option>
+            </select>
+          </div>
+        </div>
 
-				<div class="form-row">
-					<div>
-						<label for="torneo">Torneo (opcional)</label>
-						<select id="torneo" th:field="*{torneo.id}">
-							<option value="" selected>-- Ninguno --</option>
-							<option th:each="torneo : ${torneos}" th:value="${torneo.id}" th:text="${torneo.nombre}">
-							</option>
-						</select>
-					</div>
-				</div>
+        <div class="form-row">
+          <div>
+            <label for="torneo" th:text="#{admin.match.tournament.optional}">Torneo (opcional)</label>
+            <select id="torneo" th:field="*{torneo.id}">
+              <option value="" selected th:text="#{common.none}">-- Ninguno --</option>
+              <option th:each="torneo : ${torneos}" th:value="${torneo.id}" th:text="${torneo.nombre}"></option>
+            </select>
+          </div>
+        </div>
 
-				<div class="form-row">
-					<div>
-						<label for="fase">Fase(Opcional)</label>
-						<select id="fase" th:field="*{fase}" required>
-							<option value="" disabled selected>-- Seleccione fase --</option>
-							<option value="Ninguno">-- Ninguno --</option>
-							<option value="Cuartos">Cuartos</option>
-							<option value="Semifinales">Semifinales</option>
-							<option value="Final">Final</option>
-						</select>
-					</div>
-				</div>
+        <div class="form-row">
+          <div>
+            <label for="fase" th:text="#{admin.match.phase.optional}">Fase(Opcional)</label>
+            <select id="fase" th:field="*{fase}" required>
+              <option value="" disabled selected th:text="#{admin.match.phase.select}">-- Seleccione fase --</option>
+              <option value="Ninguno" th:text="#{common.none}">-- Ninguno --</option>
+              <option value="Cuartos" th:text="#{admin.match.phase.quarters}">Cuartos</option>
+              <option value="Semifinales" th:text="#{admin.match.phase.semis}">Semifinales</option>
+              <option value="Final" th:text="#{admin.match.phase.final}">Final</option>
+            </select>
+          </div>
+        </div>
 
-				<div class="actions">
-					<button class="button btn-primary create-button" type="submit">Guardar</button>
-					<a class="button btn-secondary delete-button"
-						th:href="@{/admin/partido/admin_ver_partidos}">Cancelar</a>
-				</div>
-			</form>
-		</div>
-	</div>
+        <div class="actions">
+          <button class="button btn-primary create-button" type="submit" th:text="#{common.save}">Guardar</button>
+          <a class="button btn-secondary delete-button"
+             th:href="@{/admin/partido/admin_ver_partidos}" th:text="#{common.cancel}">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
 </body>
-
 </html>

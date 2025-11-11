@@ -1,215 +1,215 @@
-<!-- html -->
-  <!DOCTYPE html>
-  <nav th:fragment="header_arbitro">
-    <html lang="es">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Menu</title>
+<nav th:fragment="header_arbitro">
+  <html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="#{admin.header.title}">Menu</title>
 
-      <!-- CSRF (Spring Security) -->
-      <meta name="_csrf" th:if="${_csrf != null}" th:content="${_csrf.token}">
-      <meta name="_csrf_header" th:if="${_csrf != null}" th:content="${_csrf.headerName}">
+    <!-- CSRF -->
+    <meta name="_csrf" th:if="${_csrf != null}" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:if="${_csrf != null}" th:content="${_csrf.headerName}">
 
-      <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-    </head>
-    <body>
-    <header>
-      <div class="left">
-        <div class="menu-container" title="Menú">
-          <div class="menu" id="menu" role="button" tabindex="0" aria-label="Abrir menú lateral">
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        </div>
-        <div class="brand">
-          <img th:src="@{/css/icons/Logo.png}" alt="Logo-Caba" class="logo">
-          <span class="name">CABA PRO</span>
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  </head>
+  <body>
+  <header>
+    <div class="left">
+      <div class="menu-container" th:title="#{admin.header.menu}">
+        <div class="menu" id="menu" role="button" tabindex="0" th:aria-label="#{admin.header.menu.aria}">
+          <div></div><div></div><div></div>
         </div>
       </div>
-
-      <div class="right">
-        <!-- Inicio -->
-        <a th:href="@{/arbitro}" title="Inicio">
-          <i class="bi bi-house"></i>
-        </a>
-
-        <!-- Notificaciones -->
-        <div class="notif-container" id="notifContainer" title="Notificaciones" aria-haspopup="true" aria-expanded="false">
-          <i class="bi bi-bell notif-icon" aria-label="Notificaciones"></i>
-          <span class="notif-badge" id="notifBadge" style="display:none;">0</span>
-
-          <div class="notif-dropdown" id="notifDropdown" style="display:none;">
-            <div class="notif-header">
-              <strong>Notificaciones</strong>
-            </div>
-            <div class="notif-list" id="notifList">
-              <div class="notif-empty">Sin notificaciones</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Logout -->
-        <a th:href="@{/logout}" title="Salir">
-          <i class="bi bi-box-arrow-right"></i>
-        </a>
+      <div class="brand">
+        <img th:src="@{/css/icons/Logo.png}" th:alt="#{logo.alt}" alt="Logo CABA PRO" class="logo">
+        <span class="name" th:text="#{app.title}">CABA PRO</span>
       </div>
-    </header>
-
-    <div class="sidebar" id="sidebar">
-      <nav>
-        <ul>
-          <li>
-            <a th:href="@{/arbitro/perfil}">
-              <i class="bi bi-person"></i>
-              <span>Perfil</span>
-            </a>
-            <a th:href="@{/arbitro/asignaciones}">
-              <i class="bi bi-journal-check"></i>
-              <span>Asignaciones</span>
-            </a>
-            <a th:href="@{/arbitro/pagos}">
-              <i class="bi bi-cash-stack"></i>
-              <span>Tus Pagos</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
     </div>
 
-    <script>
-      (function () {
-        // Sidebar toggle (coincide con tu CSS .menu-toggle)
-        const menu = document.getElementById('menu');
-        const sidebar = document.getElementById('sidebar');
-        function toggleSidebar() {
-          if (!sidebar) return;
-          sidebar.classList.toggle('menu-toggle');
+    <div class="right">
+      <!-- Inicio -->
+      <a th:href="@{/arbitro}" th:title="#{nav.home}">
+        <i class="bi bi-house"></i>
+      </a>
+
+      <!-- Notificaciones -->
+      <div class="notif-container" id="notifContainer" th:title="#{arbitro.notif.title}" aria-haspopup="true" aria-expanded="false">
+        <i class="bi bi-bell notif-icon" aria-label="Notifications"></i>
+        <span class="notif-badge" id="notifBadge" style="display:none;">0</span>
+
+        <div class="notif-dropdown" id="notifDropdown" style="display:none;">
+          <div class="notif-header">
+            <strong th:text="#{arbitro.notif.title}">Notificaciones</strong>
+          </div>
+          <!-- data-* para i18n desde JS -->
+          <div class="notif-list" id="notifList"
+               th:attr="data-i18n-empty=#{arbitro.notif.empty},
+                        data-i18n-error=#{arbitro.notif.error},
+                        data-i18n-item-default=#{arbitro.notif.item.default}">
+            <div class="notif-empty" th:text="#{arbitro.notif.empty}">Sin notificaciones</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logout -->
+      <a th:href="@{/logout}" th:title="#{nav.logout}">
+        <i class="bi bi-box-arrow-right"></i>
+      </a>
+
+      <!-- Selector de idioma -->
+      <span class="lang-switch" style="margin-left:.5rem;">
+        <a class="link-white" href="?lang=es" th:text="#{lang.es}">ES</a>
+        <span class="separator link-white">|</span>
+        <a class="link-white" href="?lang=en" th:text="#{lang.en}">EN</a>
+      </span>
+    </div>
+  </header>
+
+  <div class="sidebar" id="sidebar">
+    <nav>
+      <ul>
+        <li>
+          <a th:href="@{/arbitro/perfil}">
+            <i class="bi bi-person"></i>
+            <span th:text="#{arbitro.menu.profile}">Perfil</span>
+          </a>
+          <a th:href="@{/arbitro/asignaciones}">
+            <i class="bi bi-journal-check"></i>
+            <span th:text="#{arbitro.menu.assignments}">Asignaciones</span>
+          </a>
+          <a th:href="@{/arbitro/pagos}">
+            <i class="bi bi-cash-stack"></i>
+            <span th:text="#{arbitro.menu.payments}">Tus Pagos</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <script>
+    (function () {
+      const menu = document.getElementById('menu');
+      const sidebar = document.getElementById('sidebar');
+      function toggleSidebar() { sidebar?.classList.toggle('menu-toggle'); }
+      menu?.addEventListener('click', toggleSidebar);
+      menu?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSidebar(); }
+      });
+
+      const notifContainer = document.getElementById('notifContainer');
+      const notifDropdown = document.getElementById('notifDropdown');
+      const notifBadge = document.getElementById('notifBadge');
+      const notifList = document.getElementById('notifList');
+      const csrfToken = document.querySelector('meta[name="_csrf"]')?.getAttribute('content');
+      const csrfHeader = document.querySelector('meta[name="_csrf_header"]')?.getAttribute('content');
+
+      // i18n desde data-attributes
+      const I18N_EMPTY = notifList?.dataset.i18nEmpty || 'No notifications';
+      const I18N_ERROR = notifList?.dataset.i18nError || 'Error';
+      const I18N_ITEM_DEFAULT = notifList?.dataset.i18nItemDefault || 'Assignment';
+
+      function authHeaders(method) {
+        const h = { 'Accept': 'application/json' };
+        if (method !== 'GET') {
+          h['Content-Type'] = 'application/json';
+          if (csrfToken && csrfHeader) h[csrfHeader] = csrfToken;
         }
-        menu?.addEventListener('click', toggleSidebar);
-        menu?.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSidebar(); }
-        });
+        return h;
+      }
 
-        // Notificaciones
-        const notifContainer = document.getElementById('notifContainer');
-        const notifDropdown = document.getElementById('notifDropdown');
-        const notifBadge = document.getElementById('notifBadge');
-        const notifList = document.getElementById('notifList');
-        const csrfToken = document.querySelector('meta[name="_csrf"]')?.getAttribute('content');
-        const csrfHeader = document.querySelector('meta[name="_csrf_header"]')?.getAttribute('content');
-
-        function authHeaders(method) {
-          const h = { 'Accept': 'application/json' };
-          if (method !== 'GET') {
-            h['Content-Type'] = 'application/json';
-            if (csrfToken && csrfHeader) h[csrfHeader] = csrfToken;
-          }
-          return h;
+      function updateBadge(count) {
+        if (!notifBadge) return;
+        if (count > 0) {
+          notifBadge.style.display = 'inline-block';
+          notifBadge.textContent = String(count);
+        } else {
+          notifBadge.style.display = 'none';
+          notifBadge.textContent = '0';
         }
+      }
 
-        function updateBadge(count) {
-          if (!notifBadge) return;
-          if (count > 0) {
-            notifBadge.style.display = 'inline-block';
-            notifBadge.textContent = String(count);
+      async function fetchCount() {
+        try {
+          const res = await fetch('/api/notificaciones/count', { headers: authHeaders('GET') });
+          if (!res.ok) return;
+          const data = await res.json();
+          updateBadge(data.count ?? 0);
+        } catch {}
+      }
+
+      function itemTemplate(n) {
+        const fecha = n.fechaCreacion ? new Date(n.fechaCreacion).toLocaleString() : '';
+        const rol = n.rolPartido ? ` • Rol: ${n.rolPartido}` : '';
+        const partido = n.partidoNombre ? ` • ${n.partidoNombre}` : '';
+        const msg = n.mensaje || (I18N_ITEM_DEFAULT + partido + rol);
+        return `
+          <div class="notif-item ${n.leida ? '' : 'unread'}" data-id="${n.id}">
+            <div class="notif-msg">${msg}</div>
+            <div class="notif-meta">${fecha}</div>
+          </div>
+        `;
+      }
+
+      async function fetchList() {
+        try {
+          const res = await fetch('/api/notificaciones', { headers: authHeaders('GET') });
+          if (!res.ok) return;
+          const list = await res.json();
+          if (!Array.isArray(list) || !list.length) {
+            notifList.innerHTML = `<div class="notif-empty">${I18N_EMPTY}</div>`;
           } else {
-            notifBadge.style.display = 'none';
-            notifBadge.textContent = '0';
+            notifList.innerHTML = list.map(itemTemplate).join('');
           }
+        } catch {
+          notifList.innerHTML = `<div class="notif-empty">${I18N_ERROR}</div>`;
         }
+      }
 
-        async function fetchCount() {
-          try {
-            const res = await fetch('/api/notificaciones/count', { headers: authHeaders('GET') });
-            if (!res.ok) return;
-            const data = await res.json();
-            updateBadge(data.count ?? 0);
-          } catch { /* noop */ }
-        }
-
-        function itemTemplate(n) {
-          const fecha = n.fechaCreacion ? new Date(n.fechaCreacion).toLocaleString() : '';
-          const rol = n.rolPartido ? ` • Rol: ${n.rolPartido}` : '';
-          const partido = n.partidoNombre ? ` • ${n.partidoNombre}` : '';
-          const msg = n.mensaje || ('Asignación' + partido + rol);
-          return `
-            <div class="notif-item ${n.leida ? '' : 'unread'}" data-id="${n.id}">
-              <div class="notif-msg">${msg}</div>
-              <div class="notif-meta">${fecha}</div>
-            </div>
-          `;
-        }
-
-        async function fetchList() {
-          try {
-            const res = await fetch('/api/notificaciones', { headers: authHeaders('GET') });
-            if (!res.ok) return;
-            const list = await res.json();
-            if (!Array.isArray(list) || !list.length) {
-              notifList.innerHTML = '<div class="notif-empty">Sin notificaciones</div>';
-            } else {
-              notifList.innerHTML = list.map(itemTemplate).join('');
+      async function marcarLeida(id, el) {
+        try {
+          const wasUnread = el?.classList.contains('unread');
+          const res = await fetch(`/api/notificaciones/${id}/leer`, { method: 'POST', headers: authHeaders('POST') });
+          if (res.ok && el) {
+            el.classList.remove('unread');
+            if (wasUnread && notifBadge && notifBadge.style.display !== 'none') {
+              const newCount = Math.max(0, (parseInt(notifBadge.textContent || '0', 10) || 0) - 1);
+              updateBadge(newCount);
             }
-          } catch {
-            notifList.innerHTML = '<div class="notif-empty">Error al cargar</div>';
           }
+        } catch {}
+      }
+
+      notifContainer?.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const isOpen = notifDropdown.style.display === 'block';
+        notifContainer.setAttribute('aria-expanded', String(!isOpen));
+        if (isOpen) {
+          notifDropdown.style.display = 'none';
+        } else {
+          notifDropdown.style.display = 'block';
+          await fetchList();
         }
+      });
+      document.addEventListener('click', () => {
+        if (notifDropdown) notifDropdown.style.display = 'none';
+        notifContainer?.setAttribute('aria-expanded', 'false');
+      });
 
-        async function marcarLeida(id, el) {
-          try {
-            const wasUnread = el?.classList.contains('unread');
-            const res = await fetch(`/api/notificaciones/${id}/leer`, {
-              method: 'POST',
-              headers: authHeaders('POST')
-            });
-            if (res.ok && el) {
-              el.classList.remove('unread');
-              if (wasUnread && notifBadge && notifBadge.style.display !== 'none') {
-                const newCount = Math.max(0, (parseInt(notifBadge.textContent || '0', 10) || 0) - 1);
-                updateBadge(newCount);
-              }
-            }
-          } catch { /* noop */ }
-        }
+      notifList?.addEventListener('click', async (e) => {
+        const item = e.target.closest('.notif-item');
+        if (!item) return;
+        const id = item.getAttribute('data-id');
+        if (id) await marcarLeida(id, item);
+        window.location.href = '/arbitro/asignaciones';
+      });
 
-        // Toggle dropdown
-        notifContainer?.addEventListener('click', async (e) => {
-          e.stopPropagation();
-          const isOpen = notifDropdown.style.display === 'block';
-          notifContainer.setAttribute('aria-expanded', String(!isOpen));
-          if (isOpen) {
-            notifDropdown.style.display = 'none';
-          } else {
-            notifDropdown.style.display = 'block';
-            await fetchList();
-          }
-        });
-        document.addEventListener('click', () => {
-          if (notifDropdown) notifDropdown.style.display = 'none';
-          notifContainer?.setAttribute('aria-expanded', 'false');
-        });
-
-        // Click en ítems: marcar leída y redirigir a asignaciones
-        notifList?.addEventListener('click', async (e) => {
-          const item = e.target.closest('.notif-item');
-          if (!item) return;
-          const id = item.getAttribute('data-id');
-          if (id) {
-            await marcarLeida(id, item);
-          }
-          window.location.href = '/arbitro/asignaciones';
-        });
-
-        fetchCount();
-        setInterval(fetchCount, 30000);
-      })();
-    </script>
-    </body>
-    </html>
-  </nav>
+      fetchCount();
+      setInterval(fetchCount, 30000);
+    })();
+  </script>
+  </body>
+  </html>
+</nav>

@@ -1,61 +1,58 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link th:href="@{/css/main.css}" rel="stylesheet">
-    <link th:href="@{/css/form.css}" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link th:href="@{/css/main.css}" rel="stylesheet">
+  <link th:href="@{/css/form.css}" rel="stylesheet">
+  <title th:text="#{admin.referee.form.title}">Crear Árbitro</title>
 </head>
-
 <body>
-    <div class="main-content">
-        <div th:replace="fragments/header_admin :: header_admin"></div>
+<div class="main-content">
+  <div th:replace="fragments/header_admin :: header_admin"></div>
 
-        <div class="form-card">
-            <h2>Crear Árbitro</h2>
-            <form th:object="${arbitro}" th:action="@{/admin/gestion-arbitros/guardar}" method="post">
+  <div class="form-card">
+    <h2 th:text="#{admin.referee.form.title}">Crear Árbitro</h2>
+    <form th:object="${arbitro}" th:action="@{/admin/gestion-arbitros/guardar}" method="post">
 
-                <!-- Campos de Usuario -->
-                <h3>Datos de Usuario</h3>
+      <h3 th:text="#{admin.referee.form.userData}">Datos de Usuario</h3>
 
-                <label for="username">Usuario:</label>
-                <input type="text" id="username" th:field="*{usuario.username}" required>
+      <label for="username" th:text="#{admin.referee.form.username}">Usuario:</label>
+      <input type="text" id="username" th:field="*{usuario.username}" required>
 
-                <label for="email">Email:</label>
-                <input type="email" id="email" th:field="*{usuario.email}" required>
+      <label for="email" th:text="#{admin.referee.form.email}">Email:</label>
+      <input type="email" id="email" th:field="*{usuario.email}" required>
 
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" th:field="*{usuario.nombre}" required>
+      <label for="nombre" th:text="#{admin.referee.form.name}">Nombre:</label>
+      <input type="text" id="nombre" th:field="*{usuario.nombre}" required>
 
-                <label for="apellido">Apellido:</label>
-                <input type="text" id="apellido" th:field="*{usuario.apellido}" required>
+      <label for="apellido" th:text="#{admin.referee.form.lastname}">Apellido:</label>
+      <input type="text" id="apellido" th:field="*{usuario.apellido}" required>
 
-                <label for="password">Contraseña:</label>
-                <input type="password" id="password" th:field="*{usuario.password}" required>
+      <label for="password" th:text="#{admin.referee.form.password}">Contraseña:</label>
+      <input type="password" id="password" th:field="*{usuario.password}" required>
 
-                <label for="foto">Foto (opcional):</label>
-                <input type="text" id="foto" th:field="*{usuario.foto}">
+      <label for="foto" th:text="#{admin.referee.form.photo}">Foto (opcional):</label>
+      <input type="text" id="foto" th:field="*{usuario.foto}">
 
-                <!-- Campos de Arbitro -->
-                <h3>Datos de Árbitro</h3>
+      <h3 th:text="#{admin.referee.form.refData}">Datos de Árbitro</h3>
 
-                <label for="escalafon">Escalafón:</label>
-                    <select id="escalafon" th:field="*{escalafon}" required>
-                        <option value=""  th:selected="${arbitro.escalafon} == null">-- Seleccione el escalafón --</option>
-                        <option value="Arbitro principal">Municipal</option>
-                        <option value="Arbitro asistente">Nacional</option>
-                        <option value="Arbitro asistente">Internacional</option>
-                    </select>
-                        
+      <label for="escalafon" th:text="#{admin.referee.rank}">Escalafón:</label>
+      <select id="escalafon" th:field="*{escalafon}" required>
+        <option value="" th:selected="${arbitro.escalafon} == null" th:text="#{admin.referee.form.rank.select}">
+          -- Seleccione el escalafón --
+        </option>
+        <option value="Municipal" th:text="#{admin.referee.rank.municipal}">Municipal</option>
+        <option value="Nacional" th:text="#{admin.referee.rank.national}">Nacional</option>
+        <option value="Internacional" th:text="#{admin.referee.rank.international}">Internacional</option>
+      </select>
 
-                <label for="disponibilidad">Disponible:</label>
-                <input type="checkbox" id="disponibilidad" th:field="*{disponibilidad}" checked>
+      <label for="disponibilidad" th:text="#{admin.referee.form.available.label}">Disponible:</label>
+      <input type="checkbox" id="disponibilidad" th:field="*{disponibilidad}" checked>
 
-                <button class="button create-button" type="submit">Guardar</button>
-            </form>
-        </div>
-    </div>
+      <button class="button create-button" type="submit" th:text="#{admin.referee.form.submit}">Guardar</button>
+    </form>
+  </div>
+</div>
 </body>
-
 </html>
