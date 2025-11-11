@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <title>Clima Actual</title>
+</head>
+
+<body>
+    <div th:replace="fragments/header_admin :: header_admin"></div>
+
+    <div class="main-content">
+
+        <h1 class="h1">Clima Actual</h1>
+
+        <!-- Contenedor donde se mostrará la información del clima -->
+        <div id="clima-card" class="card text-white" style="display:none;">
+            <div class="col col-1">
+                <h3 class="card-title" id="ciudad">Ciudad</h3>
+                <div class="row-between">
+                    <div class="col">
+                        <p id="descripcion">Descripción</p>
+                        <p id="temperatura">Temperatura</p>
+                        <p id="humedad">Humedad</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="error-msg" style="display:none;">
+            <h2 class="h2">No se pudo obtener la información del clima.</h2>
+        </div>
+
+        <div class="button-group">
+            <button class="button create-button" onclick="obtenerClima()">Actualizar</button>
+        </div>
+    </div>
+
+    <script>
+        async function obtenerClima() {
+            const card = document.getElementById("clima-card");
+            const errorMsg = document.getElementById("error-msg");
+
+            card.style.display = "none";
+            errorMsg.style.display = "none";
+
+            try {
+                const response = await fetch("/api/clima");
+                if (!response.ok) throw new Error("Error al obtener datos");
+                
+                const data = await response.json();
+
+                // Actualizar los valores en la interfaz
+                document.getElementById("ciudad").textContent = data.ciudad;
+                document.getElementById("descripcion").textContent = "Descripción: " + data.descripcion;
+                document.getElementById("temperatura").textContent = "Temperatura: " + data.temperatura + " °C";
+                document.getElementById("humedad").textContent = "Humedad: " + data.humedad + "%";
+
+                card.style.display = "block";
+
+            } catch (error) {
+                console.error("Error:", error);
+                errorMsg.style.display = "block";
+            }
+        }
+
+        // Llama automáticamente al cargar la página
+        obtenerClima();
+    </script>
+</body>
+</html>

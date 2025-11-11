@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class ClimaService {
 
-    private static final String API_URL = "https://open-weather13.p.rapidapi.com/city/fivedaysforcast/6.135/75.340";
+    private static final String API_URL = "https://open-weather13.p.rapidapi.com/city/fivedaysforcast/6.2442/-75.5812"; // Medellín, Colombia
     private static final String API_KEY = ""; //TODO: agregar tu API key aquí
     private static final String API_HOST = "open-weather13.p.rapidapi.com";
 
