@@ -18,15 +18,11 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 @Service
 public class TarifaService {
@@ -34,12 +30,17 @@ public class TarifaService {
     private final TarifaRepository tarifaRepository;
     private final PartidoArbitroRepository partidoArbitroRepository;
     private final PartidoRepository partidoRepository;
+    // Dependencia invertida: ahora el servicio depende de la abstracción TarifaReportGenerator
+    private final TarifaReportGenerator tarifaReportGenerator;
 
-    public TarifaService(TarifaRepository tarifaRepository, PartidoArbitroRepository partidoArbitroRepository,
-                         PartidoRepository partidoRepository) {
+    public TarifaService(TarifaRepository tarifaRepository,
+                         PartidoArbitroRepository partidoArbitroRepository,
+                         PartidoRepository partidoRepository,
+                         @Qualifier("pdfTarifaReportGenerator") TarifaReportGenerator tarifaReportGenerator) {
         this.tarifaRepository = tarifaRepository;
         this.partidoArbitroRepository = partidoArbitroRepository;
         this.partidoRepository = partidoRepository;
+        this.tarifaReportGenerator = tarifaReportGenerator; // Inyección de la implementación concreta (PDF) por ahora
     }
     // Encuentra todas las tarifas del árbitro de aquellos partidos que el árbitro ha aceptado
     @Transactional
@@ -99,32 +100,19 @@ public class TarifaService {
 
     @Transactional
     public byte[] generarPdfTotalTarifas(Long arbitroUsuarioId) throws IOException {
+        // Método de compatibilidad que sigue retornando PDF. Internamente delega a la abstracción.
         List<Tarifa> tarifas = EncontrarTarifas(arbitroUsuarioId);
-        long suma = 0L;
-        for (Tarifa t : tarifas) {
-            if (t != null && t.getMonto() != null) suma += t.getMonto();
-        }
+        return tarifaReportGenerator.generarReporteTotalTarifas(tarifas, arbitroUsuarioId);
+    }
 
-        // Crear PDF simple con PDFBox
-        try (PDDocument doc = new PDDocument()) {
-            PDPage page = new PDPage();
-            doc.addPage(page);
-            try (PDPageContentStream cs = new PDPageContentStream(doc, page)) {
-                cs.beginText();
-                cs.setFont(PDType1Font.HELVETICA_BOLD, 18);
-                cs.newLineAtOffset(50, 700);
-                cs.showText("Resumen de Tarifas");
-                cs.newLineAtOffset(0, -25);
-                cs.setFont(PDType1Font.HELVETICA, 12);
-                cs.showText("Arbitro ID: " + (arbitroUsuarioId != null ? arbitroUsuarioId.toString() : "-"));
-                cs.newLineAtOffset(0, -18);
-                cs.showText("Total a pagar: " + suma);
-                cs.endText();
-            }
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            doc.save(out);
-            return out.toByteArray();
-        }
+    /**
+     * Nuevo método más genérico que delega la generación del reporte al generador inyectado.
+     * Permite cambiar el formato (PDF/Excel) sin modificar esta clase.
+     */
+    @Transactional
+    public byte[] generarReporteTotalTarifas(Long arbitroUsuarioId) throws IOException {
+        List<Tarifa> tarifas = EncontrarTarifas(arbitroUsuarioId);
+        return tarifaReportGenerator.generarReporteTotalTarifas(tarifas, arbitroUsuarioId);
     }
     
 
