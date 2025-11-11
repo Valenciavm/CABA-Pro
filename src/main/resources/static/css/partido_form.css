@@ -52,6 +52,41 @@ color:#fff; }
     display: inline-block;
 }
 
+/* Elimina el estilo por defecto del navegador */
+.checkbox-finalizado {
+  appearance: none;       /* quita el estilo nativo */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ffffff; /* color del borde cuando NO está marcado */
+  border-radius: 4px;
+  background-color: #f80000; /* color de fondo inicial (oscuro para resaltar) */
+  cursor: pointer;
+  position: relative;
+}
+
+/* Cuando el mouse pasa por encima */
+.checkbox-finalizado:hover {
+  border-color: #ffffff;
+}
+
+/* Cuando está marcado */
+.checkbox-finalizado:checked {
+  background-color: #e0d8d2; /* color cuando SÍ está marcado */
+  border-color: #e0d8d2;
+}
+
+/* Agrega el “check” (✔) visual manualmente */
+.checkbox-finalizado:checked::after {
+  content: "✓";
+  color: #333;            
+  font-size: 16px;
+  position: absolute;
+  left: 3px;
+  top: 0;
+}
 
 .error {
     background-color: #f8d7da;

@@ -52,7 +52,7 @@
 							<div class="form-group third-width">
 								<label for="principalId">Árbitro principal</label>
 								<select id="principalId" name="principalId">
-									<option value="" th:if="${principalId} == null" selected>-- Seleccione --</option>
+							J		<option value="" th:if="${principalId} == null" selected>-- Seleccione --</option>
 									<option th:each="arb : ${arbitros}" th:value="${arb.usuarioId}"
 											th:text="${arb.usuario.nombre} + ' ' + ${arb.usuario.apellido}"
 											th:selected="${principalId} == ${arb.usuarioId}"></option>
@@ -123,7 +123,7 @@
 							</div>
 						</div>
 									<label for="finalizado">Finalizado</label>
-									<input type="checkbox" id="finalizado" th:field="*{finalizado}" />
+									<input type="checkbox" id="finalizado" class="checkbox-finalizado" th:field="*{finalizado}" />
 							<div class="form-actions">
 								<button type="submit" class="btn btn-primary">Guardar Cambios</button>
 							</div>
