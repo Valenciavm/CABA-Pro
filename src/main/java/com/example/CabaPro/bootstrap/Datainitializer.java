@@ -27,10 +27,19 @@ public class Datainitializer implements CommandLineRunner {
 
         // ARBITRO: username, email, nombre, apellido, rawPassword, especialidad, escalafon, disponibilidad
         arbitroService.createArbitroIfNotExists("Camiloref", "Camiloref@caba.com", "Camilo", "Perez",
-                "refpassword", "Municipal", true,"/ImagenesPerfil/Arbitro1.jpg");
+                "refpassword", "Municipal", true,"https://cabapro.s3.us-east-1.amazonaws.com/arbitro1.jpg");
         arbitroService.createArbitroIfNotExists("arbitro2", "LuisaRef@caba.com", "Luisa", "Fernandez",
-                "abc123", "Internacional", true,"/ImagenesPerfil/Arbitro2.jpg");
+                "abc123", "Internacional", true,"https://cabapro.s3.us-east-1.amazonaws.com/arbitro2.jpg");
         arbitroService.createArbitroIfNotExists("arbitro3", "CarlosRef@caba.com", "Carlos", "Gomez",
-                "def456", "Nacional", true,"/ImagenesPerfil/Arbitro3.jpg");
+                "def456", "Nacional", true,"https://cabapro.s3.us-east-1.amazonaws.com/arbitro3.jpg");
+        arbitroService.createArbitroIfNotExists("anaarbitro4", "AnaRef@caba.com", "Ana", "Gomez",
+                "def456", "Nacional", true,"https://cabapro.s3.us-east-1.amazonaws.com/arbitro4.jpg");
+        arbitroService.createArbitroIfNotExists("josearbitro5", "JoseRef@caba.com", "Jose", "Gomez",
+                "def456", "Nacional", true,"https://cabapro.s3.us-east-1.amazonaws.com/arbitro5.jpg");
+        arbitroService.createArbitroIfNotExists("juanarbitro", "JuanRef@caba.com", "Juan", "Gomez",
+                "def456", "Nacional", true,"https://cabapro.s3.us-east-1.amazonaws.com/arbitro6.jpg");
+        arbitroService.createArbitroIfNotExists("sararbitro", "JuanRef@caba.com", "Sara", "Gomez",
+                "def456", "Nacional", true,"https://cabapro.s3.us-east-1.amazonaws.com/arbitro7.jpg");
+                
     }
 }
